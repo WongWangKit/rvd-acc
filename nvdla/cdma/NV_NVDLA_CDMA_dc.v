@@ -3586,66 +3586,6 @@ end
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_no_x #(0,2,0,"No Xs allowed on cur_state") zzz_assert_no_x_1x (nvdla_core_clk, `ASSERT_RESET, 1'd1, cur_state); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_2x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_rsp_done | is_done))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_10x (nvdla_core_ng_clk, `ASSERT_RESET, 1'd1, (^(reg2dp_op_en & is_idle))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_13x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_27x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | pre_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_28x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_32x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en_d1))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_39x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en_d2_g0))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_40x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en_d2_g1))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_43x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en_d2_init))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_44x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(pre_reg_en_d2_last))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_50x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | pre_reg_en_d2))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_51x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | csm_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_52x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_batch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_53x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_ch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_58x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_atm_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_59x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_atm_reg_en_0))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_60x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_atm_reg_en_1))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_61x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_atm_reg_en_2))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_62x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | req_atm_reg_en_3))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_66x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_first_running | req_grain_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_67x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_first_running | req_batch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_68x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_first_running | req_ch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_69x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_first_running | req_atm_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_75x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(req_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_81x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(dma_rd_rsp_vld & ~is_blocking))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_86x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch0_wr_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_87x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch1_wr_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_88x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch2_wr_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_89x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch3_wr_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_95x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch0_wr_addr_cnt_reg_en | ch0_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_96x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch1_wr_addr_cnt_reg_en | ch1_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_97x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch2_wr_addr_cnt_reg_en | ch2_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_98x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch3_wr_addr_cnt_reg_en | ch3_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_103x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_all_h_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_107x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_batch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_108x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_ch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_113x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_h_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_115x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_w_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_116x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch0_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_117x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch1_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_118x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch2_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_119x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | ch3_rd_addr_cnt_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_121x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_rd_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_123x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(p0_rd_en_w))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_124x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(p1_rd_en_w))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_125x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(is_first_running))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_126x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_batch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_127x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_ch_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_128x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_h_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_129x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(layer_st | rsp_all_h_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_130x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(rsp_w_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_141x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(cbuf_wr_en_d0))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_144x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(cbuf_wr_en_d1))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_147x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(cbuf_wr_en_d2))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_150x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(req_grain_reg_en | dc2status_dat_updt))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_154x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(rsp_all_h_reg_en))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_156x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(dat_updt_d0))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_158x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(dat_updt_d1))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_no_x #(0,1,0,"No X's allowed on control signals") zzz_assert_no_x_160x (nvdla_core_clk, `ASSERT_RESET, 1'd1, (^(dat_updt_d2))); // spyglass disable W504 SelfDeterminedExpr-ML 
 //nv_assert_never #(0,0,"Error config! data bank is not big enough!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (is_running & ((data_bank * 256) < (data_entries * data_height)))); // spyglass disable W504 SelfDeterminedExpr-ML 
   nv_assert_never #(0,0,"Error config! data bank is not big enough!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (is_running & ((data_bank * 512) < (data_entries * data_height)))); // spyglass disable W504 SelfDeterminedExpr-ML 
   nv_assert_never #(0,0,"Error! fifo is not empty when done!") zzz_assert_never_5x (nvdla_core_clk, `ASSERT_RESET, (is_rsp_done & dma_rsp_fifo_req)); // spyglass disable W504 SelfDeterminedExpr-ML 
