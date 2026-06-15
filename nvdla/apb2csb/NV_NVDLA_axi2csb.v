@@ -146,13 +146,13 @@ wire rd_last_beat;
 assign idle_ready     = (state == ST_IDLE) & ~bvalid & ~rvalid;
 assign axi_awready_o  = idle_ready;
 assign axi_arready_o  = idle_ready & ~axi_awvalid_i;
-assign axi_wready_o   = (state == ST_WR_DATA);
+assign axi_wready_o   = (state == ST_WR_DATA) | (idle_ready & axi_awvalid_i);
 
 assign aw_fire = axi_awvalid_i & axi_awready_o;
 assign w_fire  = axi_wvalid_i  & axi_wready_o;
 assign ar_fire = axi_arvalid_i & axi_arready_o;
 
-assign wr_last_expected = (wr_beat == wr_len);
+assign wr_last_expected = (state == ST_IDLE) ? (axi_awlen_i == 8'd0) : (wr_beat == wr_len);
 assign wr_last_seen     = axi_wlast_i | wr_last_expected;
 assign wr_beat_error    = (axi_wstrb_i != 4'hf) | (axi_wlast_i != wr_last_expected);
 assign rd_last_beat     = (rd_beat == rd_len);
@@ -210,9 +210,32 @@ always @(posedge clk_i or negedge rst_n_i) begin
                 wr_error     <= (axi_awburst_i != AXI_BURST_FIXED) &
                                 (axi_awburst_i != AXI_BURST_INCR);
                 wr_beat_done <= 1'b0;
+                wr_data      <= axi_wdata_i;
                 bid          <= axi_awid_i;
                 bresp        <= RESP_OKAY;
-                state        <= ST_WR_DATA;
+
+                if (w_fire) begin
+                    wr_beat_done <= wr_last_seen;
+                    if (((axi_awburst_i != AXI_BURST_FIXED) &
+                         (axi_awburst_i != AXI_BURST_INCR)) | wr_beat_error) begin
+                        wr_error <= 1'b1;
+                        if (wr_last_seen) begin
+                            bvalid <= 1'b1;
+                            bresp  <= RESP_SLVERR;
+                            state  <= ST_WR_RESP;
+                        end else begin
+                            wr_beat <= 8'd1;
+                            if (axi_awburst_i == AXI_BURST_INCR) begin
+                                wr_addr <= axi_awaddr_i[17:2] + 16'd1;
+                            end
+                            state <= ST_WR_DATA;
+                        end
+                    end else begin
+                        state <= ST_WR_CSB;
+                    end
+                end else begin
+                    state <= ST_WR_DATA;
+                end
             end else if (ar_fire) begin
                 rd_addr  <= axi_araddr_i[17:2];
                 rd_id    <= axi_arid_i;
