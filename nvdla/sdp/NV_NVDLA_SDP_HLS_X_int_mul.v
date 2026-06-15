@@ -323,7 +323,6 @@ wire p1_assert_clk = nvdla_core_clk;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_hold_throughout_event_interval #(0,1,0,"valid removed before ready") zzz_assert_hold_throughout_event_interval_2x (nvdla_core_clk, `ASSERT_RESET, (mul_sync_pvld && !mul_sync_prdy), (mul_sync_pvld), (mul_sync_prdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

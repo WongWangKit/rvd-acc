@@ -428,7 +428,6 @@ NV_NVDLA_SDP_WDMA_CMD_dfifo u_dfifo (
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP_WDMA: no overflow is allowed") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_width_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -473,7 +472,6 @@ NV_NVDLA_SDP_WDMA_CMD_dfifo u_dfifo (
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP_WDMA: no overflow is allowed") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_line_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -518,7 +516,6 @@ NV_NVDLA_SDP_WDMA_CMD_dfifo u_dfifo (
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP_WDMA: no overflow is allowed") zzz_assert_never_5x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_surf_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

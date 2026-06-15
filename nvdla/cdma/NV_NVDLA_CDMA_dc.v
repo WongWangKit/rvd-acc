@@ -3586,60 +3586,6 @@ end
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-//nv_assert_never #(0,0,"Error config! data bank is not big enough!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (is_running & ((data_bank * 256) < (data_entries * data_height)))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error config! data bank is not big enough!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (is_running & ((data_bank * 512) < (data_entries * data_height)))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! fifo is not empty when done!") zzz_assert_never_5x (nvdla_core_clk, `ASSERT_RESET, (is_rsp_done & dma_rsp_fifo_req)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Channel counter is not empty when done!") zzz_assert_never_6x (nvdla_core_clk, `ASSERT_RESET, (is_rsp_done & ((|ch0_cnt) | (|ch1_cnt) | (|ch2_cnt) | (|ch3_cnt)))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Req is not done when rsp is done!") zzz_assert_never_7x (nvdla_core_clk, `ASSERT_RESET, (is_rsp_done & (req_height_cnt_d1 != data_height) & ~dbg_is_last_reuse)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Req is valid when rsp is done!") zzz_assert_never_8x (nvdla_core_clk, `ASSERT_RESET, (is_rsp_done & req_pre_valid)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! entry_onfly is non zero when idle") zzz_assert_never_9x (nvdla_core_clk, `ASSERT_RESET, (fetch_done & |(dc_entry_onfly))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error config! reg2dp_grains is overflow!") zzz_assert_never_24x (nvdla_core_clk, `ASSERT_RESET, (layer_st & mon_fetch_grain_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error config! data_entries_w is overflow!") zzz_assert_never_25x (nvdla_core_clk, `ASSERT_RESET, (layer_st & mon_data_entries_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-// nv_assert_one_hot #(0,3,0,"Error! conflict data type mode") zzz_assert_one_hot_26x (nvdla_core_clk, `ASSERT_RESET, ({is_data_normal, is_data_expand, is_data_shrink})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_height_cnt_inc is overflow!") zzz_assert_never_30x (nvdla_core_clk, `ASSERT_RESET, (mon_req_height_cnt_d1)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_slice_left is overflow!") zzz_assert_never_31x (nvdla_core_clk, `ASSERT_RESET, ((|mon_req_slice_left))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_cur_atomic is overflow!") zzz_assert_never_36x (nvdla_core_clk, `ASSERT_RESET, (pre_reg_en_d1 & (|mon_req_cur_atomic))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! entry_per_batch is overflow!") zzz_assert_never_37x (nvdla_core_clk, `ASSERT_RESET, (pre_reg_en_d1 & (|mon_entry_per_batch))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_cur_atomic is out of range when HoG!") zzz_assert_never_38x (nvdla_core_clk, `ASSERT_RESET, (is_running & ~is_feature & (|req_cur_atomic[12 -1: 12 -2]))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! entry_required is overflow!") zzz_assert_never_49x (nvdla_core_clk, `ASSERT_RESET, ((|mon_entry_required))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_ch_left_w is overflow") zzz_assert_never_55x (nvdla_core_clk, `ASSERT_RESET, (mon_req_ch_left_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_cur_ch is out of range") zzz_assert_never_56x (nvdla_core_clk, `ASSERT_RESET, (req_cur_ch > 3'h4)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_ch_cnt is large than data_surface") zzz_assert_never_57x (nvdla_core_clk, `ASSERT_RESET, (is_running & (req_ch_cnt > data_surface))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_atm_left is overflow!") zzz_assert_never_63x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en & (|mon_req_atm_left))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_atm_size_addr_limit is overflow!") zzz_assert_never_64x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en & (|mon_req_atm_size_addr_limit))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_atm_size_out is overflow!") zzz_assert_never_65x (nvdla_core_clk, `ASSERT_RESET, (req_reg_en & (|mon_req_atm_size_out))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_addr_grain_base_inc is overflow!") zzz_assert_never_70x (nvdla_core_clk, `ASSERT_RESET, (req_grain_reg_en & mon_req_addr_grain_base_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_addr_batch_base_inc is overflow!") zzz_assert_never_71x (nvdla_core_clk, `ASSERT_RESET, (req_batch_reg_en & mon_req_addr_batch_base_inc & (|reg2dp_batches))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_addr_ch_base_inc is overflow!") zzz_assert_never_72x (nvdla_core_clk, `ASSERT_RESET, (req_ch_reg_en & mon_req_addr_ch_base_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_addr_base_inc is overflow!") zzz_assert_never_73x (nvdla_core_clk, `ASSERT_RESET, (req_atm_reg_en & mon_req_addr_base_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! req_addr is overflow!") zzz_assert_never_74x (nvdla_core_clk, `ASSERT_RESET, (req_reg_en & mon_req_addr)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Receive input data when not busy") zzz_assert_never_80x (nvdla_core_clk, `ASSERT_RESET, (dma_rd_rsp_vld & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"response fifo pop error") zzz_assert_never_82x (nvdla_core_clk, `ASSERT_RESET, (dma_rsp_fifo_ready & ~dma_rsp_fifo_req)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"response size mismatch") zzz_assert_never_83x (nvdla_core_clk, `ASSERT_RESET, (dma_rsp_size_cnt_inc > dma_rsp_size)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dma_rsp_size_cnt_inc is overflow") zzz_assert_never_84x (nvdla_core_clk, `ASSERT_RESET, (mon_dma_rsp_size_cnt_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dma_rsp_size_cnt_inc is out of range") zzz_assert_never_85x (nvdla_core_clk, `ASSERT_RESET, (dma_rsp_size_cnt_inc > 8'h8)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,4,0,"Error! ch_reg_en is not one hot") zzz_assert_zero_one_hot_94x (nvdla_core_clk, `ASSERT_RESET, {ch0_wr_addr_cnt_reg_en, ch1_wr_addr_cnt_reg_en, ch2_wr_addr_cnt_reg_en, ch3_wr_addr_cnt_reg_en}); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Channel 0 is not zero when idle!") zzz_assert_never_99x (nvdla_core_clk, `ASSERT_RESET, ((|ch0_cnt) & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Channel 1 is not zero when idle!") zzz_assert_never_100x (nvdla_core_clk, `ASSERT_RESET, ((|ch1_cnt) & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Channel 2 is not zero when idle!") zzz_assert_never_101x (nvdla_core_clk, `ASSERT_RESET, ((|ch2_cnt) & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Channel 3 is not zero when idle!") zzz_assert_never_102x (nvdla_core_clk, `ASSERT_RESET, ((|ch3_cnt) & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! rsp_all_h_cnt_inc is overflow") zzz_assert_never_105x (nvdla_core_clk, `ASSERT_RESET, (mon_rsp_all_h_cnt_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! rsp_all_h_left_w is overflow") zzz_assert_never_106x (nvdla_core_clk, `ASSERT_RESET, (mon_rsp_all_h_left_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! rsp_ch_cnt_inc is overflow") zzz_assert_never_110x (nvdla_core_clk, `ASSERT_RESET, (mon_rsp_ch_cnt_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! rsp_ch_left_w is overflow") zzz_assert_never_111x (nvdla_core_clk, `ASSERT_RESET, (mon_rsp_ch_left_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! rsp_cur_ch is out of range") zzz_assert_never_112x (nvdla_core_clk, `ASSERT_RESET, (rsp_cur_ch > 3'h4)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Blocking data response when not enabled") zzz_assert_never_122x (nvdla_core_clk, `ASSERT_RESET, (is_blocking & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! idx_batch_offset_w is overflow!") zzz_assert_never_135x (nvdla_core_clk, `ASSERT_RESET, (rsp_batch_reg_en & mon_idx_batch_offset_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! idx_ch_offset_w is overflow!") zzz_assert_never_136x (nvdla_core_clk, `ASSERT_RESET, (rsp_ch_reg_en & mon_idx_ch_offset_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! idx_h_offset_w is overflow!") zzz_assert_never_137x (nvdla_core_clk, `ASSERT_RESET, (rsp_h_reg_en & mon_idx_h_offset_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! cbuf_idx_inc is overflow!") zzz_assert_never_138x (nvdla_core_clk, `ASSERT_RESET, (rsp_w_reg_en & mon_cbuf_idx_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! cbuf_idx_w is overflow!") zzz_assert_never_139x (nvdla_core_clk, `ASSERT_RESET, (rsp_w_reg_en & (|mon_cbuf_idx_w))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,3,0,"Error! conflict div mode") zzz_assert_zero_one_hot_140x (nvdla_core_clk, `ASSERT_RESET, ({/*is_w_cnt_div8,*/ is_w_cnt_div4, is_w_cnt_div2})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dc_entry_onfly_w is overflow") zzz_assert_never_151x (nvdla_core_clk, `ASSERT_RESET, (mon_dc_entry_onfly_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dc_entry_onfly_w is out of range") zzz_assert_never_152x (nvdla_core_clk, `ASSERT_RESET, (dc_entry_onfly_w > 16384)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dc_entry_onfly_w is non zero when idle") zzz_assert_never_153x (nvdla_core_clk, `ASSERT_RESET, (~is_running & |(dc_entry_onfly))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Update to status when idle!") zzz_assert_never_162x (nvdla_core_clk, `ASSERT_RESET, (dc2status_dat_updt & ~is_running)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"never: counter overflow beyond <ovr_cnt>") zzz_assert_never_163x (nvdla_core_clk, `ASSERT_RESET, (ltc_1_cnt_nxt > 511 && dc_rd_latency_cen)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

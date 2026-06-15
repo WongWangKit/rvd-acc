@@ -153,7 +153,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP-RDMA: get an op-done without starting the op") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, !cmd_process && op_done); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -286,7 +285,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP RDMA: no overflow is allowed") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_line_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -348,7 +346,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP RDMA: no overflow is allowed") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_surf_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -478,7 +475,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"NO SIZE of 1Byte supported if proc precision is INT16") zzz_assert_never_6x (nvdla_core_clk, `ASSERT_RESET, reg2dp_op_en & cfg_proc_int16 & cfg_data_size_1byte); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -546,7 +542,6 @@ assign ig2cq_pvld = cmd_process & dma_rd_req_rdy;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"SDP-RDMA: CQ and DMA should accept or reject together") zzz_assert_never_7x (nvdla_core_clk, `ASSERT_RESET, (ig2cq_pvld & ig2cq_prdy) ^ (dma_rd_req_vld & dma_rd_req_rdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

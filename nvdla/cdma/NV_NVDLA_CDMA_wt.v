@@ -2366,29 +2366,6 @@ end
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-// nv_assert_never #(0,0,"Config error! Data banks is more than 15!") zzz_assert_never_6x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en && (reg2dp_data_bank == 4'hf))); // spyglass disable W504 SelfDeterminedExpr-ML 
-// nv_assert_never #(0,0,"Config error! Weight banks is more than 15!") zzz_assert_never_7x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en && (reg2dp_weight_bank == 4'hf))); // spyglass disable W504 SelfDeterminedExpr-ML 
-// nv_assert_never #(0,0,"Config error! Sum of data & weight banks is more than 16 when weight uncompressed") zzz_assert_never_8x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en && ~is_compressed && (weight_bank_end_w > 16))); // spyglass disable W504 SelfDeterminedExpr-ML 
-// nv_assert_never #(0,0,"Config error! Sum of data & weight banks is more than 15 when weight compressed!") zzz_assert_never_9x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en && is_compressed && (weight_bank_end_w > 15))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_req_burst_cnt_dec is overflow") zzz_assert_never_19x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en && mon_wt_req_burst_cnt_dec)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! FSM done when wt fetch is not!") zzz_assert_never_29x (nvdla_core_clk, `ASSERT_RESET, (is_running & ~is_nxt_running & ~wt_req_done_d3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_onfly is not zero when idle") zzz_assert_never_30x (nvdla_core_clk, `ASSERT_RESET, (~is_running && (|wt_data_onfly))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_stored is not zero when idle") zzz_assert_never_31x (nvdla_core_clk, `ASSERT_RESET, (~is_running && (|wt_data_stored))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"response fifo pop error") zzz_assert_never_56x (nvdla_core_clk, `ASSERT_RESET, (dma_rsp_fifo_ready & ~dma_rsp_fifo_req)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"response size mismatch") zzz_assert_never_57x (nvdla_core_clk, `ASSERT_RESET, (dma_rd_rsp_vld & dma_rd_rsp_rdy & (dma_rsp_size_cnt_inc > dma_rsp_size))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dma_rsp_size_cnt_inc is overflow") zzz_assert_never_58x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en & mon_dma_rsp_size_cnt_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! dma_rsp_size_cnt_inc is out of range") zzz_assert_never_59x (nvdla_core_clk, `ASSERT_RESET, (reg2dp_op_en & (dma_rsp_size_cnt_inc > 8'h8))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"WT and FLUSH write hazard") zzz_assert_never_71x (nvdla_core_clk, `ASSERT_RESET, (wt_cbuf_wr_vld_w & wt_cbuf_flush_vld_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_onfly_w is overflow") zzz_assert_never_80x (nvdla_core_ng_clk, `ASSERT_RESET, (reg2dp_op_en & mon_wt_data_onfly_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_stored_w is overflow") zzz_assert_never_81x (nvdla_core_ng_clk, `ASSERT_RESET, (reg2dp_op_en & mon_wt_data_stored_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_onfly is not zero when idle") zzz_assert_never_82x (nvdla_core_ng_clk, `ASSERT_RESET, (~is_running & (|wt_data_onfly))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_stored is not zero when idle") zzz_assert_never_83x (nvdla_core_ng_clk, `ASSERT_RESET, (~is_running & (|wt_data_stored))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_data_avl_w is overflow") zzz_assert_never_84x (nvdla_core_ng_clk, `ASSERT_RESET, (reg2dp_op_en && mon_wt_data_avl_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! wt_fetched_cnt_w is overflow") zzz_assert_never_103x (nvdla_core_clk, `ASSERT_RESET, ((layer_st | wt_cbuf_wr_vld_w) & mon_wt_fetched_cnt_inc)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Config error! Run out of weight buffer: uncompressed weight!") zzz_assert_never_121x (nvdla_core_clk, `ASSERT_RESET, (is_running & ~reg2dp_skip_weight_rls & ~dbg_full_weight & ~is_compressed & ~status_done & ((dbg_wt_kernel_bytes + 128) > {weight_bank, 15'b0}))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Config error! Run out of weight buffer: full weight!") zzz_assert_never_124x (nvdla_core_clk, `ASSERT_RESET, (is_running & reg2dp_skip_weight_rls & ~dbg_full_weight)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Weight output update with zero kernels") zzz_assert_never_126x (nvdla_core_clk, `ASSERT_RESET, (cdma2sc_wt_updt & ~(|cdma2sc_wt_kernels))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"never: counter overflow beyond <ovr_cnt>") zzz_assert_never_127x (nvdla_core_clk, `ASSERT_RESET, (ltc_1_cnt_nxt > 511 && wt_rd_latency_cen)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

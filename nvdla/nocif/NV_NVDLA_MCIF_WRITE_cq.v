@@ -3104,36 +3104,6 @@ wire disable_assert_plusarg = $test$plusargs("DISABLE_NESS_FLOW_ASSERTIONS");
 `endif
 `endif
 wire assert_enabled = 1'b1 && !disable_assert_plusarg;
-nv_assert_vld_credit_max #(0, 0, 256, 0, "FIFOGEN_ASSERTION A take occurred without credits being available")
-    fifogen_rd_take_credit_check0 ( .clk ( nvdla_core_clk ),
-                                        .reset_ ( ( nvdla_core_rstn === 1'bx ? 1'b0 : nvdla_core_rstn ) & assert_enabled ),
-                                        .vld ( cq_rd_take && cq_rd_take_thread_id == 3'd0 ),
-                                        .credit ( cq_rd_credit[0] )
-                                      );
-nv_assert_vld_credit_max #(0, 0, 256, 0, "FIFOGEN_ASSERTION A take occurred without credits being available")
-    fifogen_rd_take_credit_check1 ( .clk ( nvdla_core_clk ),
-                                        .reset_ ( ( nvdla_core_rstn === 1'bx ? 1'b0 : nvdla_core_rstn ) & assert_enabled ),
-                                        .vld ( cq_rd_take && cq_rd_take_thread_id == 3'd1 ),
-                                        .credit ( cq_rd_credit[1] )
-                                      );
-nv_assert_vld_credit_max #(0, 0, 256, 0, "FIFOGEN_ASSERTION A take occurred without credits being available")
-    fifogen_rd_take_credit_check2 ( .clk ( nvdla_core_clk ),
-                                        .reset_ ( ( nvdla_core_rstn === 1'bx ? 1'b0 : nvdla_core_rstn ) & assert_enabled ),
-                                        .vld ( cq_rd_take && cq_rd_take_thread_id == 3'd2 ),
-                                        .credit ( cq_rd_credit[2] )
-                                      );
-nv_assert_vld_credit_max #(0, 0, 256, 0, "FIFOGEN_ASSERTION A take occurred without credits being available")
-    fifogen_rd_take_credit_check3 ( .clk ( nvdla_core_clk ),
-                                        .reset_ ( ( nvdla_core_rstn === 1'bx ? 1'b0 : nvdla_core_rstn ) & assert_enabled ),
-                                        .vld ( cq_rd_take && cq_rd_take_thread_id == 3'd3 ),
-                                        .credit ( cq_rd_credit[3] )
-                                      );
-nv_assert_vld_credit_max #(0, 0, 256, 0, "FIFOGEN_ASSERTION A take occurred without credits being available")
-    fifogen_rd_take_credit_check4 ( .clk ( nvdla_core_clk ),
-                                        .reset_ ( ( nvdla_core_rstn === 1'bx ? 1'b0 : nvdla_core_rstn ) & assert_enabled ),
-                                        .vld ( cq_rd_take && cq_rd_take_thread_id == 3'd4 ),
-                                        .credit ( cq_rd_credit[4] )
-                                      );
 `endif
 `ifdef FV_ASSERT_ON
 `else

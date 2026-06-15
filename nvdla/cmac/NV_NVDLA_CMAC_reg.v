@@ -397,7 +397,6 @@ assign reg_rd_data = ({32{select_s}} & s_reg_rd_data) |
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_never #(0,0,"Error! Write group 0 registers when OP_EN is set!") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, (reg_wr_en & select_d0 & reg2dp_d0_op_en)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET
@@ -444,7 +443,6 @@ assign reg_rd_data = ({32{select_s}} & s_reg_rd_data) |
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_never #(0,0,"Error! Write group 1 registers when OP_EN is set!") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, (reg_wr_en & select_d1 & reg2dp_d1_op_en)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

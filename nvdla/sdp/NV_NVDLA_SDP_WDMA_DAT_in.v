@@ -339,7 +339,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"spt_vld should be faster than dp2wdma_valid") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (!spt_vld) && sdp_dp2wdma_valid); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

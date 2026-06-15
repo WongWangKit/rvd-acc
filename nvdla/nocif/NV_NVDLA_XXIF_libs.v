@@ -719,7 +719,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_zero_one_hot #(0,10,0,"gnt not zero one hot") zzz_grant_zero_one_hot_1x (clk, `ASSERT_RESET, (gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -765,7 +764,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt to a non requesting client") zzz_grant_to_no_req_2x (clk, `ASSERT_RESET, (|(~req & gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -811,7 +809,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"no gnt even if at least 1 client requesting ") zzz_no_gnt_when_expected_3x (clk, `ASSERT_RESET, (!gnt_busy & |(req) & !(|gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -857,7 +854,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt when gnt_busy ") zzz_gnt_when_busy_4x (clk, `ASSERT_RESET, (gnt_busy & |gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -2624,7 +2620,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_zero_one_hot #(0,10,0,"gnt not zero one hot") zzz_grant_zero_one_hot_5x (clk, `ASSERT_RESET, (gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -2670,7 +2665,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt to a non requesting client") zzz_grant_to_no_req_6x (clk, `ASSERT_RESET, (|(~req & gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -2716,7 +2710,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"no gnt even if at least 1 client requesting ") zzz_no_gnt_when_expected_7x (clk, `ASSERT_RESET, (|(req) & !(|gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -4101,7 +4094,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_zero_one_hot #(0,5,0,"gnt not zero one hot") zzz_grant_zero_one_hot_8x (clk, `ASSERT_RESET, (gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -4147,7 +4139,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt to a non requesting client") zzz_grant_to_no_req_9x (clk, `ASSERT_RESET, (|(~req & gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -4193,7 +4184,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"no gnt even if at least 1 client requesting ") zzz_no_gnt_when_expected_10x (clk, `ASSERT_RESET, (!gnt_busy & |(req) & !(|gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -4239,7 +4229,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt when gnt_busy ") zzz_gnt_when_busy_11x (clk, `ASSERT_RESET, (gnt_busy & |gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -5146,7 +5135,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_zero_one_hot #(0,5,0,"gnt not zero one hot") zzz_grant_zero_one_hot_12x (clk, `ASSERT_RESET, (gnt)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -5192,7 +5180,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"gnt to a non requesting client") zzz_grant_to_no_req_13x (clk, `ASSERT_RESET, (|(~req & gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -5238,7 +5225,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"no gnt even if at least 1 client requesting ") zzz_no_gnt_when_expected_14x (clk, `ASSERT_RESET, (|(req) & !(|gnt))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

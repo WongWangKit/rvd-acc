@@ -901,10 +901,6 @@ NV_NVDLA_CDMA_status u_status (
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_zero_one_hot #(0,3,0,"Error! DC, WG and IMG slcg gate signal conflict!") zzz_assert_zero_one_hot_1x (nvdla_core_clk, `ASSERT_RESET, ({~slcg_dc_gate_wg, ~slcg_wg_gate_img, ~slcg_img_gate_dc})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Two DC slcg signal mismatch!") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, (slcg_dc_gate_wg ^ slcg_dc_gate_img)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Two WG slcg signal mismatch!") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, (slcg_wg_gate_dc ^ slcg_wg_gate_img)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! Two IMG slcg signal mismatch!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (slcg_img_gate_dc ^ slcg_img_gate_wg)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

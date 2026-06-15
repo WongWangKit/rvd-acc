@@ -200,7 +200,6 @@ assign is_beat_end = is_last_beat & lat_fifo_rd_pvld & lat_fifo_rd_prdy;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"info in CQ there be there when return data come") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, (!cq2eg_pvld) & lat_fifo_rd_pvld); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

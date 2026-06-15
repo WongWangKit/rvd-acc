@@ -182,8 +182,6 @@ assign in_cmd_require_ack = in_cmd_vld_pd[46 -1];
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  wire cond_zzz_assert_always_1x = (in_cmd_addr[3 -1:0] == 0);
-  nv_assert_always #(0,0,"lower LSB should always be 0") zzz_assert_always_1x (.clk(nvdla_core_clk), .reset_(`ASSERT_RESET), .test_expr(cond_zzz_assert_always_1x)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

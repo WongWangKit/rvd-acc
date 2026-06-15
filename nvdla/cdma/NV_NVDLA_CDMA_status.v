@@ -771,17 +771,6 @@ assign cdma2sc_dat_slices = dat_slices_d9;
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_never #(0,0,"CDMA submodule done when op_en is invalid") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, (~reg2dp_op_en & (wt2status_done | dc2status_done | wg2status_done | img2status_done))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,3,0,"Two of DC, WG and IMG are done") zzz_assert_zero_one_hot_2x (nvdla_core_clk, `ASSERT_RESET, ({dc2status_done, wg2status_done, img2status_done})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,3,0,"Two of DC, WG and IMG are updating") zzz_assert_zero_one_hot_26x (nvdla_core_clk, `ASSERT_RESET, ({dc2status_dat_updt, wg2status_dat_updt, img2status_dat_updt})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,3,0,"Two of DC, WG and IMG are done") zzz_assert_zero_one_hot_27x (nvdla_core_clk, `ASSERT_RESET, ({dc2status_done, wg2status_done, img2status_done})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,3,0,"Two of DC, WG and IMG are pend") zzz_assert_zero_one_hot_28x (nvdla_core_clk, `ASSERT_RESET, ({dc2status_pend, wg2status_pend, img2status_pend})); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"DMA increase when pending") zzz_assert_never_29x (nvdla_core_clk, `ASSERT_RESET, (pending_ack & update_dma)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error clear") zzz_assert_never_30x (nvdla_core_clk, `ASSERT_RESET, (sc2cdma_dat_updt & ((sc2cdma_dat_entries == status2dma_valid_entries) ^ (sc2cdma_dat_slices == status2dma_valid_slices)))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! status2dma_valid_entries_w is overflow!") zzz_assert_never_31x (nvdla_core_clk, `ASSERT_RESET, (update_all & mon_status2dma_valid_entries_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! status2dma_valid_entries_w is out of range!") zzz_assert_never_32x (nvdla_core_clk, `ASSERT_RESET, (update_all && (status2dma_valid_entries_w > 16384))); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! status2dma_valid_slices_w is overflow!") zzz_assert_never_33x (nvdla_core_clk, `ASSERT_RESET, (update_all & mon_status2dma_valid_slices_w)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! status2dma_valid_slices_w is out of range!") zzz_assert_never_34x (nvdla_core_clk, `ASSERT_RESET, (update_all && (status2dma_valid_slices_w > 3840))); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

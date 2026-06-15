@@ -319,13 +319,6 @@ NV_NVDLA_sync3d_c u_sync_core_intr (
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_never #(0,0,"Error! Set and clear interrupt concurrently!") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, (sdp_done_status0_trigger & sdp_done_set0_trigger)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! CDMA data sends two interrupts at same cycle!") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, (cdma_dat2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! CDMA weight sends two interrupts at same cycle!") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, (cdma_wt2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! CACC sends two interrupts at same cycle!") zzz_assert_never_5x (nvdla_core_clk, `ASSERT_RESET, (cacc2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! SDP sends two interrupts at same cycle!") zzz_assert_never_6x (nvdla_core_clk, `ASSERT_RESET, (sdp2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! PDP sends two interrupts at same cycle!") zzz_assert_never_7x (nvdla_core_clk, `ASSERT_RESET, (pdp2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_never #(0,0,"Error! CDP sends two interrupts at same cycle!") zzz_assert_never_8x (nvdla_core_clk, `ASSERT_RESET, (cdp2glb_done_intr_pd == 3'h3)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

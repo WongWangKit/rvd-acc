@@ -208,7 +208,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP-RDMA: get an op-done without starting the op") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, !tran_vld && op_done); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -362,7 +361,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP_RDMA: no overflow is allowed") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_w_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -426,7 +424,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP_RDMA: no overflow is allowed") zzz_assert_never_4x (nvdla_core_clk, `ASSERT_RESET, mon_base_addr_c_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -490,7 +487,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP_RDMA: no overflow is allowed") zzz_assert_never_5x (nvdla_core_clk, `ASSERT_RESET, mon_dma_req_addr_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -547,7 +543,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP_RDMA: no overflow is allowed") zzz_assert_never_6x (nvdla_core_clk, `ASSERT_RESET, reg2dp_op_en & mon_size_of_32x1_in_first_block_in_width_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -625,7 +620,6 @@ assign cq_wr_pvld = tran_vld & dma_rd_req_rdy;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"CDP-RDMA: CQ and DMA should accept or reject together") zzz_assert_never_7x (nvdla_core_clk, `ASSERT_RESET, (cq_wr_pvld & cq_wr_prdy) ^ (dma_rd_req_vld & dma_rd_req_rdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

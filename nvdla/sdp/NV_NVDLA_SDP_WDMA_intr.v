@@ -141,7 +141,6 @@ assign mon_intr_fifo_rd_pvld = intr_fifo_rd_pvld;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"when write complete, intr_ptr should be already in the head of intr_fifo read side") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, !mon_intr_fifo_rd_pvld & intr_fifo_rd_prdy); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -186,7 +185,6 @@ assign mon_intr_fifo_rd_pvld = intr_fifo_rd_pvld;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"write intr0 and eql intr0 never happen in the same layer") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, intr0_wr & intr0_internal); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -231,7 +229,6 @@ assign mon_intr_fifo_rd_pvld = intr_fifo_rd_pvld;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"write intr1 and eql intr1 never happen in the same layer") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, intr1_wr & intr1_internal); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

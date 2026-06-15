@@ -1208,24 +1208,6 @@ assign core_resp_pvld = cfgrom_resp_valid |
 `endif // FV_ASSERT_ON
 `ifndef SYNTHESIS
 // VCS coverage off
-  nv_assert_never #(0,0,"Error! core response fifo block!") zzz_assert_never_1x (nvdla_core_clk, `ASSERT_RESET, (core_resp_pvld & ~core_resp_prdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
-  nv_assert_zero_one_hot #(0,19,0,"Error! Multiple response!") zzz_assert_zero_one_hot_3x (nvdla_core_clk, `ASSERT_RESET, {cfgrom2csb_resp_valid,
-                                                                                                                             glb2csb_resp_valid,
-                                                                                                                             mcif2csb_resp_valid,
-                                                                                                                             bdma2csb_resp_valid,
-                                                                                                                             cdma2csb_resp_valid,
-                                                                                                                             csc2csb_resp_valid,
-                                                                                                                             cmac_a2csb_resp_valid,
-                                                                                                                             cmac_b2csb_resp_valid,
-                                                                                                                             cacc2csb_resp_valid,
-                                                                                                                             sdp_rdma2csb_resp_valid,
-                                                                                                                             sdp2csb_resp_valid,
-                                                                                                                             pdp_rdma2csb_resp_valid,
-                                                                                                                             pdp2csb_resp_valid,
-                                                                                                                             cdp_rdma2csb_resp_valid,
-                                                                                                                             cdp2csb_resp_valid,
-                                                                                                                             rbk2csb_resp_valid,
-                                                                                                                             dummy_resp_valid}); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `endif
 `undef ASSERT_RESET

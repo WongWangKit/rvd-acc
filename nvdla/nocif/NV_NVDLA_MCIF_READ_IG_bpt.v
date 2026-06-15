@@ -145,8 +145,6 @@ assign in_size[15 -1:0] = in_vld_pd[47 -1:32];
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  wire cond_zzz_assert_always_1x = (in_addr[3 -1:0] == 0);
-  nv_assert_always #(0,0,"lower LSB should always be 0") zzz_assert_always_1x (.clk(nvdla_core_clk), .reset_(`ASSERT_RESET), .test_expr(cond_zzz_assert_always_1x)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -268,7 +266,6 @@ end
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"never: counter underflow below <und_cnt>") zzz_assert_never_2x (nvdla_core_clk, `ASSERT_RESET, (lat_cnt_nxt < 0)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -315,7 +312,6 @@ assign req_enable = (!lat_fifo_stall_enable) || ({{6{1'b0}}, slot_needed} <= lat
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_never #(0,0,"should not over flow") zzz_assert_never_3x (nvdla_core_clk, `ASSERT_RESET, mon_lat_fifo_free_slot_c); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON

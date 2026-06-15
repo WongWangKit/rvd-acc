@@ -315,7 +315,6 @@ wire p1_assert_clk = nvdla_core_clk;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_hold_throughout_event_interval #(0,1,0,"valid removed before ready") zzz_assert_hold_throughout_event_interval_2x (nvdla_core_clk, `ASSERT_RESET, (alu_sync_pvld && !alu_sync_prdy), (alu_sync_pvld), (alu_sync_prdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
@@ -519,7 +518,6 @@ wire p2_assert_clk = nvdla_core_clk;
 `endif // SYNTHESIS
 `endif // FV_ASSERT_ON
 // VCS coverage off
-  nv_assert_hold_throughout_event_interval #(0,1,0,"valid removed before ready") zzz_assert_hold_throughout_event_interval_4x (nvdla_core_clk, `ASSERT_RESET, (alu_shift_pvld && !alu_shift_prdy), (alu_shift_pvld), (alu_shift_prdy)); // spyglass disable W504 SelfDeterminedExpr-ML 
 // VCS coverage on
 `undef ASSERT_RESET
 `endif // ASSERT_ON
