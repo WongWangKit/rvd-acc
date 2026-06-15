@@ -1,0 +1,5 @@
+*.gitattributes text eol=lf
+*.v text eol=lf
+*.vh text eol=lf
+*.sv text eol=lf
+*.vlib text eol=lf
