@@ -13,6 +13,11 @@ module NV_NVDLA_CSC_regfile (
   ,csb2csc_req_pd //|< i
   ,csb2csc_req_pvld //|< i
   ,dp2reg_done //|< i
+  ,cdma2reg_consumer //|< i
+  ,cdma2reg_d0_op_en //|< i
+  ,cdma2reg_d1_op_en //|< i
+  ,cdma2reg_op_en //|< i
+  ,cdma2reg_producer //|< i
   ,csb2csc_req_prdy //|> o
   ,csc2csb_resp_pd //|> o
   ,csc2csb_resp_valid //|> o
@@ -61,6 +66,11 @@ input nvdla_core_rstn;
 input [62:0] csb2csc_req_pd;
 input csb2csc_req_pvld;
 input dp2reg_done;
+input cdma2reg_consumer;
+input cdma2reg_d0_op_en;
+input cdma2reg_d1_op_en;
+input cdma2reg_op_en;
+input cdma2reg_producer;
 output csb2csc_req_prdy;
 output [33:0] csc2csb_resp_pd;
 output csc2csb_resp_valid;
@@ -218,7 +228,6 @@ wire select_s;
 wire [3:0] slcg_op_en_d0;
 reg [33:0] csc2csb_resp_pd;
 reg csc2csb_resp_valid;
-reg dp2reg_consumer;
 reg [1:0] dp2reg_status_0;
 reg [1:0] dp2reg_status_1;
 reg [20:0] reg2dp_atomics;
@@ -227,10 +236,8 @@ reg reg2dp_conv_mode;
 reg [2:0] reg2dp_conv_x_stride_ext;
 reg [2:0] reg2dp_conv_y_stride_ext;
 reg [31:0] reg2dp_cya;
-reg reg2dp_d0_op_en;
-reg reg2dp_d0_op_en_w;
-reg reg2dp_d1_op_en;
-reg reg2dp_d1_op_en_w;
+wire reg2dp_d0_op_en_w;
+wire reg2dp_d1_op_en_w;
 reg [4:0] reg2dp_data_bank;
 reg reg2dp_data_reuse;
 reg [12:0] reg2dp_datain_channel_ext;
@@ -278,7 +285,7 @@ NV_NVDLA_CSC_single_reg u_single_reg (
   ,.nvdla_core_clk (nvdla_core_clk) //|< i
   ,.nvdla_core_rstn (nvdla_core_rstn) //|< i
   ,.producer (reg2dp_producer) //|> w
-  ,.consumer (dp2reg_consumer) //|< r
+  ,.consumer (cdma2reg_consumer) //|< r
   ,.status_0 (dp2reg_status_0[1:0]) //|< r
   ,.status_1 (dp2reg_status_1[1:0]) //|< r
   );
@@ -328,7 +335,7 @@ NV_NVDLA_CSC_dual_reg u_dual_reg_d0 (
   ,.pad_left (reg2dp_d0_pad_left[4:0]) //|> w
   ,.pad_top (reg2dp_d0_pad_top[4:0]) //|> w
   ,.pad_value (reg2dp_d0_pad_value[15:0]) //|> w
-  ,.op_en (reg2dp_d0_op_en) //|< r
+  ,.op_en (cdma2reg_d0_op_en) //|< r
   );
 NV_NVDLA_CSC_dual_reg u_dual_reg_d1 (
    .reg_rd_data (d1_reg_rd_data[31:0]) //|> w
@@ -375,188 +382,55 @@ NV_NVDLA_CSC_dual_reg u_dual_reg_d1 (
   ,.pad_left (reg2dp_d1_pad_left[4:0]) //|> w
   ,.pad_top (reg2dp_d1_pad_top[4:0]) //|> w
   ,.pad_value (reg2dp_d1_pad_value[15:0]) //|> w
-  ,.op_en (reg2dp_d1_op_en) //|< r
+  ,.op_en (cdma2reg_d1_op_en) //|< r
   );
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE CONSUMER PIONTER IN GENERAL SINGLE REGISTER GROUP //
+// CDMA drives the shared consumer pointer for CDMA/CSC/CMAC/CACC //
 // //
 ////////////////////////////////////////////////////////////////////////
-assign dp2reg_consumer_w = ~dp2reg_consumer;
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    dp2reg_consumer <= 1'b0;
-  end else begin
-  if ((dp2reg_done) == 1'b1) begin
-    dp2reg_consumer <= dp2reg_consumer_w;
-// VCS coverage off
-  end else if ((dp2reg_done) == 1'b0) begin
-  end else begin
-    dp2reg_consumer <= 'bx; // spyglass disable STARC-2.10.1.6 W443 NoWidthInBasedNum-ML -- (Constant containing x or z used, Based number `bx contains an X, Width specification missing for based number)
-// VCS coverage on
-  end
-  end
-end
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass disable_block NoWidthInBasedNum-ML
-// spyglass disable_block STARC-2.10.3.2a
-// spyglass disable_block STARC05-2.1.3.1
-// spyglass disable_block STARC-2.1.4.6
-// spyglass disable_block W116
-// spyglass disable_block W154
-// spyglass disable_block W239
-// spyglass disable_block W362
-// spyglass disable_block WRN_58
-// spyglass disable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
-`ifdef ASSERT_ON
-`ifdef FV_ASSERT_ON
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef SYNTHESIS
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef ASSERT_OFF_RESET_IS_X
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b0 : nvdla_core_rstn)
-`else
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b1 : nvdla_core_rstn)
-`endif // ASSERT_OFF_RESET_IS_X
-`endif // SYNTHESIS
-`endif // FV_ASSERT_ON
-`ifndef SYNTHESIS
-// VCS coverage off
-// VCS coverage on
-`endif
-`undef ASSERT_RESET
-`endif // ASSERT_ON
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass enable_block NoWidthInBasedNum-ML
-// spyglass enable_block STARC-2.10.3.2a
-// spyglass enable_block STARC05-2.1.3.1
-// spyglass enable_block STARC-2.1.4.6
-// spyglass enable_block W116
-// spyglass enable_block W154
-// spyglass enable_block W239
-// spyglass enable_block W362
-// spyglass enable_block WRN_58
-// spyglass enable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE TWO STATUS FIELDS IN GENERAL SINGLE REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  reg2dp_d0_op_en
-  or dp2reg_consumer
+  cdma2reg_d0_op_en
+  or cdma2reg_consumer
   ) begin
-    dp2reg_status_0 = (reg2dp_d0_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h1 ) ? 2'h2 :
+    dp2reg_status_0 = (cdma2reg_d0_op_en == 1'h0 ) ? 2'h0 :
+                      (cdma2reg_consumer == 1'h1 ) ? 2'h2 :
                       2'h1 ;
 end
 always @(
-  reg2dp_d1_op_en
-  or dp2reg_consumer
+  cdma2reg_d1_op_en
+  or cdma2reg_consumer
   ) begin
-    dp2reg_status_1 = (reg2dp_d1_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h0 ) ? 2'h2 :
+    dp2reg_status_1 = (cdma2reg_d1_op_en == 1'h0 ) ? 2'h0 :
+                      (cdma2reg_consumer == 1'h0 ) ? 2'h2 :
                       2'h1 ;
 end
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE OP_EN LOGIC //
+// CDMA drives shared op_en for CDMA/CSC/CMAC/CACC //
 // //
 ////////////////////////////////////////////////////////////////////////
-always @(
-  reg2dp_d0_op_en
-  or reg2dp_d0_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d0_op_en_w = (~reg2dp_d0_op_en & reg2dp_d0_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h0 ) ? 1'b0 :
-                        reg2dp_d0_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d0_op_en <= 1'b0;
-  end else begin
-  reg2dp_d0_op_en <= reg2dp_d0_op_en_w;
-  end
-end
-always @(
-  reg2dp_d1_op_en
-  or reg2dp_d1_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d1_op_en_w = (~reg2dp_d1_op_en & reg2dp_d1_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h1 ) ? 1'b0 :
-                        reg2dp_d1_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d1_op_en <= 1'b0;
-  end else begin
-  reg2dp_d1_op_en <= reg2dp_d1_op_en_w;
-  end
-end
-always @(
-  dp2reg_consumer
-  or reg2dp_d1_op_en
-  or reg2dp_d0_op_en
-  ) begin
-    reg2dp_op_en_ori = dp2reg_consumer ? reg2dp_d1_op_en : reg2dp_d0_op_en;
-end
-assign reg2dp_op_en_reg_w = dp2reg_done ? 3'b0 :
-                            {reg2dp_op_en_reg[1:0], reg2dp_op_en_ori};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_op_en_reg <= {3{1'b0}};
-  end else begin
-  reg2dp_op_en_reg <= reg2dp_op_en_reg_w;
-  end
-end
-assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
-assign slcg_op_en_d0 = {4{reg2dp_op_en_ori}};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d1 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d1 <= slcg_op_en_d0;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d2 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d2 <= slcg_op_en_d1;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d3 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d3 <= slcg_op_en_d2;
-  end
-end
-assign slcg_op_en = slcg_op_en_d3;
+assign reg2dp_d0_op_en_w = cdma2reg_d0_op_en;
+assign reg2dp_d1_op_en_w = cdma2reg_d1_op_en;
+assign reg2dp_op_en = cdma2reg_op_en;
+assign slcg_op_en = {4{cdma2reg_op_en}};
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE ACCESS LOGIC TO EACH REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 //EACH subunit has 4KB address space
-assign select_s = (reg_offset[11:0] < (32'h6008 & 32'hfff)) ? 1'b1: 1'b0;
-assign select_d0 = (reg_offset[11:0] >= (32'h6008 & 32'hfff)) & (reg2dp_producer == 1'h0 );
-assign select_d1 = (reg_offset[11:0] >= (32'h6008 & 32'hfff)) & (reg2dp_producer == 1'h1 );
+assign select_s = (reg_offset[11:0] < (32'h4040 & 32'hfff)) ? 1'b1: 1'b0;
+assign select_d0 = (reg_offset[11:0] >= (32'h4040 & 32'hfff)) & (cdma2reg_producer == 1'h0 );
+assign select_d1 = (reg_offset[11:0] >= (32'h4040 & 32'hfff)) & (cdma2reg_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
-assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
-assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;
+assign d0_reg_wr_en = reg_wr_en & select_d0 & ~cdma2reg_d0_op_en;
+assign d1_reg_wr_en = reg_wr_en & select_d1 & ~cdma2reg_d1_op_en;
 assign s_reg_offset = reg_offset;
 assign d0_reg_offset = reg_offset;
 assign d1_reg_offset = reg_offset;
@@ -783,263 +657,263 @@ end
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_atomics
   or reg2dp_d0_atomics
   ) begin
-    reg2dp_atomics = dp2reg_consumer ? reg2dp_d1_atomics : reg2dp_d0_atomics;
+    reg2dp_atomics = cdma2reg_consumer ? reg2dp_d1_atomics : reg2dp_d0_atomics;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_data_bank
   or reg2dp_d0_data_bank
   ) begin
-    reg2dp_data_bank = dp2reg_consumer ? reg2dp_d1_data_bank : reg2dp_d0_data_bank;
+    reg2dp_data_bank = cdma2reg_consumer ? reg2dp_d1_data_bank : reg2dp_d0_data_bank;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_bank
   or reg2dp_d0_weight_bank
   ) begin
-    reg2dp_weight_bank = dp2reg_consumer ? reg2dp_d1_weight_bank : reg2dp_d0_weight_bank;
+    reg2dp_weight_bank = cdma2reg_consumer ? reg2dp_d1_weight_bank : reg2dp_d0_weight_bank;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_batches
   or reg2dp_d0_batches
   ) begin
-    reg2dp_batches = dp2reg_consumer ? reg2dp_d1_batches : reg2dp_d0_batches;
+    reg2dp_batches = cdma2reg_consumer ? reg2dp_d1_batches : reg2dp_d0_batches;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_conv_x_stride_ext
   or reg2dp_d0_conv_x_stride_ext
   ) begin
-    reg2dp_conv_x_stride_ext = dp2reg_consumer ? reg2dp_d1_conv_x_stride_ext : reg2dp_d0_conv_x_stride_ext;
+    reg2dp_conv_x_stride_ext = cdma2reg_consumer ? reg2dp_d1_conv_x_stride_ext : reg2dp_d0_conv_x_stride_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_conv_y_stride_ext
   or reg2dp_d0_conv_y_stride_ext
   ) begin
-    reg2dp_conv_y_stride_ext = dp2reg_consumer ? reg2dp_d1_conv_y_stride_ext : reg2dp_d0_conv_y_stride_ext;
+    reg2dp_conv_y_stride_ext = cdma2reg_consumer ? reg2dp_d1_conv_y_stride_ext : reg2dp_d0_conv_y_stride_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_cya
   or reg2dp_d0_cya
   ) begin
-    reg2dp_cya = dp2reg_consumer ? reg2dp_d1_cya : reg2dp_d0_cya;
+    reg2dp_cya = cdma2reg_consumer ? reg2dp_d1_cya : reg2dp_d0_cya;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_datain_format
   or reg2dp_d0_datain_format
   ) begin
-    reg2dp_datain_format = dp2reg_consumer ? reg2dp_d1_datain_format : reg2dp_d0_datain_format;
+    reg2dp_datain_format = cdma2reg_consumer ? reg2dp_d1_datain_format : reg2dp_d0_datain_format;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_datain_height_ext
   or reg2dp_d0_datain_height_ext
   ) begin
-    reg2dp_datain_height_ext = dp2reg_consumer ? reg2dp_d1_datain_height_ext : reg2dp_d0_datain_height_ext;
+    reg2dp_datain_height_ext = cdma2reg_consumer ? reg2dp_d1_datain_height_ext : reg2dp_d0_datain_height_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_datain_width_ext
   or reg2dp_d0_datain_width_ext
   ) begin
-    reg2dp_datain_width_ext = dp2reg_consumer ? reg2dp_d1_datain_width_ext : reg2dp_d0_datain_width_ext;
+    reg2dp_datain_width_ext = cdma2reg_consumer ? reg2dp_d1_datain_width_ext : reg2dp_d0_datain_width_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_datain_channel_ext
   or reg2dp_d0_datain_channel_ext
   ) begin
-    reg2dp_datain_channel_ext = dp2reg_consumer ? reg2dp_d1_datain_channel_ext : reg2dp_d0_datain_channel_ext;
+    reg2dp_datain_channel_ext = cdma2reg_consumer ? reg2dp_d1_datain_channel_ext : reg2dp_d0_datain_channel_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_height
   or reg2dp_d0_dataout_height
   ) begin
-    reg2dp_dataout_height = dp2reg_consumer ? reg2dp_d1_dataout_height : reg2dp_d0_dataout_height;
+    reg2dp_dataout_height = cdma2reg_consumer ? reg2dp_d1_dataout_height : reg2dp_d0_dataout_height;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_width
   or reg2dp_d0_dataout_width
   ) begin
-    reg2dp_dataout_width = dp2reg_consumer ? reg2dp_d1_dataout_width : reg2dp_d0_dataout_width;
+    reg2dp_dataout_width = cdma2reg_consumer ? reg2dp_d1_dataout_width : reg2dp_d0_dataout_width;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_channel
   or reg2dp_d0_dataout_channel
   ) begin
-    reg2dp_dataout_channel = dp2reg_consumer ? reg2dp_d1_dataout_channel : reg2dp_d0_dataout_channel;
+    reg2dp_dataout_channel = cdma2reg_consumer ? reg2dp_d1_dataout_channel : reg2dp_d0_dataout_channel;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_x_dilation_ext
   or reg2dp_d0_x_dilation_ext
   ) begin
-    reg2dp_x_dilation_ext = dp2reg_consumer ? reg2dp_d1_x_dilation_ext : reg2dp_d0_x_dilation_ext;
+    reg2dp_x_dilation_ext = cdma2reg_consumer ? reg2dp_d1_x_dilation_ext : reg2dp_d0_x_dilation_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_y_dilation_ext
   or reg2dp_d0_y_dilation_ext
   ) begin
-    reg2dp_y_dilation_ext = dp2reg_consumer ? reg2dp_d1_y_dilation_ext : reg2dp_d0_y_dilation_ext;
+    reg2dp_y_dilation_ext = cdma2reg_consumer ? reg2dp_d1_y_dilation_ext : reg2dp_d0_y_dilation_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_entries
   or reg2dp_d0_entries
   ) begin
-    reg2dp_entries = dp2reg_consumer ? reg2dp_d1_entries : reg2dp_d0_entries;
+    reg2dp_entries = cdma2reg_consumer ? reg2dp_d1_entries : reg2dp_d0_entries;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_conv_mode
   or reg2dp_d0_conv_mode
   ) begin
-    reg2dp_conv_mode = dp2reg_consumer ? reg2dp_d1_conv_mode : reg2dp_d0_conv_mode;
+    reg2dp_conv_mode = cdma2reg_consumer ? reg2dp_d1_conv_mode : reg2dp_d0_conv_mode;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_data_reuse
   or reg2dp_d0_data_reuse
   ) begin
-    reg2dp_data_reuse = dp2reg_consumer ? reg2dp_d1_data_reuse : reg2dp_d0_data_reuse;
+    reg2dp_data_reuse = cdma2reg_consumer ? reg2dp_d1_data_reuse : reg2dp_d0_data_reuse;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_in_precision
   or reg2dp_d0_in_precision
   ) begin
-    reg2dp_in_precision = dp2reg_consumer ? reg2dp_d1_in_precision : reg2dp_d0_in_precision;
+    reg2dp_in_precision = cdma2reg_consumer ? reg2dp_d1_in_precision : reg2dp_d0_in_precision;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_proc_precision
   or reg2dp_d0_proc_precision
   ) begin
-    reg2dp_proc_precision = dp2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
+    reg2dp_proc_precision = cdma2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_skip_data_rls
   or reg2dp_d0_skip_data_rls
   ) begin
-    reg2dp_skip_data_rls = dp2reg_consumer ? reg2dp_d1_skip_data_rls : reg2dp_d0_skip_data_rls;
+    reg2dp_skip_data_rls = cdma2reg_consumer ? reg2dp_d1_skip_data_rls : reg2dp_d0_skip_data_rls;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_skip_weight_rls
   or reg2dp_d0_skip_weight_rls
   ) begin
-    reg2dp_skip_weight_rls = dp2reg_consumer ? reg2dp_d1_skip_weight_rls : reg2dp_d0_skip_weight_rls;
+    reg2dp_skip_weight_rls = cdma2reg_consumer ? reg2dp_d1_skip_weight_rls : reg2dp_d0_skip_weight_rls;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_reuse
   or reg2dp_d0_weight_reuse
   ) begin
-    reg2dp_weight_reuse = dp2reg_consumer ? reg2dp_d1_weight_reuse : reg2dp_d0_weight_reuse;
+    reg2dp_weight_reuse = cdma2reg_consumer ? reg2dp_d1_weight_reuse : reg2dp_d0_weight_reuse;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_y_extension
   or reg2dp_d0_y_extension
   ) begin
-    reg2dp_y_extension = dp2reg_consumer ? reg2dp_d1_y_extension : reg2dp_d0_y_extension;
+    reg2dp_y_extension = cdma2reg_consumer ? reg2dp_d1_y_extension : reg2dp_d0_y_extension;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_pra_truncate
   or reg2dp_d0_pra_truncate
   ) begin
-    reg2dp_pra_truncate = dp2reg_consumer ? reg2dp_d1_pra_truncate : reg2dp_d0_pra_truncate;
+    reg2dp_pra_truncate = cdma2reg_consumer ? reg2dp_d1_pra_truncate : reg2dp_d0_pra_truncate;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_rls_slices
   or reg2dp_d0_rls_slices
   ) begin
-    reg2dp_rls_slices = dp2reg_consumer ? reg2dp_d1_datain_height_ext : reg2dp_d0_datain_height_ext; ///////////////////// set this at 20250301 /////////////////
+    reg2dp_rls_slices = cdma2reg_consumer ? reg2dp_d1_datain_height_ext : reg2dp_d0_datain_height_ext; ///////////////////// set this at 20250301 /////////////////
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_bytes
   or reg2dp_d0_weight_bytes
   ) begin
-    reg2dp_weight_bytes = dp2reg_consumer ? reg2dp_d1_weight_bytes : reg2dp_d0_weight_bytes;
+    reg2dp_weight_bytes = cdma2reg_consumer ? reg2dp_d1_weight_bytes : reg2dp_d0_weight_bytes;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_format
   or reg2dp_d0_weight_format
   ) begin
-    reg2dp_weight_format = dp2reg_consumer ? reg2dp_d1_weight_format : reg2dp_d0_weight_format;
+    reg2dp_weight_format = cdma2reg_consumer ? reg2dp_d1_weight_format : reg2dp_d0_weight_format;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_height_ext
   or reg2dp_d0_weight_height_ext
   ) begin
-    reg2dp_weight_height_ext = dp2reg_consumer ? reg2dp_d1_weight_height_ext : reg2dp_d0_weight_height_ext;
+    reg2dp_weight_height_ext = cdma2reg_consumer ? reg2dp_d1_weight_height_ext : reg2dp_d0_weight_height_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_width_ext
   or reg2dp_d0_weight_width_ext
   ) begin
-    reg2dp_weight_width_ext = dp2reg_consumer ? reg2dp_d1_weight_width_ext : reg2dp_d0_weight_width_ext;
+    reg2dp_weight_width_ext = cdma2reg_consumer ? reg2dp_d1_weight_width_ext : reg2dp_d0_weight_width_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_channel_ext
   or reg2dp_d0_weight_channel_ext
   ) begin
-    reg2dp_weight_channel_ext = dp2reg_consumer ? reg2dp_d1_weight_channel_ext : reg2dp_d0_weight_channel_ext;
+    reg2dp_weight_channel_ext = cdma2reg_consumer ? reg2dp_d1_weight_channel_ext : reg2dp_d0_weight_channel_ext;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_weight_kernel
   or reg2dp_d0_weight_kernel
   ) begin
-    reg2dp_weight_kernel = dp2reg_consumer ? reg2dp_d1_weight_kernel : reg2dp_d0_weight_kernel;
+    reg2dp_weight_kernel = cdma2reg_consumer ? reg2dp_d1_weight_kernel : reg2dp_d0_weight_kernel;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_wmb_bytes
   or reg2dp_d0_wmb_bytes
   ) begin
-    reg2dp_wmb_bytes = dp2reg_consumer ? reg2dp_d1_wmb_bytes : reg2dp_d0_wmb_bytes;
+    reg2dp_wmb_bytes = cdma2reg_consumer ? reg2dp_d1_wmb_bytes : reg2dp_d0_wmb_bytes;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_pad_left
   or reg2dp_d0_pad_left
   ) begin
-    reg2dp_pad_left = dp2reg_consumer ? reg2dp_d1_pad_left : reg2dp_d0_pad_left;
+    reg2dp_pad_left = cdma2reg_consumer ? reg2dp_d1_pad_left : reg2dp_d0_pad_left;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_pad_top
   or reg2dp_d0_pad_top
   ) begin
-    reg2dp_pad_top = dp2reg_consumer ? reg2dp_d1_pad_top : reg2dp_d0_pad_top;
+    reg2dp_pad_top = cdma2reg_consumer ? reg2dp_d1_pad_top : reg2dp_d0_pad_top;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_pad_value
   or reg2dp_d0_pad_value
   ) begin
-    reg2dp_pad_value = dp2reg_consumer ? reg2dp_d1_pad_value : reg2dp_d0_pad_value;
+    reg2dp_pad_value = cdma2reg_consumer ? reg2dp_d1_pad_value : reg2dp_d0_pad_value;
 end
 ////////////////////////////////////////////////////////////////////////
 // //

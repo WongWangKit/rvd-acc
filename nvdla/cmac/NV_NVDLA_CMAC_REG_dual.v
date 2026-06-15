@@ -94,30 +94,5 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 // Not generating flops for field NVDLA_CMAC_A_D_OP_ENABLE_0::op_en (to be implemented outside)
   end
 end
-// spyglass enable_block STARC-2.10.1.6, NoConstWithXZ, W443
-// synopsys translate_off
-// VCS coverage off
-initial begin
-  arreggen_dump = $test$plusargs("arreggen_dump_wr");
-  arreggen_abort_on_rowr = $test$plusargs("arreggen_abort_on_rowr");
-  arreggen_abort_on_invalid_wr = $test$plusargs("arreggen_abort_on_invalid_wr");
-`ifdef VERILATOR
-`else
-  $timeformat(-9, 2, "ns", 15);
-`endif
-end
-always @(posedge nvdla_core_clk) begin
-  if (reg_wr_en) begin
-    case(reg_offset)
-      (32'h700c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CMAC_A_D_MISC_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cmac_a_d_misc_cfg_0_out, nvdla_cmac_a_d_misc_cfg_0_out);
-      (32'h7008 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CMAC_A_D_OP_ENABLE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cmac_a_d_op_enable_0_out, nvdla_cmac_a_d_op_enable_0_out);
-      default: begin
-          if (arreggen_dump) $display("%t:%m: reg wr: Unknown register (0x%h) = 0x%h", $time, reg_offset, reg_wr_data);
-          if (arreggen_abort_on_invalid_wr) begin $display("ERROR: write to undefined register!"); $finish; end
-        end
-    endcase
-  end
-end
-// VCS coverage on
-// synopsys translate_on
+
 endmodule // NV_NVDLA_CMAC_REG_dual

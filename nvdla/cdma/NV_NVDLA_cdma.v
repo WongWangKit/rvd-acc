@@ -76,6 +76,11 @@ module NV_NVDLA_cdma (
   ,cdma2sc_wt_kernels
   ,cdma2sc_wt_pending_ack
   ,cdma2sc_wt_updt
+  ,cdma_reg2dp_consumer
+  ,cdma_reg2dp_d0_op_en
+  ,cdma_reg2dp_d1_op_en
+  ,cdma_reg2dp_op_en
+  ,cdma_reg2dp_producer
   ,cdma_dat2glb_done_intr_pd
   ,cdma_dat2mcif_rd_req_pd
   ,cdma_dat2mcif_rd_req_valid
@@ -132,6 +137,11 @@ output cdma2sc_wt_updt;
 output [13:0] cdma2sc_wt_kernels;
 output [14:0] cdma2sc_wt_entries;
 output [8:0] cdma2sc_wmb_entries;
+output cdma_reg2dp_consumer;
+output cdma_reg2dp_d0_op_en;
+output cdma_reg2dp_d1_op_en;
+output cdma_reg2dp_op_en;
+output cdma_reg2dp_producer;
 input sc2cdma_wt_updt;
 input [13:0] sc2cdma_wt_kernels;
 input [14:0] sc2cdma_wt_entries;
@@ -304,6 +314,8 @@ wire status2dma_fsm_switch;
 wire [13:0] status2dma_valid_slices;
 wire [14:0] status2dma_wr_idx;
 wire [1:0] wt2status_state;
+assign cdma_reg2dp_consumer = dp2reg_consumer;
+assign cdma_reg2dp_op_en = reg2dp_op_en[0];
 ///////////////////////////////////////////////////////////////////////////
 //==========================================================
 // Regfile
@@ -332,6 +344,8 @@ NV_NVDLA_CDMA_regfile u_regfile (
   ,.cdma2csb_resp_valid (cdma2csb_resp_valid)
   ,.csb2cdma_req_prdy (csb2cdma_req_prdy)
   ,.dp2reg_consumer (dp2reg_consumer)
+  ,.reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
+  ,.reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
   ,.reg2dp_arb_weight (reg2dp_arb_weight[3:0])
   ,.reg2dp_arb_wmb (reg2dp_arb_wmb[3:0])
   ,.reg2dp_batch_stride (reg2dp_batch_stride[31:0])
@@ -382,6 +396,7 @@ NV_NVDLA_CDMA_regfile u_regfile (
   ,.reg2dp_pixel_x_offset (reg2dp_pixel_x_offset[4:0])
   ,.reg2dp_pixel_y_offset (reg2dp_pixel_y_offset[2:0])
   ,.reg2dp_proc_precision (reg2dp_proc_precision[1:0])
+  ,.reg2dp_producer (cdma_reg2dp_producer)
   ,.reg2dp_rsv_height (reg2dp_rsv_height[2:0])
   ,.reg2dp_rsv_per_line (reg2dp_rsv_per_line[9:0])
   ,.reg2dp_rsv_per_uv_line (reg2dp_rsv_per_uv_line[9:0])

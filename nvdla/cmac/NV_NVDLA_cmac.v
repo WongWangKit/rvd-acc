@@ -17,6 +17,11 @@
 module NV_NVDLA_cmac (
    csb2cmac_a_req_pd //|< i
   ,csb2cmac_a_req_pvld //|< i
+  ,cdma2reg_consumer //|< i
+  ,cdma2reg_d0_op_en //|< i
+  ,cdma2reg_d1_op_en //|< i
+  ,cdma2reg_op_en //|< i
+  ,cdma2reg_producer //|< i
   ,dla_clk_ovr_on_sync //|< i
   ,global_clk_ovr_on_sync //|< i
   ,nvdla_core_clk //|< i
@@ -85,6 +90,11 @@ input nvdla_core_rstn;
 output cmac_a2csb_resp_valid; /* data valid */
 output [33:0] cmac_a2csb_resp_pd; /* pkt_id_width=1 pkt_widths=33,33  */
 input csb2cmac_a_req_pvld; /* data valid */
+input cdma2reg_consumer;
+input cdma2reg_d0_op_en;
+input cdma2reg_d1_op_en;
+input cdma2reg_op_en;
+input cdma2reg_producer;
 output csb2cmac_a_req_prdy; /* data return handshake */
 input [62:0] csb2cmac_a_req_pd;
 output mac2accu_pvld; /* data valid */
@@ -221,6 +231,11 @@ NV_NVDLA_CMAC_reg u_reg (
   ,.csb2cmac_a_req_pd (csb2cmac_a_req_pd) //|< i
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< i
   ,.dp2reg_done (dp2reg_done) //|< w
+  ,.cdma2reg_consumer (cdma2reg_consumer) //|< i
+  ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en) //|< i
+  ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en) //|< i
+  ,.cdma2reg_op_en (cdma2reg_op_en) //|< i
+  ,.cdma2reg_producer (cdma2reg_producer) //|< i
   ,.cmac_a2csb_resp_pd (cmac_a2csb_resp_pd) //|> o
   ,.cmac_a2csb_resp_valid (cmac_a2csb_resp_valid) //|> o
   ,.csb2cmac_a_req_prdy (csb2cmac_a_req_prdy) //|> o

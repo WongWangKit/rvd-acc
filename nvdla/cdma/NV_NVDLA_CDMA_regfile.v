@@ -31,8 +31,8 @@ module NV_NVDLA_CDMA_regfile (
   ,cdma2csb_resp_valid //|> o
   ,csb2cdma_req_prdy //|> o
   ,dp2reg_consumer //|> o
-  ,reg2dp_arb_weight //|> o
-  ,reg2dp_arb_wmb //|> o
+  ,reg2dp_d0_op_en //|> o
+  ,reg2dp_d1_op_en //|> o
   ,reg2dp_batch_stride //|> o
   ,reg2dp_batches //|> o
   ,reg2dp_byte_per_kernel //|> o
@@ -81,6 +81,7 @@ module NV_NVDLA_CDMA_regfile (
   ,reg2dp_pixel_x_offset //|> o
   ,reg2dp_pixel_y_offset //|> o
   ,reg2dp_proc_precision //|> o
+  ,reg2dp_producer //|> o
   ,reg2dp_rsv_height //|> o
   ,reg2dp_rsv_per_line //|> o
   ,reg2dp_rsv_per_uv_line //|> o
@@ -129,8 +130,8 @@ output [33:0] cdma2csb_resp_pd;
 output cdma2csb_resp_valid;
 output csb2cdma_req_prdy;
 output dp2reg_consumer;
-output [3:0] reg2dp_arb_weight;
-output [3:0] reg2dp_arb_wmb;
+output reg2dp_d0_op_en;
+output reg2dp_d1_op_en;
 output [31:0] reg2dp_batch_stride;
 output [4:0] reg2dp_batches;
 output [17:0] reg2dp_byte_per_kernel;
@@ -179,6 +180,7 @@ output reg2dp_pixel_sign_override;
 output [4:0] reg2dp_pixel_x_offset;
 output [2:0] reg2dp_pixel_y_offset;
 output [1:0] reg2dp_proc_precision;
+output reg2dp_producer;
 output [2:0] reg2dp_rsv_height;
 output [9:0] reg2dp_rsv_per_line;
 output [9:0] reg2dp_rsv_per_uv_line;
@@ -361,7 +363,6 @@ wire [31:0] reg2dp_d1_wmb_addr_high;
 wire [31:0] reg2dp_d1_wmb_addr_low;
 wire [27:0] reg2dp_d1_wmb_bytes;
 wire [2:0] reg2dp_op_en_reg_w;
-wire reg2dp_producer;
 wire [23:0] reg_offset;
 wire [31:0] reg_rd_data;
 wire reg_rd_en;
@@ -515,8 +516,6 @@ NV_NVDLA_CDMA_single_reg u_single_reg (
   ,.reg_wr_en (s_reg_wr_en) //|< w
   ,.nvdla_core_clk (nvdla_core_clk) //|< i
   ,.nvdla_core_rstn (nvdla_core_rstn) //|< i
-  ,.arb_weight (reg2dp_arb_weight[3:0]) //|> o
-  ,.arb_wmb (reg2dp_arb_wmb[3:0]) //|> o
   ,.producer (reg2dp_producer) //|> w
   ,.flush_done (dp2reg_flush_done) //|< r
   ,.consumer (dp2reg_consumer) //|< o
@@ -874,9 +873,9 @@ assign slcg_op_en = slcg_op_en_d3;
 // //
 ////////////////////////////////////////////////////////////////////////
 //EACH subunit has 4KB address space
-assign select_s = (reg_offset[11:0] < (32'h5010 & 32'hfff)) ? 1'b1: 1'b0;
-assign select_d0 = (reg_offset[11:0] >= (32'h5010 & 32'hfff)) & (reg2dp_producer == 1'h0 );
-assign select_d1 = (reg_offset[11:0] >= (32'h5010 & 32'hfff)) & (reg2dp_producer == 1'h1 );
+assign select_s = (reg_offset[11:0] < (32'h3040 & 32'hfff)) ? 1'b1: 1'b0;
+assign select_d0 = (reg_offset[11:0] >= (32'h3040 & 32'hfff)) & (reg2dp_producer == 1'h0 );
+assign select_d1 = (reg_offset[11:0] >= (32'h3040 & 32'hfff)) & (reg2dp_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
 assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
 assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;

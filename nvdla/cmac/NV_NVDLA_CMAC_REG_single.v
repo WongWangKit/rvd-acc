@@ -89,33 +89,5 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 // Not generating flops for read-only field NVDLA_CMAC_A_S_STATUS_0::status_1
   end
 end
-// spyglass enable_block STARC-2.10.1.6, NoConstWithXZ, W443
-// synopsys translate_off
-// VCS coverage off
-initial begin
-  arreggen_dump = $test$plusargs("arreggen_dump_wr");
-  arreggen_abort_on_rowr = $test$plusargs("arreggen_abort_on_rowr");
-  arreggen_abort_on_invalid_wr = $test$plusargs("arreggen_abort_on_invalid_wr");
-`ifdef VERILATOR
-`else
-  $timeformat(-9, 2, "ns", 15);
-`endif
-end
-always @(posedge nvdla_core_clk) begin
-  if (reg_wr_en) begin
-    case(reg_offset)
-      (32'h7004 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CMAC_A_S_POINTER_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cmac_a_s_pointer_0_out, nvdla_cmac_a_s_pointer_0_out);
-      (32'h7000 & 32'h00000fff): begin
-          if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CMAC_A_S_STATUS_0 = 0x%h", $time, reg_wr_data);
-          if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
-        end
-      default: begin
-          if (arreggen_dump) $display("%t:%m: reg wr: Unknown register (0x%h) = 0x%h", $time, reg_offset, reg_wr_data);
-          if (arreggen_abort_on_invalid_wr) begin $display("ERROR: write to undefined register!"); $finish; end
-        end
-    endcase
-  end
-end
-// VCS coverage on
-// synopsys translate_on
+
 endmodule // NV_NVDLA_CMAC_REG_single

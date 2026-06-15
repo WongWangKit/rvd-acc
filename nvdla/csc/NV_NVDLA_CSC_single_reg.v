@@ -51,8 +51,8 @@ reg [31:0] reg_rd_data;
 assign reg_offset_wr = {20'b0 , reg_offset};
 // SCR signals
 // Address decode
-wire nvdla_csc_s_pointer_0_wren = (reg_offset_wr == (32'h6004 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_csc_s_status_0_wren = (reg_offset_wr == (32'h6000 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_csc_s_pointer_0_wren = (reg_offset_wr == (32'h4004 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_csc_s_status_0_wren = (reg_offset_wr == (32'h4000 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 assign nvdla_csc_s_pointer_0_out[31:0] = { 15'b0, consumer, 15'b0, producer };
 assign nvdla_csc_s_status_0_out[31:0] = { 14'b0, status_1, 14'b0, status_0 };
 assign reg_offset_rd_int = reg_offset;
@@ -64,10 +64,10 @@ always @(
   or nvdla_csc_s_status_0_out
   ) begin
   case (reg_offset_rd_int)
-     (32'h6004 & 32'h00000fff): begin
+     (32'h4004 & 32'h00000fff): begin
                             reg_rd_data = nvdla_csc_s_pointer_0_out ;
                             end
-     (32'h6000 & 32'h00000fff): begin
+     (32'h4000 & 32'h00000fff): begin
                             reg_rd_data = nvdla_csc_s_status_0_out ;
                             end
     default: reg_rd_data = {32{1'b0}};
@@ -89,33 +89,5 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 // Not generating flops for read-only field NVDLA_CSC_S_STATUS_0::status_1
   end
 end
-// spyglass enable_block STARC-2.10.1.6, NoConstWithXZ, W443
-// synopsys translate_off
-// VCS coverage off
-initial begin
-  arreggen_dump = $test$plusargs("arreggen_dump_wr");
-  arreggen_abort_on_rowr = $test$plusargs("arreggen_abort_on_rowr");
-  arreggen_abort_on_invalid_wr = $test$plusargs("arreggen_abort_on_invalid_wr");
-`ifdef VERILATOR
-`else
-  $timeformat(-9, 2, "ns", 15);
-`endif
-end
-always @(posedge nvdla_core_clk) begin
-  if (reg_wr_en) begin
-    case(reg_offset)
-      (32'h6004 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CSC_S_POINTER_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_csc_s_pointer_0_out, nvdla_csc_s_pointer_0_out);
-      (32'h6000 & 32'h00000fff): begin
-          if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CSC_S_STATUS_0 = 0x%h", $time, reg_wr_data);
-          if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
-        end
-      default: begin
-          if (arreggen_dump) $display("%t:%m: reg wr: Unknown register (0x%h) = 0x%h", $time, reg_offset, reg_wr_data);
-          if (arreggen_abort_on_invalid_wr) begin $display("ERROR: write to undefined register!"); $finish; end
-        end
-    endcase
-  end
-end
-// VCS coverage on
-// synopsys translate_on
+
 endmodule // NV_NVDLA_CSC_single_reg

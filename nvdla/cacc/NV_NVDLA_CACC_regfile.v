@@ -13,6 +13,11 @@ module NV_NVDLA_CACC_regfile (
   ,csb2cacc_req_pd //|< i
   ,csb2cacc_req_pvld //|< i
   ,dp2reg_done //|< i
+  ,cdma2reg_consumer //|< i
+  ,cdma2reg_d0_op_en //|< i
+  ,cdma2reg_d1_op_en //|< i
+  ,cdma2reg_op_en //|< i
+  ,cdma2reg_producer //|< i
   ,dp2reg_sat_count //|< i
   ,cacc2csb_resp_pd //|> o
   ,cacc2csb_resp_valid //|> o
@@ -38,6 +43,11 @@ input nvdla_core_rstn;
 input [62:0] csb2cacc_req_pd;
 input csb2cacc_req_pvld;
 input dp2reg_done;
+input cdma2reg_consumer;
+input cdma2reg_d0_op_en;
+input cdma2reg_d1_op_en;
+input cdma2reg_op_en;
+input cdma2reg_producer;
 input [31:0] dp2reg_sat_count;
 output [33:0] cacc2csb_resp_pd;
 output cacc2csb_resp_valid;
@@ -124,7 +134,6 @@ wire select_s;
 wire [6:0] slcg_op_en_d0;
 reg [33:0] cacc2csb_resp_pd;
 reg cacc2csb_resp_valid;
-reg dp2reg_consumer;
 reg dp2reg_d0_clr;
 reg dp2reg_d0_reg;
 reg [31:0] dp2reg_d0_sat_count;
@@ -141,10 +150,8 @@ reg [4:0] reg2dp_batches;
 reg [4:0] reg2dp_clip_truncate;
 reg reg2dp_conv_mode;
 reg [31:0] reg2dp_cya;
-reg reg2dp_d0_op_en;
-reg reg2dp_d0_op_en_w;
-reg reg2dp_d1_op_en;
-reg reg2dp_d1_op_en_w;
+wire reg2dp_d0_op_en_w;
+wire reg2dp_d1_op_en_w;
 reg [31:0] reg2dp_dataout_addr;
 reg [12:0] reg2dp_dataout_channel;
 reg [12:0] reg2dp_dataout_height;
@@ -170,7 +177,7 @@ NV_NVDLA_CACC_single_reg u_single_reg (
   ,.nvdla_core_clk (nvdla_core_clk) //|< i
   ,.nvdla_core_rstn (nvdla_core_rstn) //|< i
   ,.producer (reg2dp_producer) //|> w
-  ,.consumer (dp2reg_consumer) //|< r
+  ,.consumer (cdma2reg_consumer) //|< r
   ,.status_0 (dp2reg_status_0[1:0]) //|< r
   ,.status_1 (dp2reg_status_1[1:0]) //|< r
   );
@@ -196,7 +203,7 @@ NV_NVDLA_CACC_dual_reg u_dual_reg_d0 (
   ,.proc_precision (reg2dp_d0_proc_precision[1:0]) //|> w
   ,.op_en_trigger (reg2dp_d0_op_en_trigger) //|> w
   ,.surf_stride (reg2dp_d0_surf_stride[23:0]) //|> w
-  ,.op_en (reg2dp_d0_op_en) //|< r
+  ,.op_en (cdma2reg_d0_op_en) //|< r
   ,.sat_count (dp2reg_d0_sat_count[31:0]) //|< r
   );
 NV_NVDLA_CACC_dual_reg u_dual_reg_d1 (
@@ -220,189 +227,56 @@ NV_NVDLA_CACC_dual_reg u_dual_reg_d1 (
   ,.proc_precision (reg2dp_d1_proc_precision[1:0]) //|> w
   ,.op_en_trigger (reg2dp_d1_op_en_trigger) //|> w
   ,.surf_stride (reg2dp_d1_surf_stride[23:0]) //|> w
-  ,.op_en (reg2dp_d1_op_en) //|< r
+  ,.op_en (cdma2reg_d1_op_en) //|< r
   ,.sat_count (dp2reg_d1_sat_count[31:0]) //|< r
   );
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE CONSUMER PIONTER IN GENERAL SINGLE REGISTER GROUP //
+// CDMA drives the shared consumer pointer for CDMA/CSC/CMAC/CACC //
 // //
 ////////////////////////////////////////////////////////////////////////
-assign dp2reg_consumer_w = ~dp2reg_consumer;
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    dp2reg_consumer <= 1'b0;
-  end else begin
-  if ((dp2reg_done) == 1'b1) begin
-    dp2reg_consumer <= dp2reg_consumer_w;
-// VCS coverage off
-  end else if ((dp2reg_done) == 1'b0) begin
-  end else begin
-    dp2reg_consumer <= 'bx; // spyglass disable STARC-2.10.1.6 W443 NoWidthInBasedNum-ML -- (Constant containing x or z used, Based number `bx contains an X, Width specification missing for based number)
-// VCS coverage on
-  end
-  end
-end
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass disable_block NoWidthInBasedNum-ML
-// spyglass disable_block STARC-2.10.3.2a
-// spyglass disable_block STARC05-2.1.3.1
-// spyglass disable_block STARC-2.1.4.6
-// spyglass disable_block W116
-// spyglass disable_block W154
-// spyglass disable_block W239
-// spyglass disable_block W362
-// spyglass disable_block WRN_58
-// spyglass disable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
-`ifdef ASSERT_ON
-`ifdef FV_ASSERT_ON
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef SYNTHESIS
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef ASSERT_OFF_RESET_IS_X
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b0 : nvdla_core_rstn)
-`else
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b1 : nvdla_core_rstn)
-`endif // ASSERT_OFF_RESET_IS_X
-`endif // SYNTHESIS
-`endif // FV_ASSERT_ON
-`ifndef SYNTHESIS
-// VCS coverage off
-// VCS coverage on
-`endif
-`undef ASSERT_RESET
-`endif // ASSERT_ON
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass enable_block NoWidthInBasedNum-ML
-// spyglass enable_block STARC-2.10.3.2a
-// spyglass enable_block STARC05-2.1.3.1
-// spyglass enable_block STARC-2.1.4.6
-// spyglass enable_block W116
-// spyglass enable_block W154
-// spyglass enable_block W239
-// spyglass enable_block W362
-// spyglass enable_block WRN_58
-// spyglass enable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE TWO STATUS FIELDS IN GENERAL SINGLE REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  reg2dp_d0_op_en
-  or dp2reg_consumer
+  cdma2reg_d0_op_en
+  or cdma2reg_consumer
   ) begin
-    dp2reg_status_0 = (reg2dp_d0_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h1 ) ? 2'h2 :
+    dp2reg_status_0 = (cdma2reg_d0_op_en == 1'h0 ) ? 2'h0 :
+                      (cdma2reg_consumer == 1'h1 ) ? 2'h2 :
                       2'h1 ;
 end
 always @(
-  reg2dp_d1_op_en
-  or dp2reg_consumer
+  cdma2reg_d1_op_en
+  or cdma2reg_consumer
   ) begin
-    dp2reg_status_1 = (reg2dp_d1_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h0 ) ? 2'h2 :
+    dp2reg_status_1 = (cdma2reg_d1_op_en == 1'h0 ) ? 2'h0 :
+                      (cdma2reg_consumer == 1'h0 ) ? 2'h2 :
                       2'h1 ;
 end
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE OP_EN LOGIC //
+// CDMA drives shared op_en for CDMA/CSC/CMAC/CACC //
 // //
 ////////////////////////////////////////////////////////////////////////
-always @(
-  reg2dp_d0_op_en
-  or reg2dp_d0_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d0_op_en_w = (~reg2dp_d0_op_en & reg2dp_d0_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h0 ) ? 1'b0 :
-                        reg2dp_d0_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d0_op_en <= 1'b0;
-  end else begin
-  reg2dp_d0_op_en <= reg2dp_d0_op_en_w;
-  end
-end
-always @(
-  reg2dp_d1_op_en
-  or reg2dp_d1_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d1_op_en_w = (~reg2dp_d1_op_en & reg2dp_d1_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h1 ) ? 1'b0 :
-                        reg2dp_d1_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d1_op_en <= 1'b0;
-  end else begin
-  reg2dp_d1_op_en <= reg2dp_d1_op_en_w;
-  end
-end
-always @(
-  dp2reg_consumer
-  or reg2dp_d1_op_en
-  or reg2dp_d0_op_en
-  ) begin
-    reg2dp_op_en_ori = dp2reg_consumer ? reg2dp_d1_op_en : reg2dp_d0_op_en;
-end
-assign reg2dp_op_en_reg_w = dp2reg_done ? 3'b0 :
-                            {reg2dp_op_en_reg[1:0], reg2dp_op_en_ori};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_op_en_reg <= {3{1'b0}};
-  end else begin
-  reg2dp_op_en_reg <= reg2dp_op_en_reg_w;
-  end
-end
-assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
-assign slcg_op_en_d0 = {7{reg2dp_op_en_ori}};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d1 <= {7{1'b0}};
-  end else begin
-  slcg_op_en_d1 <= slcg_op_en_d0;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d2 <= {7{1'b0}};
-  end else begin
-  slcg_op_en_d2 <= slcg_op_en_d1;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d3 <= {7{1'b0}};
-  end else begin
-  slcg_op_en_d3 <= slcg_op_en_d2;
-  end
-end
-assign slcg_op_en = slcg_op_en_d3;
+assign reg2dp_d0_op_en_w = cdma2reg_d0_op_en;
+assign reg2dp_d1_op_en_w = cdma2reg_d1_op_en;
+assign reg2dp_op_en = cdma2reg_op_en;
+assign slcg_op_en = {7{cdma2reg_op_en}};
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE ACCESS LOGIC TO EACH REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 //EACH subunit has 4KB address space
-assign select_s = (reg_offset[11:0] < (32'h9008 & 32'hfff)) ? 1'b1: 1'b0;
-assign select_d0 = (reg_offset[11:0] >= (32'h9008 & 32'hfff)) & (reg2dp_producer == 1'h0 );
-assign select_d1 = (reg_offset[11:0] >= (32'h9008 & 32'hfff)) & (reg2dp_producer == 1'h1 );
+assign select_s = (reg_offset[11:0] < (32'h7040 & 32'hfff)) ? 1'b1: 1'b0;
+assign select_d0 = (reg_offset[11:0] >= (32'h7040 & 32'hfff)) & (cdma2reg_producer == 1'h0 );
+assign select_d1 = (reg_offset[11:0] >= (32'h7040 & 32'hfff)) & (cdma2reg_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
-assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
-assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;
+assign d0_reg_wr_en = reg_wr_en & select_d0 & ~cdma2reg_d0_op_en;
+assign d1_reg_wr_en = reg_wr_en & select_d1 & ~cdma2reg_d1_op_en;
 assign s_reg_offset = reg_offset;
 assign d0_reg_offset = reg_offset;
 assign d1_reg_offset = reg_offset;
@@ -629,95 +503,95 @@ end
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_batches
   or reg2dp_d0_batches
   ) begin
-    reg2dp_batches = dp2reg_consumer ? reg2dp_d1_batches : reg2dp_d0_batches;
+    reg2dp_batches = cdma2reg_consumer ? reg2dp_d1_batches : reg2dp_d0_batches;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_clip_truncate
   or reg2dp_d0_clip_truncate
   ) begin
-    reg2dp_clip_truncate = dp2reg_consumer ? reg2dp_d1_clip_truncate : reg2dp_d0_clip_truncate;
+    reg2dp_clip_truncate = cdma2reg_consumer ? reg2dp_d1_clip_truncate : reg2dp_d0_clip_truncate;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_cya
   or reg2dp_d0_cya
   ) begin
-    reg2dp_cya = dp2reg_consumer ? reg2dp_d1_cya : reg2dp_d0_cya;
+    reg2dp_cya = cdma2reg_consumer ? reg2dp_d1_cya : reg2dp_d0_cya;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_addr
   or reg2dp_d0_dataout_addr
   ) begin
-    reg2dp_dataout_addr = dp2reg_consumer ? reg2dp_d1_dataout_addr : reg2dp_d0_dataout_addr;
+    reg2dp_dataout_addr = cdma2reg_consumer ? reg2dp_d1_dataout_addr : reg2dp_d0_dataout_addr;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_line_packed
   or reg2dp_d0_line_packed
   ) begin
-    reg2dp_line_packed = dp2reg_consumer ? reg2dp_d1_line_packed : reg2dp_d0_line_packed;
+    reg2dp_line_packed = cdma2reg_consumer ? reg2dp_d1_line_packed : reg2dp_d0_line_packed;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_surf_packed
   or reg2dp_d0_surf_packed
   ) begin
-    reg2dp_surf_packed = dp2reg_consumer ? reg2dp_d1_surf_packed : reg2dp_d0_surf_packed;
+    reg2dp_surf_packed = cdma2reg_consumer ? reg2dp_d1_surf_packed : reg2dp_d0_surf_packed;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_height
   or reg2dp_d0_dataout_height
   ) begin
-    reg2dp_dataout_height = dp2reg_consumer ? reg2dp_d1_dataout_height : reg2dp_d0_dataout_height;
+    reg2dp_dataout_height = cdma2reg_consumer ? reg2dp_d1_dataout_height : reg2dp_d0_dataout_height;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_width
   or reg2dp_d0_dataout_width
   ) begin
-    reg2dp_dataout_width = dp2reg_consumer ? reg2dp_d1_dataout_width : reg2dp_d0_dataout_width;
+    reg2dp_dataout_width = cdma2reg_consumer ? reg2dp_d1_dataout_width : reg2dp_d0_dataout_width;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_dataout_channel
   or reg2dp_d0_dataout_channel
   ) begin
-    reg2dp_dataout_channel = dp2reg_consumer ? reg2dp_d1_dataout_channel : reg2dp_d0_dataout_channel;
+    reg2dp_dataout_channel = cdma2reg_consumer ? reg2dp_d1_dataout_channel : reg2dp_d0_dataout_channel;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_line_stride
   or reg2dp_d0_line_stride
   ) begin
-    reg2dp_line_stride = dp2reg_consumer ? reg2dp_d1_line_stride : reg2dp_d0_line_stride;
+    reg2dp_line_stride = cdma2reg_consumer ? reg2dp_d1_line_stride : reg2dp_d0_line_stride;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_conv_mode
   or reg2dp_d0_conv_mode
   ) begin
-    reg2dp_conv_mode = dp2reg_consumer ? reg2dp_d1_conv_mode : reg2dp_d0_conv_mode;
+    reg2dp_conv_mode = cdma2reg_consumer ? reg2dp_d1_conv_mode : reg2dp_d0_conv_mode;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_proc_precision
   or reg2dp_d0_proc_precision
   ) begin
-    reg2dp_proc_precision = dp2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
+    reg2dp_proc_precision = cdma2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
 end
 always @(
-  dp2reg_consumer
+  cdma2reg_consumer
   or reg2dp_d1_surf_stride
   or reg2dp_d0_surf_stride
   ) begin
-    reg2dp_surf_stride = dp2reg_consumer ? reg2dp_d1_surf_stride : reg2dp_d0_surf_stride;
+    reg2dp_surf_stride = cdma2reg_consumer ? reg2dp_d1_surf_stride : reg2dp_d0_surf_stride;
 end
 ////////////////////////////////////////////////////////////////////////
 // //
@@ -728,20 +602,20 @@ end
 // for general counting register //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  reg2dp_d0_op_en
+  cdma2reg_d0_op_en
   or reg2dp_d0_op_en_w
   ) begin
-    dp2reg_d0_set = reg2dp_d0_op_en & ~reg2dp_d0_op_en_w;
-    dp2reg_d0_clr = ~reg2dp_d0_op_en & reg2dp_d0_op_en_w;
-    dp2reg_d0_reg = reg2dp_d0_op_en ^ reg2dp_d0_op_en_w;
+    dp2reg_d0_set = cdma2reg_d0_op_en & ~reg2dp_d0_op_en_w;
+    dp2reg_d0_clr = ~cdma2reg_d0_op_en & reg2dp_d0_op_en_w;
+    dp2reg_d0_reg = cdma2reg_d0_op_en ^ reg2dp_d0_op_en_w;
 end
 always @(
-  reg2dp_d1_op_en
+  cdma2reg_d1_op_en
   or reg2dp_d1_op_en_w
   ) begin
-    dp2reg_d1_set = reg2dp_d1_op_en & ~reg2dp_d1_op_en_w;
-    dp2reg_d1_clr = ~reg2dp_d1_op_en & reg2dp_d1_op_en_w;
-    dp2reg_d1_reg = reg2dp_d1_op_en ^ reg2dp_d1_op_en_w;
+    dp2reg_d1_set = cdma2reg_d1_op_en & ~reg2dp_d1_op_en_w;
+    dp2reg_d1_clr = ~cdma2reg_d1_op_en & reg2dp_d1_op_en_w;
+    dp2reg_d1_reg = cdma2reg_d1_op_en ^ reg2dp_d1_op_en_w;
 end
 ////////////////////////////////////////////////////////////////////////
 // for output saturation register //

@@ -161,6 +161,11 @@ wire cacc2sdp_ready;
 wire cacc2sdp_valid;
 wire [33:0] cdma2csb_resp_pd;
 wire cdma2csb_resp_valid;
+wire cdma_reg2dp_consumer;
+wire cdma_reg2dp_d0_op_en;
+wire cdma_reg2dp_d1_op_en;
+wire cdma_reg2dp_op_en;
+wire cdma_reg2dp_producer;
 wire [1:0] cdma_dat2glb_done_intr_pd;
 wire [1:0] cdma_wt2glb_done_intr_pd;
 wire [33:0] cmac_a2csb_resp_pd;
@@ -474,6 +479,11 @@ NV_NVDLA_partition_c u_partition_c (
   ,.accu2sc_credit_vld (accu2sc_credit_vld)
   ,.accu2sc_credit_size (accu2sc_credit_size[2:0])
   ,.cdma2csb_resp_valid (cdma2csb_resp_valid)
+  ,.cdma_reg2dp_consumer (cdma_reg2dp_consumer)
+  ,.cdma_reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
+  ,.cdma_reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
+  ,.cdma_reg2dp_op_en (cdma_reg2dp_op_en)
+  ,.cdma_reg2dp_producer (cdma_reg2dp_producer)
   ,.cdma2csb_resp_pd (cdma2csb_resp_pd[33:0])
   ,.cdma_dat2glb_done_intr_pd (cdma_dat2glb_done_intr_pd[1:0])
   ,.cdma_dat2mcif_rd_req_valid (cdma_dat2mcif_rd_req_valid)
@@ -574,6 +584,11 @@ NV_NVDLA_partition_m u_partition_ma (
    .test_mode (test_mode)
   ,.direct_reset_ (direct_reset_)
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< w
+  ,.cdma2reg_consumer (cdma_reg2dp_consumer)
+  ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en)
+  ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en)
+  ,.cdma2reg_op_en (cdma_reg2dp_op_en)
+  ,.cdma2reg_producer (cdma_reg2dp_producer)
   ,.csb2cmac_a_req_prdy (csb2cmac_a_req_prdy) //|> w
   ,.csb2cmac_a_req_pd (csb2cmac_a_req_pd) //|< w
   ,.cmac_a2csb_resp_valid (cmac_a2csb_resp_valid) //|> w
@@ -714,6 +729,11 @@ NV_NVDLA_partition_a u_partition_a (
   ,.accu2sc_credit_vld (accu2sc_credit_vld)
   ,.accu2sc_credit_size (accu2sc_credit_size[2:0])
   ,.csb2cacc_req_pvld (csb2cacc_req_pvld)
+  ,.cdma2reg_consumer (cdma_reg2dp_consumer)
+  ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en)
+  ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en)
+  ,.cdma2reg_op_en (cdma_reg2dp_op_en)
+  ,.cdma2reg_producer (cdma_reg2dp_producer)
   ,.csb2cacc_req_prdy (csb2cacc_req_prdy)
   ,.csb2cacc_req_pd (csb2cacc_req_pd[62:0])
   ,.cacc2csb_resp_valid (cacc2csb_resp_valid)

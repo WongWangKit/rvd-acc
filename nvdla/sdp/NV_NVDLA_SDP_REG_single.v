@@ -135,20 +135,20 @@ reg [31:0] reg_rd_data;
 assign reg_offset_wr = {20'b0 , reg_offset};
 // SCR signals
 // Address decode
-wire nvdla_sdp_s_lut_access_cfg_0_wren = (reg_offset_wr == (32'hb008 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_access_data_0_wren = (reg_offset_wr == (32'hb00c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_cfg_0_wren = (reg_offset_wr == (32'hb010 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_info_0_wren = (reg_offset_wr == (32'hb014 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_le_end_0_wren = (reg_offset_wr == (32'hb01c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_le_slope_scale_0_wren = (reg_offset_wr == (32'hb028 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_le_slope_shift_0_wren = (reg_offset_wr == (32'hb02c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_le_start_0_wren = (reg_offset_wr == (32'hb018 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_lo_end_0_wren = (reg_offset_wr == (32'hb024 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_lo_slope_scale_0_wren = (reg_offset_wr == (32'hb030 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_lo_slope_shift_0_wren = (reg_offset_wr == (32'hb034 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_lut_lo_start_0_wren = (reg_offset_wr == (32'hb020 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_pointer_0_wren = (reg_offset_wr == (32'hb004 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_s_status_0_wren = (reg_offset_wr == (32'hb000 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_access_cfg_0_wren = (reg_offset_wr == (32'h9008 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_access_data_0_wren = (reg_offset_wr == (32'h900c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_cfg_0_wren = (reg_offset_wr == (32'h9010 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_info_0_wren = (reg_offset_wr == (32'h9014 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_le_end_0_wren = (reg_offset_wr == (32'h901c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_le_slope_scale_0_wren = (reg_offset_wr == (32'h9028 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_le_slope_shift_0_wren = (reg_offset_wr == (32'h902c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_le_start_0_wren = (reg_offset_wr == (32'h9018 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_lo_end_0_wren = (reg_offset_wr == (32'h9024 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_lo_slope_scale_0_wren = (reg_offset_wr == (32'h9030 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_lo_slope_shift_0_wren = (reg_offset_wr == (32'h9034 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_lut_lo_start_0_wren = (reg_offset_wr == (32'h9020 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_pointer_0_wren = (reg_offset_wr == (32'h9004 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_s_status_0_wren = (reg_offset_wr == (32'h9000 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 assign nvdla_sdp_s_lut_access_cfg_0_out[31:0] = { 14'b0, lut_access_type, lut_table_id, 6'b0, lut_addr };
 assign nvdla_sdp_s_lut_access_data_0_out[31:0] = { 16'b0, lut_data };
 assign nvdla_sdp_s_lut_cfg_0_out[31:0] = { 25'b0, lut_hybrid_priority, lut_oflow_priority, lut_uflow_priority, 3'b0, lut_le_function };
@@ -186,46 +186,46 @@ always @(
   or nvdla_sdp_s_status_0_out
   ) begin
   case (reg_offset_rd_int)
-     (32'hb008 & 32'h00000fff): begin
+     (32'h9008 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_access_cfg_0_out ;
                             end
-     (32'hb00c & 32'h00000fff): begin
+     (32'h900c & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_access_data_0_out ;
                             end
-     (32'hb010 & 32'h00000fff): begin
+     (32'h9010 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_cfg_0_out ;
                             end
-     (32'hb014 & 32'h00000fff): begin
+     (32'h9014 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_info_0_out ;
                             end
-     (32'hb01c & 32'h00000fff): begin
+     (32'h901c & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_le_end_0_out ;
                             end
-     (32'hb028 & 32'h00000fff): begin
+     (32'h9028 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_le_slope_scale_0_out ;
                             end
-     (32'hb02c & 32'h00000fff): begin
+     (32'h902c & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_le_slope_shift_0_out ;
                             end
-     (32'hb018 & 32'h00000fff): begin
+     (32'h9018 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_le_start_0_out ;
                             end
-     (32'hb024 & 32'h00000fff): begin
+     (32'h9024 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_lo_end_0_out ;
                             end
-     (32'hb030 & 32'h00000fff): begin
+     (32'h9030 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_lo_slope_scale_0_out ;
                             end
-     (32'hb034 & 32'h00000fff): begin
+     (32'h9034 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_lo_slope_shift_0_out ;
                             end
-     (32'hb020 & 32'h00000fff): begin
+     (32'h9020 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_lut_lo_start_0_out ;
                             end
-     (32'hb004 & 32'h00000fff): begin
+     (32'h9004 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_pointer_0_out ;
                             end
-     (32'hb000 & 32'h00000fff): begin
+     (32'h9000 & 32'h00000fff): begin
                             reg_rd_data = nvdla_sdp_s_status_0_out ;
                             end
     default: reg_rd_data = {32{1'b0}};
@@ -358,45 +358,5 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 // Not generating flops for read-only field NVDLA_SDP_S_STATUS_0::status_1
   end
 end
-// spyglass enable_block STARC-2.10.1.6, NoConstWithXZ, W443
-// synopsys translate_off
-// VCS coverage off
-initial begin
-  arreggen_dump = $test$plusargs("arreggen_dump_wr");
-  arreggen_abort_on_rowr = $test$plusargs("arreggen_abort_on_rowr");
-  arreggen_abort_on_invalid_wr = $test$plusargs("arreggen_abort_on_invalid_wr");
-`ifdef VERILATOR
-`else
-  $timeformat(-9, 2, "ns", 15);
-`endif
-end
-always @(posedge nvdla_core_clk) begin
-  if (reg_wr_en) begin
-    case(reg_offset)
-      (32'hb008 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_ACCESS_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_access_cfg_0_out, nvdla_sdp_s_lut_access_cfg_0_out);
-      (32'hb00c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_ACCESS_DATA_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_access_data_0_out, nvdla_sdp_s_lut_access_data_0_out);
-      (32'hb010 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_cfg_0_out, nvdla_sdp_s_lut_cfg_0_out);
-      (32'hb014 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_INFO_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_info_0_out, nvdla_sdp_s_lut_info_0_out);
-      (32'hb01c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LE_END_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_le_end_0_out, nvdla_sdp_s_lut_le_end_0_out);
-      (32'hb028 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LE_SLOPE_SCALE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_le_slope_scale_0_out, nvdla_sdp_s_lut_le_slope_scale_0_out);
-      (32'hb02c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LE_SLOPE_SHIFT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_le_slope_shift_0_out, nvdla_sdp_s_lut_le_slope_shift_0_out);
-      (32'hb018 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LE_START_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_le_start_0_out, nvdla_sdp_s_lut_le_start_0_out);
-      (32'hb024 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LO_END_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_lo_end_0_out, nvdla_sdp_s_lut_lo_end_0_out);
-      (32'hb030 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LO_SLOPE_SCALE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_lo_slope_scale_0_out, nvdla_sdp_s_lut_lo_slope_scale_0_out);
-      (32'hb034 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LO_SLOPE_SHIFT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_lo_slope_shift_0_out, nvdla_sdp_s_lut_lo_slope_shift_0_out);
-      (32'hb020 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_LUT_LO_START_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_lut_lo_start_0_out, nvdla_sdp_s_lut_lo_start_0_out);
-      (32'hb004 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_SDP_S_POINTER_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_sdp_s_pointer_0_out, nvdla_sdp_s_pointer_0_out);
-      (32'hb000 & 32'h00000fff): begin
-          if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_SDP_S_STATUS_0 = 0x%h", $time, reg_wr_data);
-          if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
-        end
-      default: begin
-          if (arreggen_dump) $display("%t:%m: reg wr: Unknown register (0x%h) = 0x%h", $time, reg_offset, reg_wr_data);
-          if (arreggen_abort_on_invalid_wr) begin $display("ERROR: write to undefined register!"); $finish; end
-        end
-    endcase
-  end
-end
-// VCS coverage on
-// synopsys translate_on
+
 endmodule // NV_NVDLA_SDP_REG_single

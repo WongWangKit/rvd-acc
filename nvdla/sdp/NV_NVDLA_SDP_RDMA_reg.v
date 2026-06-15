@@ -20,6 +20,11 @@ module NV_NVDLA_SDP_RDMA_reg (
   ,nvdla_core_rstn //|< i
   ,csb2sdp_rdma_req_pd //|< i
   ,csb2sdp_rdma_req_pvld //|< i
+  ,sdp2reg_consumer //|< i
+  ,sdp2reg_d0_op_en //|< i
+  ,sdp2reg_d1_op_en //|< i
+  ,sdp2reg_op_en //|< i
+  ,sdp2reg_producer //|< i
   ,dp2reg_brdma_stall //|< i
   ,dp2reg_done //|< i
   ,dp2reg_erdma_stall //|< i
@@ -83,6 +88,11 @@ input nvdla_core_clk;
 input nvdla_core_rstn;
 input [62:0] csb2sdp_rdma_req_pd;
 input csb2sdp_rdma_req_pvld;
+input sdp2reg_consumer;
+input sdp2reg_d0_op_en;
+input sdp2reg_d1_op_en;
+input sdp2reg_op_en;
+input sdp2reg_producer;
 input [31:0] dp2reg_brdma_stall;
 input dp2reg_done;
 input [31:0] dp2reg_erdma_stall;
@@ -155,7 +165,6 @@ wire [23:0] d1_reg_offset;
 wire [31:0] d1_reg_rd_data;
 wire [31:0] d1_reg_wr_data;
 wire d1_reg_wr_en;
-wire dp2reg_consumer_w;
 wire [31:0] dp2reg_d0_brdma_stall_w;
 wire [31:0] dp2reg_d0_erdma_stall_w;
 wire [31:0] dp2reg_d0_mrdma_stall_w;
@@ -262,7 +271,6 @@ wire reg2dp_d1_src_ram_type;
 wire [31:0] reg2dp_d1_src_surface_stride;
 wire [12:0] reg2dp_d1_width;
 wire reg2dp_d1_winograd;
-wire [2:0] reg2dp_op_en_reg_w;
 wire reg2dp_producer;
 wire [23:0] reg_offset;
 wire [31:0] reg_rd_data;
@@ -283,8 +291,7 @@ wire s_reg_wr_en;
 wire select_d0;
 wire select_d1;
 wire select_s;
-wire [3:0] slcg_op_en_d0;
-reg dp2reg_consumer;
+
 reg [31:0] dp2reg_d0_brdma_stall;
 reg dp2reg_d0_clr;
 reg [31:0] dp2reg_d0_erdma_stall;
@@ -322,10 +329,8 @@ reg [31:0] reg2dp_bs_batch_stride;
 reg [31:0] reg2dp_bs_line_stride;
 reg [31:0] reg2dp_bs_surface_stride;
 reg [12:0] reg2dp_channel;
-reg reg2dp_d0_op_en;
-reg reg2dp_d0_op_en_w;
-reg reg2dp_d1_op_en;
-reg reg2dp_d1_op_en_w;
+wire reg2dp_d0_op_en_w;
+wire reg2dp_d1_op_en_w;
 reg reg2dp_erdma_data_mode;
 reg reg2dp_erdma_data_size;
 reg [1:0] reg2dp_erdma_data_use;
@@ -344,8 +349,6 @@ reg reg2dp_nrdma_data_size;
 reg [1:0] reg2dp_nrdma_data_use;
 reg reg2dp_nrdma_disable;
 reg reg2dp_nrdma_ram_type;
-reg reg2dp_op_en_ori;
-reg [2:0] reg2dp_op_en_reg;
 reg [1:0] reg2dp_out_precision;
 reg reg2dp_perf_dma_en;
 reg reg2dp_perf_nan_inf_count_en;
@@ -361,9 +364,6 @@ reg [62:0] req_pd;
 reg req_pvld;
 reg [33:0] sdp_rdma2csb_resp_pd;
 reg sdp_rdma2csb_resp_valid;
-reg [3:0] slcg_op_en_d1;
-reg [3:0] slcg_op_en_d2;
-reg [3:0] slcg_op_en_d3;
 //Instance single register group
 NV_NVDLA_SDP_RDMA_REG_single u_single_reg (
    .reg_rd_data (s_reg_rd_data[31:0]) //|> w
@@ -373,7 +373,7 @@ NV_NVDLA_SDP_RDMA_REG_single u_single_reg (
   ,.nvdla_core_clk (nvdla_core_clk) //|< i
   ,.nvdla_core_rstn (nvdla_core_rstn) //|< i
   ,.producer (reg2dp_producer) //|> w
-  ,.consumer (dp2reg_consumer) //|< r
+  ,.consumer (sdp2reg_consumer) //|< r
   ,.status_0 (dp2reg_status_0[1:0]) //|< r
   ,.status_1 (dp2reg_status_1[1:0]) //|< r
   );
@@ -432,7 +432,7 @@ NV_NVDLA_SDP_RDMA_REG_dual u_dual_reg_d0 (
   ,.src_ram_type (reg2dp_d0_src_ram_type) //|> w
   ,.src_line_stride (reg2dp_d0_src_line_stride[31:0]) //|> w
   ,.src_surface_stride (reg2dp_d0_src_surface_stride[31:0]) //|> w
-  ,.op_en (reg2dp_d0_op_en) //|< r
+  ,.op_en (sdp2reg_d0_op_en) //|< r
   ,.brdma_stall (dp2reg_d0_brdma_stall[31:0]) //|< r
   ,.erdma_stall (dp2reg_d0_erdma_stall[31:0]) //|< r
   ,.mrdma_stall (dp2reg_d0_mrdma_stall[31:0]) //|< r
@@ -494,7 +494,7 @@ NV_NVDLA_SDP_RDMA_REG_dual u_dual_reg_d1 (
   ,.src_ram_type (reg2dp_d1_src_ram_type) //|> w
   ,.src_line_stride (reg2dp_d1_src_line_stride[31:0]) //|> w
   ,.src_surface_stride (reg2dp_d1_src_surface_stride[31:0]) //|> w
-  ,.op_en (reg2dp_d1_op_en) //|< r
+  ,.op_en (sdp2reg_d1_op_en) //|< r
   ,.brdma_stall (dp2reg_d1_brdma_stall[31:0]) //|< r
   ,.erdma_stall (dp2reg_d1_erdma_stall[31:0]) //|< r
   ,.mrdma_stall (dp2reg_d1_mrdma_stall[31:0]) //|< r
@@ -504,184 +504,51 @@ NV_NVDLA_SDP_RDMA_REG_dual u_dual_reg_d1 (
   );
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE CONSUMER PIONTER IN GENERAL SINGLE REGISTER GROUP //
+// SDP drives the shared consumer pointer for SDP/SDP_RDMA //
 // //
 ////////////////////////////////////////////////////////////////////////
-assign dp2reg_consumer_w = ~dp2reg_consumer;
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    dp2reg_consumer <= 1'b0;
-  end else begin
-  if ((dp2reg_done) == 1'b1) begin
-    dp2reg_consumer <= dp2reg_consumer_w;
-// VCS coverage off
-  end else if ((dp2reg_done) == 1'b0) begin
-  end else begin
-    dp2reg_consumer <= 'bx; // spyglass disable STARC-2.10.1.6 W443 NoWidthInBasedNum-ML -- (Constant containing x or z used, Based number `bx contains an X, Width specification missing for based number)
-// VCS coverage on
-  end
-  end
-end
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass disable_block NoWidthInBasedNum-ML
-// spyglass disable_block STARC-2.10.3.2a
-// spyglass disable_block STARC05-2.1.3.1
-// spyglass disable_block STARC-2.1.4.6
-// spyglass disable_block W116
-// spyglass disable_block W154
-// spyglass disable_block W239
-// spyglass disable_block W362
-// spyglass disable_block WRN_58
-// spyglass disable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
-`ifdef ASSERT_ON
-`ifdef FV_ASSERT_ON
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef SYNTHESIS
-`define ASSERT_RESET nvdla_core_rstn
-`else
-`ifdef ASSERT_OFF_RESET_IS_X
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b0 : nvdla_core_rstn)
-`else
-`define ASSERT_RESET ((1'bx === nvdla_core_rstn) ? 1'b1 : nvdla_core_rstn)
-`endif // ASSERT_OFF_RESET_IS_X
-`endif // SYNTHESIS
-`endif // FV_ASSERT_ON
-`ifndef SYNTHESIS
-// VCS coverage off
-// VCS coverage on
-`endif
-`undef ASSERT_RESET
-`endif // ASSERT_ON
-`ifdef SPYGLASS_ASSERT_ON
-`else
-// spyglass enable_block NoWidthInBasedNum-ML
-// spyglass enable_block STARC-2.10.3.2a
-// spyglass enable_block STARC05-2.1.3.1
-// spyglass enable_block STARC-2.1.4.6
-// spyglass enable_block W116
-// spyglass enable_block W154
-// spyglass enable_block W239
-// spyglass enable_block W362
-// spyglass enable_block WRN_58
-// spyglass enable_block WRN_61
-`endif // SPYGLASS_ASSERT_ON
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE TWO STATUS FIELDS IN GENERAL SINGLE REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  reg2dp_d0_op_en
-  or dp2reg_consumer
+  sdp2reg_d0_op_en
+  or sdp2reg_consumer
   ) begin
-    dp2reg_status_0 = (reg2dp_d0_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h1 ) ? 2'h2 :
+    dp2reg_status_0 = (sdp2reg_d0_op_en == 1'h0 ) ? 2'h0 :
+                      (sdp2reg_consumer == 1'h1 ) ? 2'h2 :
                       2'h1 ;
 end
 always @(
-  reg2dp_d1_op_en
-  or dp2reg_consumer
+  sdp2reg_d1_op_en
+  or sdp2reg_consumer
   ) begin
-    dp2reg_status_1 = (reg2dp_d1_op_en == 1'h0 ) ? 2'h0 :
-                      (dp2reg_consumer == 1'h0 ) ? 2'h2 :
+    dp2reg_status_1 = (sdp2reg_d1_op_en == 1'h0 ) ? 2'h0 :
+                      (sdp2reg_consumer == 1'h0 ) ? 2'h2 :
                       2'h1 ;
 end
 ////////////////////////////////////////////////////////////////////////
 // //
-// GENERATE OP_EN LOGIC //
+// SDP drives shared op_en for SDP/SDP_RDMA //
 // //
 ////////////////////////////////////////////////////////////////////////
-always @(
-  reg2dp_d0_op_en
-  or reg2dp_d0_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d0_op_en_w = (~reg2dp_d0_op_en & reg2dp_d0_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h0 ) ? 1'b0 :
-                        reg2dp_d0_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d0_op_en <= 1'b0;
-  end else begin
-  reg2dp_d0_op_en <= reg2dp_d0_op_en_w;
-  end
-end
-always @(
-  reg2dp_d1_op_en
-  or reg2dp_d1_op_en_trigger
-  or reg_wr_data
-  or dp2reg_done
-  or dp2reg_consumer
-  ) begin
-    reg2dp_d1_op_en_w = (~reg2dp_d1_op_en & reg2dp_d1_op_en_trigger) ? reg_wr_data[0 ] :
-                        (dp2reg_done && dp2reg_consumer == 1'h1 ) ? 1'b0 :
-                        reg2dp_d1_op_en;
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_d1_op_en <= 1'b0;
-  end else begin
-  reg2dp_d1_op_en <= reg2dp_d1_op_en_w;
-  end
-end
-always @(
-  dp2reg_consumer
-  or reg2dp_d1_op_en
-  or reg2dp_d0_op_en
-  ) begin
-    reg2dp_op_en_ori = dp2reg_consumer ? reg2dp_d1_op_en : reg2dp_d0_op_en;
-end
-assign reg2dp_op_en_reg_w = dp2reg_done ? 3'b0 :
-                            {reg2dp_op_en_reg[1:0], reg2dp_op_en_ori};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    reg2dp_op_en_reg <= {3{1'b0}};
-  end else begin
-  reg2dp_op_en_reg <= reg2dp_op_en_reg_w;
-  end
-end
-assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
-assign slcg_op_en_d0 = {4{reg2dp_op_en_ori}};
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d1 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d1 <= slcg_op_en_d0;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d2 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d2 <= slcg_op_en_d1;
-  end
-end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
-  if (!nvdla_core_rstn) begin
-    slcg_op_en_d3 <= {4{1'b0}};
-  end else begin
-  slcg_op_en_d3 <= slcg_op_en_d2;
-  end
-end
-assign slcg_op_en = slcg_op_en_d3;
+assign reg2dp_d0_op_en_w = sdp2reg_d0_op_en;
+assign reg2dp_d1_op_en_w = sdp2reg_d1_op_en;
+assign reg2dp_op_en = sdp2reg_op_en;
+assign slcg_op_en = {4{sdp2reg_op_en}};
 ////////////////////////////////////////////////////////////////////////
 // //
 // GENERATE ACCESS LOGIC TO EACH REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
 //EACH subunit has 4KB address space
-assign select_s = (reg_offset[11:0] < (32'ha008 & 32'hfff)) ? 1'b1: 1'b0;
-assign select_d0 = (reg_offset[11:0] >= (32'ha008 & 32'hfff)) & (reg2dp_producer == 1'h0 );
-assign select_d1 = (reg_offset[11:0] >= (32'ha008 & 32'hfff)) & (reg2dp_producer == 1'h1 );
+assign select_s = (reg_offset[11:0] < (32'h8040 & 32'hfff)) ? 1'b1: 1'b0;
+assign select_d0 = (reg_offset[11:0] >= (32'h8040 & 32'hfff)) & (sdp2reg_producer == 1'h0 );
+assign select_d1 = (reg_offset[11:0] >= (32'h8040 & 32'hfff)) & (sdp2reg_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
-assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
-assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;
+assign d0_reg_wr_en = reg_wr_en & select_d0 & ~sdp2reg_d0_op_en;
+assign d1_reg_wr_en = reg_wr_en & select_d1 & ~sdp2reg_d1_op_en;
 assign s_reg_offset = reg_offset;
 assign d0_reg_offset = reg_offset;
 assign d1_reg_offset = reg_offset;
@@ -908,326 +775,326 @@ end
 // //
 ////////////////////////////////////////////////////////////////////////
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bn_base_addr_high
   or reg2dp_d0_bn_base_addr_high
   ) begin
-    reg2dp_bn_base_addr_high = dp2reg_consumer ? reg2dp_d1_bn_base_addr_high : reg2dp_d0_bn_base_addr_high;
+    reg2dp_bn_base_addr_high = sdp2reg_consumer ? reg2dp_d1_bn_base_addr_high : reg2dp_d0_bn_base_addr_high;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bn_base_addr_low
   or reg2dp_d0_bn_base_addr_low
   ) begin
-    reg2dp_bn_base_addr_low = dp2reg_consumer ? reg2dp_d1_bn_base_addr_low : reg2dp_d0_bn_base_addr_low;
+    reg2dp_bn_base_addr_low = sdp2reg_consumer ? reg2dp_d1_bn_base_addr_low : reg2dp_d0_bn_base_addr_low;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bn_batch_stride
   or reg2dp_d0_bn_batch_stride
   ) begin
-    reg2dp_bn_batch_stride = dp2reg_consumer ? reg2dp_d1_bn_batch_stride : reg2dp_d0_bn_batch_stride;
+    reg2dp_bn_batch_stride = sdp2reg_consumer ? reg2dp_d1_bn_batch_stride : reg2dp_d0_bn_batch_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bn_line_stride
   or reg2dp_d0_bn_line_stride
   ) begin
-    reg2dp_bn_line_stride = dp2reg_consumer ? reg2dp_d1_bn_line_stride : reg2dp_d0_bn_line_stride;
+    reg2dp_bn_line_stride = sdp2reg_consumer ? reg2dp_d1_bn_line_stride : reg2dp_d0_bn_line_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bn_surface_stride
   or reg2dp_d0_bn_surface_stride
   ) begin
-    reg2dp_bn_surface_stride = dp2reg_consumer ? reg2dp_d1_bn_surface_stride : reg2dp_d0_bn_surface_stride;
+    reg2dp_bn_surface_stride = sdp2reg_consumer ? reg2dp_d1_bn_surface_stride : reg2dp_d0_bn_surface_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_brdma_data_mode
   or reg2dp_d0_brdma_data_mode
   ) begin
-    reg2dp_brdma_data_mode = dp2reg_consumer ? reg2dp_d1_brdma_data_mode : reg2dp_d0_brdma_data_mode;
+    reg2dp_brdma_data_mode = sdp2reg_consumer ? reg2dp_d1_brdma_data_mode : reg2dp_d0_brdma_data_mode;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_brdma_data_size
   or reg2dp_d0_brdma_data_size
   ) begin
-    reg2dp_brdma_data_size = dp2reg_consumer ? reg2dp_d1_brdma_data_size : reg2dp_d0_brdma_data_size;
+    reg2dp_brdma_data_size = sdp2reg_consumer ? reg2dp_d1_brdma_data_size : reg2dp_d0_brdma_data_size;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_brdma_data_use
   or reg2dp_d0_brdma_data_use
   ) begin
-    reg2dp_brdma_data_use = dp2reg_consumer ? reg2dp_d1_brdma_data_use : reg2dp_d0_brdma_data_use;
+    reg2dp_brdma_data_use = sdp2reg_consumer ? reg2dp_d1_brdma_data_use : reg2dp_d0_brdma_data_use;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_brdma_disable
   or reg2dp_d0_brdma_disable
   ) begin
-    reg2dp_brdma_disable = dp2reg_consumer ? reg2dp_d1_brdma_disable : reg2dp_d0_brdma_disable;
+    reg2dp_brdma_disable = sdp2reg_consumer ? reg2dp_d1_brdma_disable : reg2dp_d0_brdma_disable;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_brdma_ram_type
   or reg2dp_d0_brdma_ram_type
   ) begin
-    reg2dp_brdma_ram_type = dp2reg_consumer ? reg2dp_d1_brdma_ram_type : reg2dp_d0_brdma_ram_type;
+    reg2dp_brdma_ram_type = sdp2reg_consumer ? reg2dp_d1_brdma_ram_type : reg2dp_d0_brdma_ram_type;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bs_base_addr_high
   or reg2dp_d0_bs_base_addr_high
   ) begin
-    reg2dp_bs_base_addr_high = dp2reg_consumer ? reg2dp_d1_bs_base_addr_high : reg2dp_d0_bs_base_addr_high;
+    reg2dp_bs_base_addr_high = sdp2reg_consumer ? reg2dp_d1_bs_base_addr_high : reg2dp_d0_bs_base_addr_high;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bs_base_addr_low
   or reg2dp_d0_bs_base_addr_low
   ) begin
-    reg2dp_bs_base_addr_low = dp2reg_consumer ? reg2dp_d1_bs_base_addr_low : reg2dp_d0_bs_base_addr_low;
+    reg2dp_bs_base_addr_low = sdp2reg_consumer ? reg2dp_d1_bs_base_addr_low : reg2dp_d0_bs_base_addr_low;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bs_batch_stride
   or reg2dp_d0_bs_batch_stride
   ) begin
-    reg2dp_bs_batch_stride = dp2reg_consumer ? reg2dp_d1_bs_batch_stride : reg2dp_d0_bs_batch_stride;
+    reg2dp_bs_batch_stride = sdp2reg_consumer ? reg2dp_d1_bs_batch_stride : reg2dp_d0_bs_batch_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bs_line_stride
   or reg2dp_d0_bs_line_stride
   ) begin
-    reg2dp_bs_line_stride = dp2reg_consumer ? reg2dp_d1_bs_line_stride : reg2dp_d0_bs_line_stride;
+    reg2dp_bs_line_stride = sdp2reg_consumer ? reg2dp_d1_bs_line_stride : reg2dp_d0_bs_line_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_bs_surface_stride
   or reg2dp_d0_bs_surface_stride
   ) begin
-    reg2dp_bs_surface_stride = dp2reg_consumer ? reg2dp_d1_bs_surface_stride : reg2dp_d0_bs_surface_stride;
+    reg2dp_bs_surface_stride = sdp2reg_consumer ? reg2dp_d1_bs_surface_stride : reg2dp_d0_bs_surface_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_channel
   or reg2dp_d0_channel
   ) begin
-    reg2dp_channel = dp2reg_consumer ? reg2dp_d1_channel : reg2dp_d0_channel;
+    reg2dp_channel = sdp2reg_consumer ? reg2dp_d1_channel : reg2dp_d0_channel;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_height
   or reg2dp_d0_height
   ) begin
-    reg2dp_height = dp2reg_consumer ? reg2dp_d1_height : reg2dp_d0_height;
+    reg2dp_height = sdp2reg_consumer ? reg2dp_d1_height : reg2dp_d0_height;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_width
   or reg2dp_d0_width
   ) begin
-    reg2dp_width = dp2reg_consumer ? reg2dp_d1_width : reg2dp_d0_width;
+    reg2dp_width = sdp2reg_consumer ? reg2dp_d1_width : reg2dp_d0_width;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_erdma_data_mode
   or reg2dp_d0_erdma_data_mode
   ) begin
-    reg2dp_erdma_data_mode = dp2reg_consumer ? reg2dp_d1_erdma_data_mode : reg2dp_d0_erdma_data_mode;
+    reg2dp_erdma_data_mode = sdp2reg_consumer ? reg2dp_d1_erdma_data_mode : reg2dp_d0_erdma_data_mode;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_erdma_data_size
   or reg2dp_d0_erdma_data_size
   ) begin
-    reg2dp_erdma_data_size = dp2reg_consumer ? reg2dp_d1_erdma_data_size : reg2dp_d0_erdma_data_size;
+    reg2dp_erdma_data_size = sdp2reg_consumer ? reg2dp_d1_erdma_data_size : reg2dp_d0_erdma_data_size;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_erdma_data_use
   or reg2dp_d0_erdma_data_use
   ) begin
-    reg2dp_erdma_data_use = dp2reg_consumer ? reg2dp_d1_erdma_data_use : reg2dp_d0_erdma_data_use;
+    reg2dp_erdma_data_use = sdp2reg_consumer ? reg2dp_d1_erdma_data_use : reg2dp_d0_erdma_data_use;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_erdma_disable
   or reg2dp_d0_erdma_disable
   ) begin
-    reg2dp_erdma_disable = dp2reg_consumer ? reg2dp_d1_erdma_disable : reg2dp_d0_erdma_disable;
+    reg2dp_erdma_disable = sdp2reg_consumer ? reg2dp_d1_erdma_disable : reg2dp_d0_erdma_disable;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_erdma_ram_type
   or reg2dp_d0_erdma_ram_type
   ) begin
-    reg2dp_erdma_ram_type = dp2reg_consumer ? reg2dp_d1_erdma_ram_type : reg2dp_d0_erdma_ram_type;
+    reg2dp_erdma_ram_type = sdp2reg_consumer ? reg2dp_d1_erdma_ram_type : reg2dp_d0_erdma_ram_type;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_ew_base_addr_high
   or reg2dp_d0_ew_base_addr_high
   ) begin
-    reg2dp_ew_base_addr_high = dp2reg_consumer ? reg2dp_d1_ew_base_addr_high : reg2dp_d0_ew_base_addr_high;
+    reg2dp_ew_base_addr_high = sdp2reg_consumer ? reg2dp_d1_ew_base_addr_high : reg2dp_d0_ew_base_addr_high;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_ew_base_addr_low
   or reg2dp_d0_ew_base_addr_low
   ) begin
-    reg2dp_ew_base_addr_low = dp2reg_consumer ? reg2dp_d1_ew_base_addr_low : reg2dp_d0_ew_base_addr_low;
+    reg2dp_ew_base_addr_low = sdp2reg_consumer ? reg2dp_d1_ew_base_addr_low : reg2dp_d0_ew_base_addr_low;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_ew_batch_stride
   or reg2dp_d0_ew_batch_stride
   ) begin
-    reg2dp_ew_batch_stride = dp2reg_consumer ? reg2dp_d1_ew_batch_stride : reg2dp_d0_ew_batch_stride;
+    reg2dp_ew_batch_stride = sdp2reg_consumer ? reg2dp_d1_ew_batch_stride : reg2dp_d0_ew_batch_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_ew_line_stride
   or reg2dp_d0_ew_line_stride
   ) begin
-    reg2dp_ew_line_stride = dp2reg_consumer ? reg2dp_d1_ew_line_stride : reg2dp_d0_ew_line_stride;
+    reg2dp_ew_line_stride = sdp2reg_consumer ? reg2dp_d1_ew_line_stride : reg2dp_d0_ew_line_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_ew_surface_stride
   or reg2dp_d0_ew_surface_stride
   ) begin
-    reg2dp_ew_surface_stride = dp2reg_consumer ? reg2dp_d1_ew_surface_stride : reg2dp_d0_ew_surface_stride;
+    reg2dp_ew_surface_stride = sdp2reg_consumer ? reg2dp_d1_ew_surface_stride : reg2dp_d0_ew_surface_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_batch_number
   or reg2dp_d0_batch_number
   ) begin
-    reg2dp_batch_number = dp2reg_consumer ? reg2dp_d1_batch_number : reg2dp_d0_batch_number;
+    reg2dp_batch_number = sdp2reg_consumer ? reg2dp_d1_batch_number : reg2dp_d0_batch_number;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_flying_mode
   or reg2dp_d0_flying_mode
   ) begin
-    reg2dp_flying_mode = dp2reg_consumer ? reg2dp_d1_flying_mode : reg2dp_d0_flying_mode;
+    reg2dp_flying_mode = sdp2reg_consumer ? reg2dp_d1_flying_mode : reg2dp_d0_flying_mode;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_in_precision
   or reg2dp_d0_in_precision
   ) begin
-    reg2dp_in_precision = dp2reg_consumer ? reg2dp_d1_in_precision : reg2dp_d0_in_precision;
+    reg2dp_in_precision = sdp2reg_consumer ? reg2dp_d1_in_precision : reg2dp_d0_in_precision;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_out_precision
   or reg2dp_d0_out_precision
   ) begin
-    reg2dp_out_precision = dp2reg_consumer ? reg2dp_d1_out_precision : reg2dp_d0_out_precision;
+    reg2dp_out_precision = sdp2reg_consumer ? reg2dp_d1_out_precision : reg2dp_d0_out_precision;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_proc_precision
   or reg2dp_d0_proc_precision
   ) begin
-    reg2dp_proc_precision = dp2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
+    reg2dp_proc_precision = sdp2reg_consumer ? reg2dp_d1_proc_precision : reg2dp_d0_proc_precision;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_winograd
   or reg2dp_d0_winograd
   ) begin
-    reg2dp_winograd = dp2reg_consumer ? reg2dp_d1_winograd : reg2dp_d0_winograd;
+    reg2dp_winograd = sdp2reg_consumer ? reg2dp_d1_winograd : reg2dp_d0_winograd;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_nrdma_data_mode
   or reg2dp_d0_nrdma_data_mode
   ) begin
-    reg2dp_nrdma_data_mode = dp2reg_consumer ? reg2dp_d1_nrdma_data_mode : reg2dp_d0_nrdma_data_mode;
+    reg2dp_nrdma_data_mode = sdp2reg_consumer ? reg2dp_d1_nrdma_data_mode : reg2dp_d0_nrdma_data_mode;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_nrdma_data_size
   or reg2dp_d0_nrdma_data_size
   ) begin
-    reg2dp_nrdma_data_size = dp2reg_consumer ? reg2dp_d1_nrdma_data_size : reg2dp_d0_nrdma_data_size;
+    reg2dp_nrdma_data_size = sdp2reg_consumer ? reg2dp_d1_nrdma_data_size : reg2dp_d0_nrdma_data_size;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_nrdma_data_use
   or reg2dp_d0_nrdma_data_use
   ) begin
-    reg2dp_nrdma_data_use = dp2reg_consumer ? reg2dp_d1_nrdma_data_use : reg2dp_d0_nrdma_data_use;
+    reg2dp_nrdma_data_use = sdp2reg_consumer ? reg2dp_d1_nrdma_data_use : reg2dp_d0_nrdma_data_use;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_nrdma_disable
   or reg2dp_d0_nrdma_disable
   ) begin
-    reg2dp_nrdma_disable = dp2reg_consumer ? reg2dp_d1_nrdma_disable : reg2dp_d0_nrdma_disable;
+    reg2dp_nrdma_disable = sdp2reg_consumer ? reg2dp_d1_nrdma_disable : reg2dp_d0_nrdma_disable;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_nrdma_ram_type
   or reg2dp_d0_nrdma_ram_type
   ) begin
-    reg2dp_nrdma_ram_type = dp2reg_consumer ? reg2dp_d1_nrdma_ram_type : reg2dp_d0_nrdma_ram_type;
+    reg2dp_nrdma_ram_type = sdp2reg_consumer ? reg2dp_d1_nrdma_ram_type : reg2dp_d0_nrdma_ram_type;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_perf_dma_en
   or reg2dp_d0_perf_dma_en
   ) begin
-    reg2dp_perf_dma_en = dp2reg_consumer ? reg2dp_d1_perf_dma_en : reg2dp_d0_perf_dma_en;
+    reg2dp_perf_dma_en = sdp2reg_consumer ? reg2dp_d1_perf_dma_en : reg2dp_d0_perf_dma_en;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_perf_nan_inf_count_en
   or reg2dp_d0_perf_nan_inf_count_en
   ) begin
-    reg2dp_perf_nan_inf_count_en = dp2reg_consumer ? reg2dp_d1_perf_nan_inf_count_en : reg2dp_d0_perf_nan_inf_count_en;
+    reg2dp_perf_nan_inf_count_en = sdp2reg_consumer ? reg2dp_d1_perf_nan_inf_count_en : reg2dp_d0_perf_nan_inf_count_en;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_src_base_addr_high
   or reg2dp_d0_src_base_addr_high
   ) begin
-    reg2dp_src_base_addr_high = dp2reg_consumer ? reg2dp_d1_src_base_addr_high : reg2dp_d0_src_base_addr_high;
+    reg2dp_src_base_addr_high = sdp2reg_consumer ? reg2dp_d1_src_base_addr_high : reg2dp_d0_src_base_addr_high;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_src_base_addr_low
   or reg2dp_d0_src_base_addr_low
   ) begin
-    reg2dp_src_base_addr_low = dp2reg_consumer ? reg2dp_d1_src_base_addr_low : reg2dp_d0_src_base_addr_low;
+    reg2dp_src_base_addr_low = sdp2reg_consumer ? reg2dp_d1_src_base_addr_low : reg2dp_d0_src_base_addr_low;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_src_ram_type
   or reg2dp_d0_src_ram_type
   ) begin
-    reg2dp_src_ram_type = dp2reg_consumer ? reg2dp_d1_src_ram_type : reg2dp_d0_src_ram_type;
+    reg2dp_src_ram_type = sdp2reg_consumer ? reg2dp_d1_src_ram_type : reg2dp_d0_src_ram_type;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_src_line_stride
   or reg2dp_d0_src_line_stride
   ) begin
-    reg2dp_src_line_stride = dp2reg_consumer ? reg2dp_d1_src_line_stride : reg2dp_d0_src_line_stride;
+    reg2dp_src_line_stride = sdp2reg_consumer ? reg2dp_d1_src_line_stride : reg2dp_d0_src_line_stride;
 end
 always @(
-  dp2reg_consumer
+  sdp2reg_consumer
   or reg2dp_d1_src_surface_stride
   or reg2dp_d0_src_surface_stride
   ) begin
-    reg2dp_src_surface_stride = dp2reg_consumer ? reg2dp_d1_src_surface_stride : reg2dp_d0_src_surface_stride;
+    reg2dp_src_surface_stride = sdp2reg_consumer ? reg2dp_d1_src_surface_stride : reg2dp_d0_src_surface_stride;
 end
 ////////////////////////////////////////////////////////////////////////
 // //
@@ -1237,20 +1104,20 @@ end
 // USER logic can be put here:
 //////// Dual Flop Write Control////////
 always @(
-  reg2dp_d0_op_en
+  sdp2reg_d0_op_en
   or reg2dp_d0_op_en_w
   ) begin
-    dp2reg_d0_set = reg2dp_d0_op_en & ~reg2dp_d0_op_en_w;
-    dp2reg_d0_clr = ~reg2dp_d0_op_en & reg2dp_d0_op_en_w;
-    dp2reg_d0_reg = reg2dp_d0_op_en ^ reg2dp_d0_op_en_w;
+    dp2reg_d0_set = sdp2reg_d0_op_en & ~reg2dp_d0_op_en_w;
+    dp2reg_d0_clr = ~sdp2reg_d0_op_en & reg2dp_d0_op_en_w;
+    dp2reg_d0_reg = sdp2reg_d0_op_en ^ reg2dp_d0_op_en_w;
 end
 always @(
-  reg2dp_d1_op_en
+  sdp2reg_d1_op_en
   or reg2dp_d1_op_en_w
   ) begin
-    dp2reg_d1_set = reg2dp_d1_op_en & ~reg2dp_d1_op_en_w;
-    dp2reg_d1_clr = ~reg2dp_d1_op_en & reg2dp_d1_op_en_w;
-    dp2reg_d1_reg = reg2dp_d1_op_en ^ reg2dp_d1_op_en_w;
+    dp2reg_d1_set = sdp2reg_d1_op_en & ~reg2dp_d1_op_en_w;
+    dp2reg_d1_clr = ~sdp2reg_d1_op_en & reg2dp_d1_op_en_w;
+    dp2reg_d1_reg = sdp2reg_d1_op_en ^ reg2dp_d1_op_en_w;
 end
 //////// for overflow counting register ////////
 assign dp2reg_d0_status_nan_input_num_w = (dp2reg_d0_set) ? dp2reg_status_nan_input_num[31:0] :

@@ -121,6 +121,11 @@ module NV_NVDLA_SDP_reg (
   ,reg2dp_nan_to_zero //|> o
   ,reg2dp_ncore_slcg_op_en //|> o
   ,reg2dp_op_en //|> o
+  ,sdp_reg2dp_consumer //|> o
+  ,sdp_reg2dp_d0_op_en //|> o
+  ,sdp_reg2dp_d1_op_en //|> o
+  ,sdp_reg2dp_op_en //|> o
+  ,sdp_reg2dp_producer //|> o
   ,reg2dp_out_precision //|> o
   ,reg2dp_output_dst //|> o
   ,reg2dp_perf_dma_en //|> o
@@ -239,6 +244,11 @@ output reg2dp_lut_uflow_priority;
 output reg2dp_nan_to_zero;
 output reg2dp_ncore_slcg_op_en;
 output reg2dp_op_en;
+output sdp_reg2dp_consumer;
+output sdp_reg2dp_d0_op_en;
+output sdp_reg2dp_d1_op_en;
+output sdp_reg2dp_op_en;
+output sdp_reg2dp_producer;
 output [1:0] reg2dp_out_precision;
 output reg2dp_output_dst;
 output reg2dp_perf_dma_en;
@@ -931,6 +941,11 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   end
 end
 assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
+assign sdp_reg2dp_consumer = dp2reg_consumer;
+assign sdp_reg2dp_d0_op_en = reg2dp_d0_op_en;
+assign sdp_reg2dp_d1_op_en = reg2dp_d1_op_en;
+assign sdp_reg2dp_op_en = reg2dp_op_en;
+assign sdp_reg2dp_producer = reg2dp_producer;
 assign slcg_op_en_d0 = {4{reg2dp_op_en_ori}};
 always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   if (!nvdla_core_rstn) begin
@@ -960,9 +975,9 @@ assign slcg_op_en = slcg_op_en_d3;
 // //
 ////////////////////////////////////////////////////////////////////////
 //EACH subunit has 4KB address space
-assign select_s = (reg_offset[11:0] < (32'hb038 & 32'hfff)) ? 1'b1: 1'b0;
-assign select_d0 = (reg_offset[11:0] >= (32'hb038 & 32'hfff)) & (reg2dp_producer == 1'h0 );
-assign select_d1 = (reg_offset[11:0] >= (32'hb038 & 32'hfff)) & (reg2dp_producer == 1'h1 );
+assign select_s = (reg_offset[11:0] < (32'h9040 & 32'hfff)) ? 1'b1: 1'b0;
+assign select_d0 = (reg_offset[11:0] >= (32'h9040 & 32'hfff)) & (reg2dp_producer == 1'h0 );
+assign select_d1 = (reg_offset[11:0] >= (32'h9040 & 32'hfff)) & (reg2dp_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
 assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
 assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;
@@ -1675,7 +1690,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   end
 end
 //assign reg2dp_lut_int_addr_trigger = lut_int_addr_trigger;
-assign lut_int_data_rd_trigger = reg_rd_en & ( {20'h0,reg_offset[11:0]}==(32'hb00c & 32'h00000fff));
+assign lut_int_data_rd_trigger = reg_rd_en & ( {20'h0,reg_offset[11:0]}==(32'h900c & 32'h00000fff));
 always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   if (!nvdla_core_rstn) begin
     lut_int_data_wr_trigger <= 1'b0;

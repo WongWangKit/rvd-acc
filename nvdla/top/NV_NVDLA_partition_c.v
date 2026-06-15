@@ -87,6 +87,11 @@ module NV_NVDLA_partition_c (
   ,tmc2slcg_disable_clock_gating //|< i
   ,cdma2csb_resp_pd //|> o
   ,cdma2csb_resp_valid //|> o
+  ,cdma_reg2dp_consumer //|> o
+  ,cdma_reg2dp_d0_op_en //|> o
+  ,cdma_reg2dp_d1_op_en //|> o
+  ,cdma_reg2dp_op_en //|> o
+  ,cdma_reg2dp_producer //|> o
   ,cdma_dat2glb_done_intr_pd //|> o
   ,cdma_dat2mcif_rd_req_pd //|> o
   ,cdma_dat2mcif_rd_req_valid //|> o
@@ -182,6 +187,11 @@ input tmc2slcg_disable_clock_gating;
 input accu2sc_credit_vld; /* data valid */
 input [2:0] accu2sc_credit_size;
 output cdma2csb_resp_valid; /* data valid */
+output cdma_reg2dp_consumer;
+output cdma_reg2dp_d0_op_en;
+output cdma_reg2dp_d1_op_en;
+output cdma_reg2dp_op_en;
+output cdma_reg2dp_producer;
 output [33:0] cdma2csb_resp_pd; /* pkt_id_width=1 pkt_widths=33,33  */
 output [1:0] cdma_dat2glb_done_intr_pd;
 output cdma_dat2mcif_rd_req_valid; /* data valid */
@@ -437,6 +447,11 @@ NV_NVDLA_cdma u_NV_NVDLA_cdma (
    .nvdla_core_clk (nvdla_core_clk)
   ,.nvdla_core_rstn (nvdla_core_rstn)
   ,.cdma2csb_resp_valid (cdma2csb_resp_valid)
+  ,.cdma_reg2dp_consumer (cdma_reg2dp_consumer)
+  ,.cdma_reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
+  ,.cdma_reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
+  ,.cdma_reg2dp_op_en (cdma_reg2dp_op_en)
+  ,.cdma_reg2dp_producer (cdma_reg2dp_producer)
   ,.cdma2csb_resp_pd (cdma2csb_resp_pd)
   ,.cdma2sc_dat_pending_ack (cdma2sc_dat_pending_ack)
   ,.cdma2sc_wt_pending_ack (cdma2sc_wt_pending_ack)
@@ -681,6 +696,11 @@ NV_NVDLA_csc u_NV_NVDLA_csc (
   ,.cdma2sc_dat_pending_ack (cdma2sc_dat_pending_ack) //|< w
   ,.cdma2sc_wt_pending_ack (cdma2sc_wt_pending_ack) //|< w
   ,.csb2csc_req_pvld (csb2csc_req_pvld) //|< i
+  ,.cdma2reg_consumer (cdma_reg2dp_consumer) //|< w
+  ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en) //|< w
+  ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en) //|< w
+  ,.cdma2reg_op_en (cdma_reg2dp_op_en) //|< w
+  ,.cdma2reg_producer (cdma_reg2dp_producer) //|< w
   ,.csb2csc_req_prdy (csb2csc_req_prdy) //|> o
   ,.csb2csc_req_pd (csb2csc_req_pd[62:0]) //|< i
   ,.csc2csb_resp_valid (csc2csb_resp_valid) //|> o

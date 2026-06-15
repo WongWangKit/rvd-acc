@@ -163,6 +163,11 @@ wire reg2dp_ecore_slcg_op_en;
 wire reg2dp_nan_to_zero;
 wire reg2dp_ncore_slcg_op_en;
 wire reg2dp_op_en;
+wire sdp_reg2dp_consumer;
+wire sdp_reg2dp_d0_op_en;
+wire sdp_reg2dp_d1_op_en;
+wire sdp_reg2dp_op_en;
+wire sdp_reg2dp_producer;
 wire [1:0] reg2dp_out_precision;
 wire reg2dp_output_dst;
 wire reg2dp_perf_dma_en;
@@ -200,6 +205,11 @@ NV_NVDLA_SDP_rdma u_rdma (
   ,.csb2sdp_rdma_req_pvld (csb2sdp_rdma_req_pvld)
   ,.csb2sdp_rdma_req_prdy (csb2sdp_rdma_req_prdy)
   ,.csb2sdp_rdma_req_pd (csb2sdp_rdma_req_pd[62:0])
+  ,.sdp2reg_consumer (sdp_reg2dp_consumer)
+  ,.sdp2reg_d0_op_en (sdp_reg2dp_d0_op_en)
+  ,.sdp2reg_d1_op_en (sdp_reg2dp_d1_op_en)
+  ,.sdp2reg_op_en (sdp_reg2dp_op_en)
+  ,.sdp2reg_producer (sdp_reg2dp_producer)
   ,.sdp_rdma2csb_resp_valid (sdp_rdma2csb_resp_valid)
   ,.sdp_rdma2csb_resp_pd (sdp_rdma2csb_resp_pd[33:0])
   ,.sdp_mrdma2cmux_valid (sdp_mrdma2cmux_valid)
@@ -409,6 +419,11 @@ NV_NVDLA_SDP_reg u_reg (
   ,.reg2dp_cvt_shift (reg2dp_cvt_shift[5:0])
   ,.reg2dp_wdma_slcg_op_en (reg2dp_wdma_slcg_op_en)
   ,.reg2dp_op_en (reg2dp_op_en)
+  ,.sdp_reg2dp_consumer (sdp_reg2dp_consumer)
+  ,.sdp_reg2dp_d0_op_en (sdp_reg2dp_d0_op_en)
+  ,.sdp_reg2dp_d1_op_en (sdp_reg2dp_d1_op_en)
+  ,.sdp_reg2dp_op_en (sdp_reg2dp_op_en)
+  ,.sdp_reg2dp_producer (sdp_reg2dp_producer)
   ,.reg2dp_flying_mode (reg2dp_flying_mode)
   ,.reg2dp_output_dst (reg2dp_output_dst)
   ,.reg2dp_batch_number (reg2dp_batch_number[4:0])
