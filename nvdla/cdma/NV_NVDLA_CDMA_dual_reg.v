@@ -325,61 +325,61 @@ reg [27:0] wmb_bytes;
 assign reg_offset_wr = {20'b0 , reg_offset};
 // SCR signals
 // Address decode
-wire nvdla_cdma_d_bank_0_wren = (reg_offset_wr == (32'h50bc & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_batch_number_0_wren = (reg_offset_wr == (32'h5058 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_batch_stride_0_wren = (reg_offset_wr == (32'h505c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_conv_stride_0_wren = (reg_offset_wr == (32'h50b0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_cvt_cfg_0_wren = (reg_offset_wr == (32'h50a4 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_cvt_offset_0_wren = (reg_offset_wr == (32'h50a8 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_cvt_scale_0_wren = (reg_offset_wr == (32'h50ac & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_cya_0_wren = (reg_offset_wr == (32'h50e8 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_addr_high_0_0_wren = (reg_offset_wr == (32'h5030 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_addr_high_1_0_wren = (reg_offset_wr == (32'h5038 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_addr_low_0_0_wren = (reg_offset_wr == (32'h5034 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_addr_low_1_0_wren = (reg_offset_wr == (32'h503c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_map_0_wren = (reg_offset_wr == (32'h504c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_dain_ram_type_0_wren = (reg_offset_wr == (32'h502c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_datain_format_0_wren = (reg_offset_wr == (32'h5018 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_datain_size_0_0_wren = (reg_offset_wr == (32'h501c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_datain_size_1_0_wren = (reg_offset_wr == (32'h5020 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_datain_size_ext_0_0_wren = (reg_offset_wr == (32'h5024 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_bank_0_wren = (reg_offset_wr == (32'h507c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_batch_number_0_wren = (reg_offset_wr == (32'h5800 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_batch_stride_0_wren = (reg_offset_wr == (32'h5804 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_conv_stride_0_wren = (reg_offset_wr == (32'h5074 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_cvt_cfg_0_wren = (reg_offset_wr == (32'h5808 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_cvt_offset_0_wren = (reg_offset_wr == (32'h580c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_cvt_scale_0_wren = (reg_offset_wr == (32'h5810 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_cya_0_wren = (reg_offset_wr == (32'h5814 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_addr_high_0_0_wren = (reg_offset_wr == (32'h5818 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_addr_high_1_0_wren = (reg_offset_wr == (32'h581c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_addr_low_0_0_wren = (reg_offset_wr == (32'h5050 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_addr_low_1_0_wren = (reg_offset_wr == (32'h5820 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_map_0_wren = (reg_offset_wr == (32'h505c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_dain_ram_type_0_wren = (reg_offset_wr == (32'h5824 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_datain_format_0_wren = (reg_offset_wr == (32'h5828 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_datain_size_0_0_wren = (reg_offset_wr == (32'h5044 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_datain_size_1_0_wren = (reg_offset_wr == (32'h5048 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_datain_size_ext_0_0_wren = (reg_offset_wr == (32'h504c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_cdma_d_entry_per_slice_0_wren = (reg_offset_wr == (32'h5060 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_fetch_grain_0_wren = (reg_offset_wr == (32'h5064 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_inf_input_data_num_0_wren = (reg_offset_wr == (32'h50cc & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_inf_input_weight_num_0_wren = (reg_offset_wr == (32'h50d0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_line_stride_0_wren = (reg_offset_wr == (32'h5040 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_line_uv_stride_0_wren = (reg_offset_wr == (32'h5044 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_mean_format_0_wren = (reg_offset_wr == (32'h5098 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_mean_global_0_0_wren = (reg_offset_wr == (32'h509c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_mean_global_1_0_wren = (reg_offset_wr == (32'h50a0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_misc_cfg_0_wren = (reg_offset_wr == (32'h5014 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_nan_flush_to_zero_0_wren = (reg_offset_wr == (32'h50c0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_nan_input_data_num_0_wren = (reg_offset_wr == (32'h50c4 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_nan_input_weight_num_0_wren = (reg_offset_wr == (32'h50c8 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_fetch_grain_0_wren = (reg_offset_wr == (32'h582c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_inf_input_data_num_0_wren = (reg_offset_wr == (32'h5830 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_inf_input_weight_num_0_wren = (reg_offset_wr == (32'h5834 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_line_stride_0_wren = (reg_offset_wr == (32'h5054 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_line_uv_stride_0_wren = (reg_offset_wr == (32'h5838 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_mean_format_0_wren = (reg_offset_wr == (32'h583c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_mean_global_0_0_wren = (reg_offset_wr == (32'h5840 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_mean_global_1_0_wren = (reg_offset_wr == (32'h5844 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_misc_cfg_0_wren = (reg_offset_wr == (32'h5040 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_nan_flush_to_zero_0_wren = (reg_offset_wr == (32'h5848 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_nan_input_data_num_0_wren = (reg_offset_wr == (32'h584c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_nan_input_weight_num_0_wren = (reg_offset_wr == (32'h5850 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_cdma_d_op_enable_0_wren = (reg_offset_wr == (32'h5010 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_perf_dat_read_latency_0_wren = (reg_offset_wr == (32'h50e0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_perf_dat_read_stall_0_wren = (reg_offset_wr == (32'h50d8 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_perf_enable_0_wren = (reg_offset_wr == (32'h50d4 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_perf_wt_read_latency_0_wren = (reg_offset_wr == (32'h50e4 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_perf_wt_read_stall_0_wren = (reg_offset_wr == (32'h50dc & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_pixel_offset_0_wren = (reg_offset_wr == (32'h5028 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_reserved_x_cfg_0_wren = (reg_offset_wr == (32'h5050 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_reserved_y_cfg_0_wren = (reg_offset_wr == (32'h5054 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_surf_stride_0_wren = (reg_offset_wr == (32'h5048 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_addr_high_0_wren = (reg_offset_wr == (32'h5078 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_addr_low_0_wren = (reg_offset_wr == (32'h507c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_bytes_0_wren = (reg_offset_wr == (32'h5080 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_format_0_wren = (reg_offset_wr == (32'h5068 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_ram_type_0_wren = (reg_offset_wr == (32'h5074 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_size_0_0_wren = (reg_offset_wr == (32'h506c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_weight_size_1_0_wren = (reg_offset_wr == (32'h5070 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_wgs_addr_high_0_wren = (reg_offset_wr == (32'h5084 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_wgs_addr_low_0_wren = (reg_offset_wr == (32'h5088 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_wmb_addr_high_0_wren = (reg_offset_wr == (32'h508c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_wmb_addr_low_0_wren = (reg_offset_wr == (32'h5090 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_wmb_bytes_0_wren = (reg_offset_wr == (32'h5094 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_zero_padding_0_wren = (reg_offset_wr == (32'h50b4 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_cdma_d_zero_padding_value_0_wren = (reg_offset_wr == (32'h50b8 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_perf_dat_read_latency_0_wren = (reg_offset_wr == (32'h5854 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_perf_dat_read_stall_0_wren = (reg_offset_wr == (32'h5858 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_perf_enable_0_wren = (reg_offset_wr == (32'h585c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_perf_wt_read_latency_0_wren = (reg_offset_wr == (32'h5860 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_perf_wt_read_stall_0_wren = (reg_offset_wr == (32'h5864 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_pixel_offset_0_wren = (reg_offset_wr == (32'h5868 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_reserved_x_cfg_0_wren = (reg_offset_wr == (32'h586c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_reserved_y_cfg_0_wren = (reg_offset_wr == (32'h5870 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_surf_stride_0_wren = (reg_offset_wr == (32'h5058 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_addr_high_0_wren = (reg_offset_wr == (32'h5874 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_addr_low_0_wren = (reg_offset_wr == (32'h506c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_bytes_0_wren = (reg_offset_wr == (32'h5070 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_format_0_wren = (reg_offset_wr == (32'h5878 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_ram_type_0_wren = (reg_offset_wr == (32'h587c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_size_0_0_wren = (reg_offset_wr == (32'h5064 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_weight_size_1_0_wren = (reg_offset_wr == (32'h5068 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_wgs_addr_high_0_wren = (reg_offset_wr == (32'h5880 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_wgs_addr_low_0_wren = (reg_offset_wr == (32'h5884 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_wmb_addr_high_0_wren = (reg_offset_wr == (32'h5888 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_wmb_addr_low_0_wren = (reg_offset_wr == (32'h588c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_wmb_bytes_0_wren = (reg_offset_wr == (32'h5890 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_zero_padding_0_wren = (reg_offset_wr == (32'h5078 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_cdma_d_zero_padding_value_0_wren = (reg_offset_wr == (32'h5894 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 assign nvdla_cdma_d_bank_0_out[31:0] = { 11'b0, weight_bank, 11'b0, data_bank };
 assign nvdla_cdma_d_batch_number_0_out[31:0] = { 27'b0, batches };
 assign nvdla_cdma_d_batch_stride_0_out[31:0] = { batch_stride };
@@ -498,169 +498,169 @@ always @(
   or nvdla_cdma_d_zero_padding_value_0_out
   ) begin
   case (reg_offset_rd_int)
-     (32'h50bc & 32'h00000fff): begin
+     (32'h507c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_bank_0_out ;
                             end
-     (32'h5058 & 32'h00000fff): begin
+     (32'h5800 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_batch_number_0_out ;
                             end
-     (32'h505c & 32'h00000fff): begin
+     (32'h5804 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_batch_stride_0_out ;
                             end
-     (32'h50b0 & 32'h00000fff): begin
+     (32'h5074 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_conv_stride_0_out ;
                             end
-     (32'h50a4 & 32'h00000fff): begin
+     (32'h5808 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_cvt_cfg_0_out ;
                             end
-     (32'h50a8 & 32'h00000fff): begin
+     (32'h580c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_cvt_offset_0_out ;
                             end
-     (32'h50ac & 32'h00000fff): begin
+     (32'h5810 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_cvt_scale_0_out ;
                             end
-     (32'h50e8 & 32'h00000fff): begin
+     (32'h5814 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_cya_0_out ;
                             end
-     (32'h5030 & 32'h00000fff): begin
+     (32'h5818 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_addr_high_0_0_out ;
                             end
-     (32'h5038 & 32'h00000fff): begin
+     (32'h581c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_addr_high_1_0_out ;
                             end
-     (32'h5034 & 32'h00000fff): begin
+     (32'h5050 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_addr_low_0_0_out ;
                             end
-     (32'h503c & 32'h00000fff): begin
+     (32'h5820 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_addr_low_1_0_out ;
                             end
-     (32'h504c & 32'h00000fff): begin
+     (32'h505c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_map_0_out ;
                             end
-     (32'h502c & 32'h00000fff): begin
+     (32'h5824 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_dain_ram_type_0_out ;
                             end
-     (32'h5018 & 32'h00000fff): begin
+     (32'h5828 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_datain_format_0_out ;
                             end
-     (32'h501c & 32'h00000fff): begin
+     (32'h5044 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_datain_size_0_0_out ;
                             end
-     (32'h5020 & 32'h00000fff): begin
+     (32'h5048 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_datain_size_1_0_out ;
                             end
-     (32'h5024 & 32'h00000fff): begin
+     (32'h504c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_datain_size_ext_0_0_out ;
                             end
      (32'h5060 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_entry_per_slice_0_out ;
                             end
-     (32'h5064 & 32'h00000fff): begin
+     (32'h582c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_fetch_grain_0_out ;
                             end
-     (32'h50cc & 32'h00000fff): begin
+     (32'h5830 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_inf_input_data_num_0_out ;
                             end
-     (32'h50d0 & 32'h00000fff): begin
+     (32'h5834 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_inf_input_weight_num_0_out ;
                             end
-     (32'h5040 & 32'h00000fff): begin
+     (32'h5054 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_line_stride_0_out ;
                             end
-     (32'h5044 & 32'h00000fff): begin
+     (32'h5838 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_line_uv_stride_0_out ;
                             end
-     (32'h5098 & 32'h00000fff): begin
+     (32'h583c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_mean_format_0_out ;
                             end
-     (32'h509c & 32'h00000fff): begin
+     (32'h5840 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_mean_global_0_0_out ;
                             end
-     (32'h50a0 & 32'h00000fff): begin
+     (32'h5844 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_mean_global_1_0_out ;
                             end
-     (32'h5014 & 32'h00000fff): begin
+     (32'h5040 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_misc_cfg_0_out ;
                             end
-     (32'h50c0 & 32'h00000fff): begin
+     (32'h5848 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_nan_flush_to_zero_0_out ;
                             end
-     (32'h50c4 & 32'h00000fff): begin
+     (32'h584c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_nan_input_data_num_0_out ;
                             end
-     (32'h50c8 & 32'h00000fff): begin
+     (32'h5850 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_nan_input_weight_num_0_out ;
                             end
      (32'h5010 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_op_enable_0_out ;
                             end
-     (32'h50e0 & 32'h00000fff): begin
+     (32'h5854 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_perf_dat_read_latency_0_out ;
                             end
-     (32'h50d8 & 32'h00000fff): begin
+     (32'h5858 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_perf_dat_read_stall_0_out ;
                             end
-     (32'h50d4 & 32'h00000fff): begin
+     (32'h585c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_perf_enable_0_out ;
                             end
-     (32'h50e4 & 32'h00000fff): begin
+     (32'h5860 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_perf_wt_read_latency_0_out ;
                             end
-     (32'h50dc & 32'h00000fff): begin
+     (32'h5864 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_perf_wt_read_stall_0_out ;
                             end
-     (32'h5028 & 32'h00000fff): begin
+     (32'h5868 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_pixel_offset_0_out ;
                             end
-     (32'h5050 & 32'h00000fff): begin
+     (32'h586c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_reserved_x_cfg_0_out ;
                             end
-     (32'h5054 & 32'h00000fff): begin
+     (32'h5870 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_reserved_y_cfg_0_out ;
                             end
-     (32'h5048 & 32'h00000fff): begin
+     (32'h5058 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_surf_stride_0_out ;
                             end
-     (32'h5078 & 32'h00000fff): begin
+     (32'h5874 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_addr_high_0_out ;
                             end
-     (32'h507c & 32'h00000fff): begin
+     (32'h506c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_addr_low_0_out ;
                             end
-     (32'h5080 & 32'h00000fff): begin
+     (32'h5070 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_bytes_0_out ;
                             end
-     (32'h5068 & 32'h00000fff): begin
+     (32'h5878 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_format_0_out ;
                             end
-     (32'h5074 & 32'h00000fff): begin
+     (32'h587c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_ram_type_0_out ;
                             end
-     (32'h506c & 32'h00000fff): begin
+     (32'h5064 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_size_0_0_out ;
                             end
-     (32'h5070 & 32'h00000fff): begin
+     (32'h5068 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_weight_size_1_0_out ;
                             end
-     (32'h5084 & 32'h00000fff): begin
+     (32'h5880 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_wgs_addr_high_0_out ;
                             end
-     (32'h5088 & 32'h00000fff): begin
+     (32'h5884 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_wgs_addr_low_0_out ;
                             end
-     (32'h508c & 32'h00000fff): begin
+     (32'h5888 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_wmb_addr_high_0_out ;
                             end
-     (32'h5090 & 32'h00000fff): begin
+     (32'h588c & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_wmb_addr_low_0_out ;
                             end
-     (32'h5094 & 32'h00000fff): begin
+     (32'h5890 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_wmb_bytes_0_out ;
                             end
-     (32'h50b4 & 32'h00000fff): begin
+     (32'h5078 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_zero_padding_0_out ;
                             end
-     (32'h50b8 & 32'h00000fff): begin
+     (32'h5894 & 32'h00000fff): begin
                             reg_rd_data = nvdla_cdma_d_zero_padding_value_0_out ;
                             end
     default: reg_rd_data = {32{1'b0}};
@@ -1048,26 +1048,26 @@ end
 always @(posedge nvdla_core_clk) begin
   if (reg_wr_en) begin
     case(reg_offset)
-      (32'h50bc & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BANK_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_bank_0_out, nvdla_cdma_d_bank_0_out);
-      (32'h5058 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BATCH_NUMBER_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_batch_number_0_out, nvdla_cdma_d_batch_number_0_out);
-      (32'h505c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BATCH_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_batch_stride_0_out, nvdla_cdma_d_batch_stride_0_out);
-      (32'h50b0 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CONV_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_conv_stride_0_out, nvdla_cdma_d_conv_stride_0_out);
-      (32'h50a4 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_cfg_0_out, nvdla_cdma_d_cvt_cfg_0_out);
-      (32'h50a8 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_OFFSET_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_offset_0_out, nvdla_cdma_d_cvt_offset_0_out);
-      (32'h50ac & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_SCALE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_scale_0_out, nvdla_cdma_d_cvt_scale_0_out);
-      (32'h50e8 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CYA_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cya_0_out, nvdla_cdma_d_cya_0_out);
-      (32'h5030 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_HIGH_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_high_0_0_out, nvdla_cdma_d_dain_addr_high_0_0_out);
-      (32'h5038 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_HIGH_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_high_1_0_out, nvdla_cdma_d_dain_addr_high_1_0_out);
-      (32'h5034 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_LOW_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_low_0_0_out, nvdla_cdma_d_dain_addr_low_0_0_out);
-      (32'h503c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_LOW_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_low_1_0_out, nvdla_cdma_d_dain_addr_low_1_0_out);
-      (32'h504c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_MAP_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_map_0_out, nvdla_cdma_d_dain_map_0_out);
-      (32'h502c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_RAM_TYPE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_ram_type_0_out, nvdla_cdma_d_dain_ram_type_0_out);
-      (32'h5018 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_format_0_out, nvdla_cdma_d_datain_format_0_out);
-      (32'h501c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_0_0_out, nvdla_cdma_d_datain_size_0_0_out);
-      (32'h5020 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_1_0_out, nvdla_cdma_d_datain_size_1_0_out);
-      (32'h5024 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_EXT_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_ext_0_0_out, nvdla_cdma_d_datain_size_ext_0_0_out);
+      (32'h507c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BANK_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_bank_0_out, nvdla_cdma_d_bank_0_out);
+      (32'h5800 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BATCH_NUMBER_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_batch_number_0_out, nvdla_cdma_d_batch_number_0_out);
+      (32'h5804 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_BATCH_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_batch_stride_0_out, nvdla_cdma_d_batch_stride_0_out);
+      (32'h5074 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CONV_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_conv_stride_0_out, nvdla_cdma_d_conv_stride_0_out);
+      (32'h5808 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_cfg_0_out, nvdla_cdma_d_cvt_cfg_0_out);
+      (32'h580c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_OFFSET_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_offset_0_out, nvdla_cdma_d_cvt_offset_0_out);
+      (32'h5810 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CVT_SCALE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cvt_scale_0_out, nvdla_cdma_d_cvt_scale_0_out);
+      (32'h5814 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_CYA_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_cya_0_out, nvdla_cdma_d_cya_0_out);
+      (32'h5818 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_HIGH_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_high_0_0_out, nvdla_cdma_d_dain_addr_high_0_0_out);
+      (32'h581c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_HIGH_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_high_1_0_out, nvdla_cdma_d_dain_addr_high_1_0_out);
+      (32'h5050 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_LOW_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_low_0_0_out, nvdla_cdma_d_dain_addr_low_0_0_out);
+      (32'h5820 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_ADDR_LOW_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_addr_low_1_0_out, nvdla_cdma_d_dain_addr_low_1_0_out);
+      (32'h505c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_MAP_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_map_0_out, nvdla_cdma_d_dain_map_0_out);
+      (32'h5824 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DAIN_RAM_TYPE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_dain_ram_type_0_out, nvdla_cdma_d_dain_ram_type_0_out);
+      (32'h5828 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_format_0_out, nvdla_cdma_d_datain_format_0_out);
+      (32'h5044 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_0_0_out, nvdla_cdma_d_datain_size_0_0_out);
+      (32'h5048 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_1_0_out, nvdla_cdma_d_datain_size_1_0_out);
+      (32'h504c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_DATAIN_SIZE_EXT_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_datain_size_ext_0_0_out, nvdla_cdma_d_datain_size_ext_0_0_out);
       (32'h5060 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_ENTRY_PER_SLICE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_entry_per_slice_0_out, nvdla_cdma_d_entry_per_slice_0_out);
-      (32'h5064 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_FETCH_GRAIN_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_fetch_grain_0_out, nvdla_cdma_d_fetch_grain_0_out);
+      (32'h582c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_FETCH_GRAIN_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_fetch_grain_0_out, nvdla_cdma_d_fetch_grain_0_out);
       (32'h50cc & 32'h00000fff): begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_INF_INPUT_DATA_NUM_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
@@ -1076,13 +1076,13 @@ always @(posedge nvdla_core_clk) begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_INF_INPUT_WEIGHT_NUM_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
         end
-      (32'h5040 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_LINE_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_line_stride_0_out, nvdla_cdma_d_line_stride_0_out);
-      (32'h5044 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_LINE_UV_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_line_uv_stride_0_out, nvdla_cdma_d_line_uv_stride_0_out);
-      (32'h5098 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_format_0_out, nvdla_cdma_d_mean_format_0_out);
-      (32'h509c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_GLOBAL_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_global_0_0_out, nvdla_cdma_d_mean_global_0_0_out);
-      (32'h50a0 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_GLOBAL_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_global_1_0_out, nvdla_cdma_d_mean_global_1_0_out);
-      (32'h5014 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MISC_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_misc_cfg_0_out, nvdla_cdma_d_misc_cfg_0_out);
-      (32'h50c0 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_NAN_FLUSH_TO_ZERO_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_nan_flush_to_zero_0_out, nvdla_cdma_d_nan_flush_to_zero_0_out);
+      (32'h5054 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_LINE_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_line_stride_0_out, nvdla_cdma_d_line_stride_0_out);
+      (32'h5838 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_LINE_UV_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_line_uv_stride_0_out, nvdla_cdma_d_line_uv_stride_0_out);
+      (32'h583c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_format_0_out, nvdla_cdma_d_mean_format_0_out);
+      (32'h5840 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_GLOBAL_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_global_0_0_out, nvdla_cdma_d_mean_global_0_0_out);
+      (32'h5844 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MEAN_GLOBAL_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_mean_global_1_0_out, nvdla_cdma_d_mean_global_1_0_out);
+      (32'h5040 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_MISC_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_misc_cfg_0_out, nvdla_cdma_d_misc_cfg_0_out);
+      (32'h5848 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_NAN_FLUSH_TO_ZERO_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_nan_flush_to_zero_0_out, nvdla_cdma_d_nan_flush_to_zero_0_out);
       (32'h50c4 & 32'h00000fff): begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_NAN_INPUT_DATA_NUM_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
@@ -1100,7 +1100,7 @@ always @(posedge nvdla_core_clk) begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_PERF_DAT_READ_STALL_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
         end
-      (32'h50d4 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_PERF_ENABLE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_perf_enable_0_out, nvdla_cdma_d_perf_enable_0_out);
+      (32'h585c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_PERF_ENABLE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_perf_enable_0_out, nvdla_cdma_d_perf_enable_0_out);
       (32'h50e4 & 32'h00000fff): begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_PERF_WT_READ_LATENCY_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
@@ -1109,24 +1109,24 @@ always @(posedge nvdla_core_clk) begin
           if (arreggen_dump) $display("%t:%m: read-only reg wr: NVDLA_CDMA_D_PERF_WT_READ_STALL_0 = 0x%h", $time, reg_wr_data);
           if (arreggen_abort_on_rowr) begin $display("ERROR: write to read-only register!"); $finish; end
         end
-      (32'h5028 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_PIXEL_OFFSET_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_pixel_offset_0_out, nvdla_cdma_d_pixel_offset_0_out);
-      (32'h5050 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_RESERVED_X_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_reserved_x_cfg_0_out, nvdla_cdma_d_reserved_x_cfg_0_out);
-      (32'h5054 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_RESERVED_Y_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_reserved_y_cfg_0_out, nvdla_cdma_d_reserved_y_cfg_0_out);
-      (32'h5048 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_SURF_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_surf_stride_0_out, nvdla_cdma_d_surf_stride_0_out);
-      (32'h5078 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_addr_high_0_out, nvdla_cdma_d_weight_addr_high_0_out);
-      (32'h507c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_addr_low_0_out, nvdla_cdma_d_weight_addr_low_0_out);
-      (32'h5080 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_BYTES_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_bytes_0_out, nvdla_cdma_d_weight_bytes_0_out);
-      (32'h5068 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_format_0_out, nvdla_cdma_d_weight_format_0_out);
-      (32'h5074 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_RAM_TYPE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_ram_type_0_out, nvdla_cdma_d_weight_ram_type_0_out);
-      (32'h506c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_SIZE_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_size_0_0_out, nvdla_cdma_d_weight_size_0_0_out);
-      (32'h5070 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_SIZE_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_size_1_0_out, nvdla_cdma_d_weight_size_1_0_out);
-      (32'h5084 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WGS_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wgs_addr_high_0_out, nvdla_cdma_d_wgs_addr_high_0_out);
-      (32'h5088 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WGS_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wgs_addr_low_0_out, nvdla_cdma_d_wgs_addr_low_0_out);
-      (32'h508c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_addr_high_0_out, nvdla_cdma_d_wmb_addr_high_0_out);
-      (32'h5090 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_addr_low_0_out, nvdla_cdma_d_wmb_addr_low_0_out);
-      (32'h5094 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_BYTES_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_bytes_0_out, nvdla_cdma_d_wmb_bytes_0_out);
-      (32'h50b4 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_ZERO_PADDING_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_zero_padding_0_out, nvdla_cdma_d_zero_padding_0_out);
-      (32'h50b8 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_ZERO_PADDING_VALUE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_zero_padding_value_0_out, nvdla_cdma_d_zero_padding_value_0_out);
+      (32'h5868 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_PIXEL_OFFSET_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_pixel_offset_0_out, nvdla_cdma_d_pixel_offset_0_out);
+      (32'h586c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_RESERVED_X_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_reserved_x_cfg_0_out, nvdla_cdma_d_reserved_x_cfg_0_out);
+      (32'h5870 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_RESERVED_Y_CFG_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_reserved_y_cfg_0_out, nvdla_cdma_d_reserved_y_cfg_0_out);
+      (32'h5058 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_SURF_STRIDE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_surf_stride_0_out, nvdla_cdma_d_surf_stride_0_out);
+      (32'h5874 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_addr_high_0_out, nvdla_cdma_d_weight_addr_high_0_out);
+      (32'h506c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_addr_low_0_out, nvdla_cdma_d_weight_addr_low_0_out);
+      (32'h5070 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_BYTES_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_bytes_0_out, nvdla_cdma_d_weight_bytes_0_out);
+      (32'h5878 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_FORMAT_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_format_0_out, nvdla_cdma_d_weight_format_0_out);
+      (32'h587c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_RAM_TYPE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_ram_type_0_out, nvdla_cdma_d_weight_ram_type_0_out);
+      (32'h5064 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_SIZE_0_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_size_0_0_out, nvdla_cdma_d_weight_size_0_0_out);
+      (32'h5068 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WEIGHT_SIZE_1_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_weight_size_1_0_out, nvdla_cdma_d_weight_size_1_0_out);
+      (32'h5880 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WGS_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wgs_addr_high_0_out, nvdla_cdma_d_wgs_addr_high_0_out);
+      (32'h5884 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WGS_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wgs_addr_low_0_out, nvdla_cdma_d_wgs_addr_low_0_out);
+      (32'h5888 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_ADDR_HIGH_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_addr_high_0_out, nvdla_cdma_d_wmb_addr_high_0_out);
+      (32'h588c & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_ADDR_LOW_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_addr_low_0_out, nvdla_cdma_d_wmb_addr_low_0_out);
+      (32'h5890 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_WMB_BYTES_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_wmb_bytes_0_out, nvdla_cdma_d_wmb_bytes_0_out);
+      (32'h5078 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_ZERO_PADDING_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_zero_padding_0_out, nvdla_cdma_d_zero_padding_0_out);
+      (32'h5894 & 32'h00000fff): if (arreggen_dump) $display("%t:%m: reg wr: NVDLA_CDMA_D_ZERO_PADDING_VALUE_0 = 0x%h (old value: 0x%h, 0x%b))", $time, reg_wr_data, nvdla_cdma_d_zero_padding_value_0_out, nvdla_cdma_d_zero_padding_value_0_out);
       default: begin
           if (arreggen_dump) $display("%t:%m: reg wr: Unknown register (0x%h) = 0x%h", $time, reg_offset, reg_wr_data);
           if (arreggen_abort_on_invalid_wr) begin $display("ERROR: write to undefined register!"); $finish; end
@@ -1137,3 +1137,4 @@ end
 // VCS coverage on
 // synopsys translate_on
 endmodule // NV_NVDLA_CDMA_dual_reg
+
