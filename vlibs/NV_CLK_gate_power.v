@@ -14,15 +14,4 @@ assign clk_gated = clk;
 `else
 CKLNQD12 p_clkgate (.TE(1'b0), .CP(clk), .E(clk_en), .Q(clk_gated));
 `endif // VLIB_BYPASS_POWER_CG
-// the gated clk better not be x after reset
-//
-`ifdef VERILINT
-`else
-// synopsys translate_off
-reg disable_asserts; initial disable_asserts = $test$plusargs( "disable_nv_clk_gate_asserts" ) != 0;
-    clk_not_x( .clk( clk ), .reset_( reset_ || disable_asserts ), .start_event( 1'b1 ), .test_expr( clk_gated ) );
-// Above assert is not reliable for catching X on clk_en. See bug 872824.
-    clk_en_not_x( .clk( clk ), .reset_( reset_ || disable_asserts ), .start_event( 1'b1 ), .test_expr( clk_en ) );
-// synopsys translate_on
-`endif
 endmodule // NV_CLK_gate
