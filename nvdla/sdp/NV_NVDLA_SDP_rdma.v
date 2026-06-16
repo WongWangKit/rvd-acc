@@ -59,7 +59,6 @@ module NV_NVDLA_SDP_rdma (
   ,sdp_mrdma2cmux_valid //|> o
   ,csb2sdp_rdma_req_pd //|< i
   ,csb2sdp_rdma_req_pvld //|< i
-  ,sdp2reg_consumer //|< i
   ,sdp2reg_d0_op_en //|< i
   ,sdp2reg_d1_op_en //|< i
   ,sdp2reg_op_en //|< i
@@ -78,7 +77,6 @@ input dla_clk_ovr_on_sync;
 input global_clk_ovr_on_sync;
 input tmc2slcg_disable_clock_gating;
 input csb2sdp_rdma_req_pvld;
-input sdp2reg_consumer;
 input sdp2reg_d0_op_en;
 input sdp2reg_d1_op_en;
 input sdp2reg_op_en;
@@ -363,7 +361,6 @@ NV_NVDLA_SDP_RDMA_reg u_reg (
   ,.nvdla_core_rstn (nvdla_core_rstn) //|< i
   ,.csb2sdp_rdma_req_pd (csb2sdp_rdma_req_pd[62:0]) //|< i
   ,.csb2sdp_rdma_req_pvld (csb2sdp_rdma_req_pvld) //|< i
-  ,.sdp2reg_consumer (sdp2reg_consumer) //|< i
   ,.sdp2reg_d0_op_en (sdp2reg_d0_op_en) //|< i
   ,.sdp2reg_d1_op_en (sdp2reg_d1_op_en) //|< i
   ,.sdp2reg_op_en (sdp2reg_op_en) //|< i

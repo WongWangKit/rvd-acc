@@ -120,11 +120,9 @@ module NV_NVDLA_SDP_reg (
   ,reg2dp_lut_uflow_priority //|> o
   ,reg2dp_nan_to_zero //|> o
   ,reg2dp_ncore_slcg_op_en //|> o
-  ,reg2dp_op_en //|> o
-  ,sdp_reg2dp_consumer //|> o
   ,sdp_reg2dp_d0_op_en //|> o
   ,sdp_reg2dp_d1_op_en //|> o
-  ,sdp_reg2dp_op_en //|> o
+  ,reg2dp_op_en //|> o
   ,sdp_reg2dp_producer //|> o
   ,reg2dp_out_precision //|> o
   ,reg2dp_output_dst //|> o
@@ -243,11 +241,9 @@ output reg2dp_lut_slcg_en;
 output reg2dp_lut_uflow_priority;
 output reg2dp_nan_to_zero;
 output reg2dp_ncore_slcg_op_en;
-output reg2dp_op_en;
-output sdp_reg2dp_consumer;
 output sdp_reg2dp_d0_op_en;
 output sdp_reg2dp_d1_op_en;
-output sdp_reg2dp_op_en;
+output reg2dp_op_en;
 output sdp_reg2dp_producer;
 output [1:0] reg2dp_out_precision;
 output reg2dp_output_dst;
@@ -941,10 +937,8 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   end
 end
 assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
-assign sdp_reg2dp_consumer = dp2reg_consumer;
 assign sdp_reg2dp_d0_op_en = reg2dp_d0_op_en;
 assign sdp_reg2dp_d1_op_en = reg2dp_d1_op_en;
-assign sdp_reg2dp_op_en = reg2dp_op_en;
 assign sdp_reg2dp_producer = reg2dp_producer;
 assign slcg_op_en_d0 = {4{reg2dp_op_en_ori}};
 always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin

@@ -18,7 +18,6 @@ module NV_NVDLA_cacc (
    cacc2sdp_ready //|< i
   ,csb2cacc_req_pd //|< i
   ,csb2cacc_req_pvld //|< i
-  ,cdma2reg_consumer //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
   ,cdma2reg_op_en //|< i
@@ -69,7 +68,6 @@ input nvdla_core_clk; /* csb2cacc_req, cacc2csb_resp, mac_a2accu, mac_b2accu, ca
 input nvdla_core_rstn; /* csb2cacc_req, cacc2csb_resp, mac_a2accu, mac_b2accu, cacc2sdp, accu2sc_credit, cacc2glb_done_intr */
 input [31:0] pwrbus_ram_pd;
 input csb2cacc_req_pvld; /* data valid */
-input cdma2reg_consumer;
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
 input cdma2reg_op_en;
@@ -167,7 +165,6 @@ NV_NVDLA_CACC_regfile u_regfile (
   ,.csb2cacc_req_pd (csb2cacc_req_pd) //|< i
   ,.csb2cacc_req_pvld (csb2cacc_req_pvld) //|< i
   ,.dp2reg_done (dp2reg_done) //|< w
-  ,.cdma2reg_consumer (cdma2reg_consumer) //|< i
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en) //|< i
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en) //|< i
   ,.cdma2reg_op_en (cdma2reg_op_en) //|< i

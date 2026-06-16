@@ -25,18 +25,16 @@ Important register/address reference:
 
 Recent design intent:
 
-- `CSC`, `CMAC`, and `CACC` no longer own independent `S_POINTER` or
-  `D_OP_ENABLE` behavior.
-- They follow `CDMA` shared group signals:
-  - producer/group id
-  - consumer
-  - `d0_op_en`
-  - `d1_op_en`
-  - combined `op_en`
-- `SDP_RDMA` follows `SDP` for the same kind of group/op enable signals.
+- `CSC`, `CMAC`, and `CACC` use `CDMA`'s `producer`, `d0_op_en`,
+  `d1_op_en`, and combined `op_en` values.
+- `CSC`, `CMAC`, and `CACC` still maintain their own `consumer`.
+- `SDP_RDMA` uses `SDP`'s `producer`, `d0_op_en`, `d1_op_en`, and combined
+  `op_en` values.
+- `SDP_RDMA` still maintains its own `consumer`.
 
-When touching these blocks, keep mux selection, write protection, status fields,
-and SLCG op enable consistent with the shared source.
+When touching these blocks, keep register group selection and op-en/write
+protection tied to the upstream block, but keep done-driven consumer updates
+local to the block.
 
 ## Address Alignment Notes
 

@@ -17,7 +17,6 @@
 module NV_NVDLA_cmac (
    csb2cmac_a_req_pd //|< i
   ,csb2cmac_a_req_pvld //|< i
-  ,cdma2reg_consumer //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
   ,cdma2reg_op_en //|< i
@@ -90,7 +89,6 @@ input nvdla_core_rstn;
 output cmac_a2csb_resp_valid; /* data valid */
 output [33:0] cmac_a2csb_resp_pd; /* pkt_id_width=1 pkt_widths=33,33  */
 input csb2cmac_a_req_pvld; /* data valid */
-input cdma2reg_consumer;
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
 input cdma2reg_op_en;
@@ -231,7 +229,6 @@ NV_NVDLA_CMAC_reg u_reg (
   ,.csb2cmac_a_req_pd (csb2cmac_a_req_pd) //|< i
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< i
   ,.dp2reg_done (dp2reg_done) //|< w
-  ,.cdma2reg_consumer (cdma2reg_consumer) //|< i
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en) //|< i
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en) //|< i
   ,.cdma2reg_op_en (cdma2reg_op_en) //|< i

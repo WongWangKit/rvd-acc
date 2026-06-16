@@ -17,7 +17,6 @@
 module NV_NVDLA_partition_m (
    csb2cmac_a_req_pd //|< i
   ,csb2cmac_a_req_pvld //|< i
-  ,cdma2reg_consumer //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
   ,cdma2reg_op_en //|< i
@@ -90,7 +89,6 @@ module NV_NVDLA_partition_m (
 input test_mode;
 input direct_reset_;
 input csb2cmac_a_req_pvld;
-input cdma2reg_consumer;
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
 input cdma2reg_op_en;
@@ -191,7 +189,6 @@ NV_NVDLA_cmac u_NV_NVDLA_cmac (
   ,.cmac_a2csb_resp_valid (cmac_a2csb_resp_valid) //|> o
   ,.cmac_a2csb_resp_pd (cmac_a2csb_resp_pd) //|> o
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< i
-  ,.cdma2reg_consumer (cdma2reg_consumer)
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en)
   ,.cdma2reg_op_en (cdma2reg_op_en)
