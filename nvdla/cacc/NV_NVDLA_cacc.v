@@ -20,7 +20,6 @@ module NV_NVDLA_cacc (
   ,csb2cacc_req_pvld //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
-  ,cdma2reg_op_en //|< i
   ,cdma2reg_producer //|< i
   ,dla_clk_ovr_on_sync //|< i
   ,global_clk_ovr_on_sync //|< i
@@ -70,7 +69,6 @@ input [31:0] pwrbus_ram_pd;
 input csb2cacc_req_pvld; /* data valid */
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
-input cdma2reg_op_en;
 input cdma2reg_producer;
 output csb2cacc_req_prdy; /* data return handshake */
 input [62:0] csb2cacc_req_pd;
@@ -167,7 +165,6 @@ NV_NVDLA_CACC_regfile u_regfile (
   ,.dp2reg_done (dp2reg_done) //|< w
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en) //|< i
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en) //|< i
-  ,.cdma2reg_op_en (cdma2reg_op_en) //|< i
   ,.cdma2reg_producer (cdma2reg_producer) //|< i
   ,.dp2reg_sat_count (dp2reg_sat_count) //|< w
   ,.cacc2csb_resp_pd (cacc2csb_resp_pd) //|> o

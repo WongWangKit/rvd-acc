@@ -205,7 +205,6 @@ NV_NVDLA_SDP_rdma u_rdma (
   ,.csb2sdp_rdma_req_pd (csb2sdp_rdma_req_pd[62:0])
   ,.sdp2reg_d0_op_en (sdp_reg2dp_d0_op_en)
   ,.sdp2reg_d1_op_en (sdp_reg2dp_d1_op_en)
-  ,.sdp2reg_op_en (reg2dp_op_en)
   ,.sdp2reg_producer (sdp_reg2dp_producer)
   ,.sdp_rdma2csb_resp_valid (sdp_rdma2csb_resp_valid)
   ,.sdp_rdma2csb_resp_pd (sdp_rdma2csb_resp_pd[33:0])

@@ -78,7 +78,6 @@ module NV_NVDLA_cdma (
   ,cdma2sc_wt_updt
   ,cdma_reg2dp_d0_op_en
   ,cdma_reg2dp_d1_op_en
-  ,cdma_reg2dp_op_en
   ,cdma_reg2dp_producer
   ,cdma_dat2glb_done_intr_pd
   ,cdma_dat2mcif_rd_req_pd
@@ -138,7 +137,6 @@ output [14:0] cdma2sc_wt_entries;
 output [8:0] cdma2sc_wmb_entries;
 output cdma_reg2dp_d0_op_en;
 output cdma_reg2dp_d1_op_en;
-output cdma_reg2dp_op_en;
 output cdma_reg2dp_producer;
 input sc2cdma_wt_updt;
 input [13:0] sc2cdma_wt_kernels;
@@ -314,7 +312,6 @@ wire [14:0] status2dma_wr_idx;
 wire [1:0] wt2status_state;
 assign cdma_reg2dp_d0_op_en = reg2dp_d0_op_en;
 assign cdma_reg2dp_d1_op_en = reg2dp_d1_op_en;
-assign cdma_reg2dp_op_en = reg2dp_op_en[0];
 ///////////////////////////////////////////////////////////////////////////
 //==========================================================
 // Regfile

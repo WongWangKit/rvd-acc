@@ -56,7 +56,6 @@ module NV_NVDLA_csc (
   ,csb2csc_req_pvld //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
-  ,cdma2reg_op_en //|< i
   ,cdma2reg_producer //|< i
   ,dla_clk_ovr_on_sync //|< i
   ,global_clk_ovr_on_sync //|< i
@@ -177,7 +176,6 @@ input cdma2sc_wt_pending_ack;
 input csb2csc_req_pvld; /* data valid */
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
-input cdma2reg_op_en;
 input cdma2reg_producer;
 output csb2csc_req_prdy; /* data return handshake */
 input [62:0] csb2csc_req_pd;
@@ -355,7 +353,6 @@ NV_NVDLA_CSC_regfile u_regfile (
   ,.dp2reg_done (dp2reg_done) //|< w
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en) //|< i
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en) //|< i
-  ,.cdma2reg_op_en (cdma2reg_op_en) //|< i
   ,.cdma2reg_producer (cdma2reg_producer) //|< i
   ,.csb2csc_req_prdy (csb2csc_req_prdy) //|> o
   ,.csc2csb_resp_pd (csc2csb_resp_pd[33:0]) //|> o

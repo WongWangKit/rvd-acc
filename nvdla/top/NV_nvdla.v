@@ -163,7 +163,6 @@ wire [33:0] cdma2csb_resp_pd;
 wire cdma2csb_resp_valid;
 wire cdma_reg2dp_d0_op_en;
 wire cdma_reg2dp_d1_op_en;
-wire cdma_reg2dp_op_en;
 wire cdma_reg2dp_producer;
 wire [1:0] cdma_dat2glb_done_intr_pd;
 wire [1:0] cdma_wt2glb_done_intr_pd;
@@ -480,7 +479,6 @@ NV_NVDLA_partition_c u_partition_c (
   ,.cdma2csb_resp_valid (cdma2csb_resp_valid)
   ,.cdma_reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.cdma_reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.cdma_reg2dp_op_en (cdma_reg2dp_op_en)
   ,.cdma_reg2dp_producer (cdma_reg2dp_producer)
   ,.cdma2csb_resp_pd (cdma2csb_resp_pd[33:0])
   ,.cdma_dat2glb_done_intr_pd (cdma_dat2glb_done_intr_pd[1:0])
@@ -584,7 +582,6 @@ NV_NVDLA_partition_m u_partition_ma (
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< w
   ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.cdma2reg_op_en (cdma_reg2dp_op_en)
   ,.cdma2reg_producer (cdma_reg2dp_producer)
   ,.csb2cmac_a_req_prdy (csb2cmac_a_req_prdy) //|> w
   ,.csb2cmac_a_req_pd (csb2cmac_a_req_pd) //|< w
@@ -656,7 +653,6 @@ NV_NVDLA_partition_m u_partition_mb (
   ,.csb2cmac_a_req_pvld (csb2cmac_b_req_pvld) //|< w
   ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.cdma2reg_op_en (cdma_reg2dp_op_en)
   ,.cdma2reg_producer (cdma_reg2dp_producer)
   ,.csb2cmac_a_req_prdy (csb2cmac_b_req_prdy) //|> w
   ,.csb2cmac_a_req_pd (csb2cmac_b_req_pd) //|< w
@@ -732,7 +728,6 @@ NV_NVDLA_partition_a u_partition_a (
   ,.csb2cacc_req_pvld (csb2cacc_req_pvld)
   ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.cdma2reg_op_en (cdma_reg2dp_op_en)
   ,.cdma2reg_producer (cdma_reg2dp_producer)
   ,.csb2cacc_req_prdy (csb2cacc_req_prdy)
   ,.csb2cacc_req_pd (csb2cacc_req_pd[62:0])

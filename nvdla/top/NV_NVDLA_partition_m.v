@@ -19,7 +19,6 @@ module NV_NVDLA_partition_m (
   ,csb2cmac_a_req_pvld //|< i
   ,cdma2reg_d0_op_en //|< i
   ,cdma2reg_d1_op_en //|< i
-  ,cdma2reg_op_en //|< i
   ,cdma2reg_producer //|< i
   ,direct_reset_ //|< i
   ,dla_reset_rstn //|< i
@@ -91,7 +90,6 @@ input direct_reset_;
 input csb2cmac_a_req_pvld;
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
-input cdma2reg_op_en;
 input cdma2reg_producer;
 output csb2cmac_a_req_prdy;
 input [62:0] csb2cmac_a_req_pd;
@@ -191,7 +189,6 @@ NV_NVDLA_cmac u_NV_NVDLA_cmac (
   ,.csb2cmac_a_req_pvld (csb2cmac_a_req_pvld) //|< i
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en)
-  ,.cdma2reg_op_en (cdma2reg_op_en)
   ,.cdma2reg_producer (cdma2reg_producer)
   ,.csb2cmac_a_req_prdy (csb2cmac_a_req_prdy) //|> o
   ,.csb2cmac_a_req_pd (csb2cmac_a_req_pd) //|< i

@@ -25,16 +25,18 @@ Important register/address reference:
 
 Recent design intent:
 
-- `CSC`, `CMAC`, and `CACC` use `CDMA`'s `producer`, `d0_op_en`,
-  `d1_op_en`, and combined `op_en` values.
-- `CSC`, `CMAC`, and `CACC` still maintain their own `consumer`.
-- `SDP_RDMA` uses `SDP`'s `producer`, `d0_op_en`, `d1_op_en`, and combined
-  `op_en` values.
-- `SDP_RDMA` still maintains its own `consumer`.
+- `CSC`, `CMAC`, and `CACC` use `CDMA`'s `producer` for D register group
+  selection.
+- `CSC`, `CMAC`, and `CACC` use the rising edge of CDMA's per-group
+  `d0_op_en`/`d1_op_en` to start their own local op-enable state.
+- `CSC`, `CMAC`, and `CACC` clear their local op-enable state on their own
+  `dp2reg_done`, and still maintain their own `consumer`.
+- `SDP_RDMA` follows the same rule using `SDP`'s `producer` and per-group
+  `d0_op_en`/`d1_op_en`.
 
-When touching these blocks, keep register group selection and op-en/write
-protection tied to the upstream block, but keep done-driven consumer updates
-local to the block.
+When touching these blocks, keep register group selection tied to the upstream
+producer, start local op-en from the upstream op-en rising edge, and keep
+done-driven consumer/op-en clear local to the block.
 
 ## Address Alignment Notes
 

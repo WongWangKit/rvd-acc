@@ -22,7 +22,6 @@ module NV_NVDLA_SDP_RDMA_reg (
   ,csb2sdp_rdma_req_pvld //|< i
   ,sdp2reg_d0_op_en //|< i
   ,sdp2reg_d1_op_en //|< i
-  ,sdp2reg_op_en //|< i
   ,sdp2reg_producer //|< i
   ,dp2reg_brdma_stall //|< i
   ,dp2reg_done //|< i
@@ -89,7 +88,6 @@ input [62:0] csb2sdp_rdma_req_pd;
 input csb2sdp_rdma_req_pvld;
 input sdp2reg_d0_op_en;
 input sdp2reg_d1_op_en;
-input sdp2reg_op_en;
 input sdp2reg_producer;
 input [31:0] dp2reg_brdma_stall;
 input dp2reg_done;
@@ -211,6 +209,7 @@ wire [1:0] reg2dp_d0_nrdma_data_use;
 wire reg2dp_d0_nrdma_disable;
 wire reg2dp_d0_nrdma_ram_type;
 wire reg2dp_d0_op_en_trigger;
+wire sdp2reg_d0_op_en_start;
 wire [1:0] reg2dp_d0_out_precision;
 wire reg2dp_d0_perf_dma_en;
 wire reg2dp_d0_perf_nan_inf_count_en;
@@ -258,6 +257,7 @@ wire [1:0] reg2dp_d1_nrdma_data_use;
 wire reg2dp_d1_nrdma_disable;
 wire reg2dp_d1_nrdma_ram_type;
 wire reg2dp_d1_op_en_trigger;
+wire sdp2reg_d1_op_en_start;
 wire [1:0] reg2dp_d1_out_precision;
 wire reg2dp_d1_perf_dma_en;
 wire reg2dp_d1_perf_nan_inf_count_en;
@@ -331,7 +331,9 @@ reg [31:0] reg2dp_bs_line_stride;
 reg [31:0] reg2dp_bs_surface_stride;
 reg [12:0] reg2dp_channel;
 reg reg2dp_d0_op_en;
+reg sdp2reg_d0_op_en_d1;
 reg reg2dp_d1_op_en;
+reg sdp2reg_d1_op_en_d1;
 reg reg2dp_d0_op_en_w;
 reg reg2dp_d1_op_en_w;
 reg reg2dp_erdma_data_mode;
@@ -440,7 +442,7 @@ NV_NVDLA_SDP_RDMA_REG_dual u_dual_reg_d0 (
   ,.src_ram_type (reg2dp_d0_src_ram_type) //|> w
   ,.src_line_stride (reg2dp_d0_src_line_stride[31:0]) //|> w
   ,.src_surface_stride (reg2dp_d0_src_surface_stride[31:0]) //|> w
-  ,.op_en (sdp2reg_d0_op_en) //|< i
+  ,.op_en (reg2dp_d0_op_en) //|< r
   ,.brdma_stall (dp2reg_d0_brdma_stall[31:0]) //|< r
   ,.erdma_stall (dp2reg_d0_erdma_stall[31:0]) //|< r
   ,.mrdma_stall (dp2reg_d0_mrdma_stall[31:0]) //|< r
@@ -502,7 +504,7 @@ NV_NVDLA_SDP_RDMA_REG_dual u_dual_reg_d1 (
   ,.src_ram_type (reg2dp_d1_src_ram_type) //|> w
   ,.src_line_stride (reg2dp_d1_src_line_stride[31:0]) //|> w
   ,.src_surface_stride (reg2dp_d1_src_surface_stride[31:0]) //|> w
-  ,.op_en (sdp2reg_d1_op_en) //|< i
+  ,.op_en (reg2dp_d1_op_en) //|< r
   ,.brdma_stall (dp2reg_d1_brdma_stall[31:0]) //|< r
   ,.erdma_stall (dp2reg_d1_erdma_stall[31:0]) //|< r
   ,.mrdma_stall (dp2reg_d1_mrdma_stall[31:0]) //|< r
@@ -535,19 +537,30 @@ end
 // GENERATE TWO STATUS FIELDS IN GENERAL SINGLE REGISTER GROUP //
 // //
 ////////////////////////////////////////////////////////////////////////
+always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+  if (!nvdla_core_rstn) begin
+    sdp2reg_d0_op_en_d1 <= 1'b0;
+    sdp2reg_d1_op_en_d1 <= 1'b0;
+  end else begin
+    sdp2reg_d0_op_en_d1 <= sdp2reg_d0_op_en;
+    sdp2reg_d1_op_en_d1 <= sdp2reg_d1_op_en;
+  end
+end
+assign sdp2reg_d0_op_en_start = sdp2reg_d0_op_en & ~sdp2reg_d0_op_en_d1;
+assign sdp2reg_d1_op_en_start = sdp2reg_d1_op_en & ~sdp2reg_d1_op_en_d1;
 always @(
-  sdp2reg_d0_op_en
+  reg2dp_d0_op_en
   or dp2reg_consumer
   ) begin
-    dp2reg_status_0 = (sdp2reg_d0_op_en == 1'h0 ) ? 2'h0 :
+    dp2reg_status_0 = (reg2dp_d0_op_en == 1'h0 ) ? 2'h0 :
                       (dp2reg_consumer == 1'h1 ) ? 2'h2 :
                       2'h1 ;
 end
 always @(
-  sdp2reg_d1_op_en
+  reg2dp_d1_op_en
   or dp2reg_consumer
   ) begin
-    dp2reg_status_1 = (sdp2reg_d1_op_en == 1'h0 ) ? 2'h0 :
+    dp2reg_status_1 = (reg2dp_d1_op_en == 1'h0 ) ? 2'h0 :
                       (dp2reg_consumer == 1'h0 ) ? 2'h2 :
                       2'h1 ;
 end
@@ -558,12 +571,11 @@ end
 ////////////////////////////////////////////////////////////////////////
 always @(
   reg2dp_d0_op_en
-  or reg2dp_d0_op_en_trigger
-  or reg_wr_data
+  or sdp2reg_d0_op_en_start
   or dp2reg_done
   or dp2reg_consumer
   ) begin
-    reg2dp_d0_op_en_w = (~reg2dp_d0_op_en & reg2dp_d0_op_en_trigger) ? reg_wr_data[0 ] :
+    reg2dp_d0_op_en_w = (~reg2dp_d0_op_en & sdp2reg_d0_op_en_start) ? 1'b1 :
                         (dp2reg_done && dp2reg_consumer == 1'h0 ) ? 1'b0 :
                         reg2dp_d0_op_en;
 end
@@ -576,12 +588,11 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 end
 always @(
   reg2dp_d1_op_en
-  or reg2dp_d1_op_en_trigger
-  or reg_wr_data
+  or sdp2reg_d1_op_en_start
   or dp2reg_done
   or dp2reg_consumer
   ) begin
-    reg2dp_d1_op_en_w = (~reg2dp_d1_op_en & reg2dp_d1_op_en_trigger) ? reg_wr_data[0 ] :
+    reg2dp_d1_op_en_w = (~reg2dp_d1_op_en & sdp2reg_d1_op_en_start) ? 1'b1 :
                         (dp2reg_done && dp2reg_consumer == 1'h1 ) ? 1'b0 :
                         reg2dp_d1_op_en;
 end
@@ -594,10 +605,10 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 end
 always @(
   dp2reg_consumer
-  or sdp2reg_d1_op_en
-  or sdp2reg_d0_op_en
+  or reg2dp_d1_op_en
+  or reg2dp_d0_op_en
   ) begin
-    reg2dp_op_en_ori = dp2reg_consumer ? sdp2reg_d1_op_en : sdp2reg_d0_op_en;
+    reg2dp_op_en_ori = dp2reg_consumer ? reg2dp_d1_op_en : reg2dp_d0_op_en;
 end
 assign reg2dp_op_en_reg_w = dp2reg_done ? 3'b0 :
                             {reg2dp_op_en_reg[1:0], reg2dp_op_en_ori};
@@ -608,7 +619,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   reg2dp_op_en_reg <= reg2dp_op_en_reg_w;
   end
 end
-assign reg2dp_op_en = sdp2reg_op_en;
+assign reg2dp_op_en = reg2dp_op_en_reg[3-1];
 assign slcg_op_en_d0 = {4{reg2dp_op_en_ori}};
 always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
   if (!nvdla_core_rstn) begin
@@ -642,8 +653,8 @@ assign select_s = (reg_offset[11:0] < (32'h8040 & 32'hfff)) ? 1'b1: 1'b0;
 assign select_d0 = (reg_offset[11:0] >= (32'h8040 & 32'hfff)) & (sdp2reg_producer == 1'h0 );
 assign select_d1 = (reg_offset[11:0] >= (32'h8040 & 32'hfff)) & (sdp2reg_producer == 1'h1 );
 assign s_reg_wr_en = reg_wr_en & select_s;
-assign d0_reg_wr_en = reg_wr_en & select_d0 & ~sdp2reg_d0_op_en;
-assign d1_reg_wr_en = reg_wr_en & select_d1 & ~sdp2reg_d1_op_en;
+assign d0_reg_wr_en = reg_wr_en & select_d0 & ~reg2dp_d0_op_en;
+assign d1_reg_wr_en = reg_wr_en & select_d1 & ~reg2dp_d1_op_en;
 assign s_reg_offset = reg_offset;
 assign d0_reg_offset = reg_offset;
 assign d1_reg_offset = reg_offset;

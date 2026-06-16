@@ -44,7 +44,6 @@ module NV_NVDLA_partition_a (
   ,csb2cacc_req_pvld
   ,cdma2reg_d0_op_en
   ,cdma2reg_d1_op_en
-  ,cdma2reg_op_en
   ,cdma2reg_producer
   ,csb2cacc_req_prdy
   ,csb2cacc_req_pd
@@ -109,7 +108,6 @@ output [1:0] cacc2glb_done_intr_pd;
 input csb2cacc_req_pvld; /* data valid */
 input cdma2reg_d0_op_en;
 input cdma2reg_d1_op_en;
-input cdma2reg_op_en;
 input cdma2reg_producer;
 output csb2cacc_req_prdy; /* data return handshake */
 input [62:0] csb2cacc_req_pd;
@@ -205,7 +203,6 @@ NV_NVDLA_cacc u_NV_NVDLA_cacc (
   ,.csb2cacc_req_pvld (csb2cacc_req_pvld)
   ,.cdma2reg_d0_op_en (cdma2reg_d0_op_en)
   ,.cdma2reg_d1_op_en (cdma2reg_d1_op_en)
-  ,.cdma2reg_op_en (cdma2reg_op_en)
   ,.cdma2reg_producer (cdma2reg_producer)
   ,.csb2cacc_req_prdy (csb2cacc_req_prdy)
   ,.csb2cacc_req_pd (csb2cacc_req_pd)

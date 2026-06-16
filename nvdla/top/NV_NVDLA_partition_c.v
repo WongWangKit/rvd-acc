@@ -89,7 +89,6 @@ module NV_NVDLA_partition_c (
   ,cdma2csb_resp_valid //|> o
   ,cdma_reg2dp_d0_op_en //|> o
   ,cdma_reg2dp_d1_op_en //|> o
-  ,cdma_reg2dp_op_en //|> o
   ,cdma_reg2dp_producer //|> o
   ,cdma_dat2glb_done_intr_pd //|> o
   ,cdma_dat2mcif_rd_req_pd //|> o
@@ -188,7 +187,6 @@ input [2:0] accu2sc_credit_size;
 output cdma2csb_resp_valid; /* data valid */
 output cdma_reg2dp_d0_op_en;
 output cdma_reg2dp_d1_op_en;
-output cdma_reg2dp_op_en;
 output cdma_reg2dp_producer;
 output [33:0] cdma2csb_resp_pd; /* pkt_id_width=1 pkt_widths=33,33  */
 output [1:0] cdma_dat2glb_done_intr_pd;
@@ -447,7 +445,6 @@ NV_NVDLA_cdma u_NV_NVDLA_cdma (
   ,.cdma2csb_resp_valid (cdma2csb_resp_valid)
   ,.cdma_reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.cdma_reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.cdma_reg2dp_op_en (cdma_reg2dp_op_en)
   ,.cdma_reg2dp_producer (cdma_reg2dp_producer)
   ,.cdma2csb_resp_pd (cdma2csb_resp_pd)
   ,.cdma2sc_dat_pending_ack (cdma2sc_dat_pending_ack)
@@ -695,7 +692,6 @@ NV_NVDLA_csc u_NV_NVDLA_csc (
   ,.csb2csc_req_pvld (csb2csc_req_pvld) //|< i
   ,.cdma2reg_d0_op_en (cdma_reg2dp_d0_op_en) //|< w
   ,.cdma2reg_d1_op_en (cdma_reg2dp_d1_op_en) //|< w
-  ,.cdma2reg_op_en (cdma_reg2dp_op_en) //|< w
   ,.cdma2reg_producer (cdma_reg2dp_producer) //|< w
   ,.csb2csc_req_prdy (csb2csc_req_prdy) //|> o
   ,.csb2csc_req_pd (csb2csc_req_pd[62:0]) //|< i

@@ -61,7 +61,6 @@ module NV_NVDLA_SDP_rdma (
   ,csb2sdp_rdma_req_pvld //|< i
   ,sdp2reg_d0_op_en //|< i
   ,sdp2reg_d1_op_en //|< i
-  ,sdp2reg_op_en //|< i
   ,sdp2reg_producer //|< i
   ,csb2sdp_rdma_req_prdy //|> o
   ,sdp_rdma2csb_resp_pd //|> o
@@ -79,7 +78,6 @@ input tmc2slcg_disable_clock_gating;
 input csb2sdp_rdma_req_pvld;
 input sdp2reg_d0_op_en;
 input sdp2reg_d1_op_en;
-input sdp2reg_op_en;
 input sdp2reg_producer;
 output csb2sdp_rdma_req_prdy;
 input [62:0] csb2sdp_rdma_req_pd;
@@ -363,7 +361,6 @@ NV_NVDLA_SDP_RDMA_reg u_reg (
   ,.csb2sdp_rdma_req_pvld (csb2sdp_rdma_req_pvld) //|< i
   ,.sdp2reg_d0_op_en (sdp2reg_d0_op_en) //|< i
   ,.sdp2reg_d1_op_en (sdp2reg_d1_op_en) //|< i
-  ,.sdp2reg_op_en (sdp2reg_op_en) //|< i
   ,.sdp2reg_producer (sdp2reg_producer) //|< i
   ,.csb2sdp_rdma_req_prdy (csb2sdp_rdma_req_prdy) //|> o
   ,.sdp_rdma2csb_resp_pd (sdp_rdma2csb_resp_pd[33:0]) //|> o
