@@ -33,8 +33,6 @@ module NV_NVDLA_CDMA_wt (
   ,mcif2cdma_wt_rd_rsp_pd //|< i
   ,mcif2cdma_wt_rd_rsp_valid //|< i
   ,pwrbus_ram_pd //|< i
-  ,reg2dp_arb_weight //|< i
-  ,reg2dp_arb_wmb //|< i
   ,reg2dp_byte_per_kernel //|< i
   ,reg2dp_data_bank //|< i
   ,reg2dp_dma_en //|< i
@@ -170,8 +168,6 @@ input [8:0] sc2cdma_wmb_entries;
 input sc2cdma_wt_pending_req;
 output cdma2sc_wt_pending_ack;
 input nvdla_core_ng_clk;
-input [3:0] reg2dp_arb_weight;
-input [3:0] reg2dp_arb_wmb;
 input [0:0] reg2dp_op_en;
 input [1:0] reg2dp_proc_precision;
 input [0:0] reg2dp_weight_reuse;

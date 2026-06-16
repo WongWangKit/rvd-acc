@@ -228,8 +228,6 @@ wire nvdla_op_gated_clk_dc;
 wire nvdla_op_gated_clk_img;
 wire nvdla_op_gated_clk_mux;
 wire nvdla_op_gated_clk_wt;
-wire [3:0] reg2dp_arb_weight;
-wire [3:0] reg2dp_arb_wmb;
 wire [31:0] reg2dp_batch_stride;
 wire [4:0] reg2dp_batches;
 wire [17:0] reg2dp_byte_per_kernel;
@@ -346,8 +344,6 @@ NV_NVDLA_CDMA_regfile u_regfile (
   ,.dp2reg_consumer (dp2reg_consumer)
   ,.reg2dp_d0_op_en (cdma_reg2dp_d0_op_en)
   ,.reg2dp_d1_op_en (cdma_reg2dp_d1_op_en)
-  ,.reg2dp_arb_weight (reg2dp_arb_weight[3:0])
-  ,.reg2dp_arb_wmb (reg2dp_arb_wmb[3:0])
   ,.reg2dp_batch_stride (reg2dp_batch_stride[31:0])
   ,.reg2dp_batches (reg2dp_batches[4:0])
   ,.reg2dp_byte_per_kernel (reg2dp_byte_per_kernel[17:0])
@@ -453,8 +449,6 @@ NV_NVDLA_CDMA_wt u_wt (
   ,.sc2cdma_wt_pending_req (sc2cdma_wt_pending_req)
   ,.cdma2sc_wt_pending_ack (cdma2sc_wt_pending_ack)
   ,.nvdla_core_ng_clk (nvdla_core_clk)
-  ,.reg2dp_arb_weight (reg2dp_arb_weight[3:0])
-  ,.reg2dp_arb_wmb (reg2dp_arb_wmb[3:0])
   ,.reg2dp_op_en (reg2dp_op_en[0])
   ,.reg2dp_proc_precision (reg2dp_proc_precision[1:0])
   ,.reg2dp_weight_reuse (reg2dp_weight_reuse[0])

@@ -65,7 +65,6 @@ assign reg_offset_rd_int = reg_offset;
 //spyglass disable_block W338, W263
 always @(
   reg_offset_rd_int
-  or nvdla_cdma_s_arbiter_0_out
   or nvdla_cdma_s_cbuf_flush_status_0_out
   or nvdla_cdma_s_pointer_0_out
   or nvdla_cdma_s_status_0_out
