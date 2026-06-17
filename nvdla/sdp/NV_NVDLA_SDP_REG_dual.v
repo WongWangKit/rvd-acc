@@ -111,6 +111,11 @@ wire [31:0] nvdla_sdp_d_cvt_shift_0_out;
 wire [31:0] nvdla_sdp_d_data_cube_channel_0_out;
 wire [31:0] nvdla_sdp_d_data_cube_height_0_out;
 wire [31:0] nvdla_sdp_d_data_cube_width_0_out;
+wire [31:0] nvdla_sdp_d_dp_bn_alu_cfg_0_out;
+wire [31:0] nvdla_sdp_d_dp_bn_alu_src_value_0_out;
+wire [31:0] nvdla_sdp_d_dp_bn_cfg_0_out;
+wire [31:0] nvdla_sdp_d_dp_bn_mul_cfg_0_out;
+wire [31:0] nvdla_sdp_d_dp_bn_mul_src_value_0_out;
 wire [31:0] nvdla_sdp_d_dp_bs_alu_cfg_0_out;
 wire [31:0] nvdla_sdp_d_dp_bs_alu_src_value_0_out;
 wire [31:0] nvdla_sdp_d_dp_bs_cfg_0_out;
@@ -219,6 +224,18 @@ reg arreggen_abort_on_rowr;
 reg arreggen_dump;
 // leda FM_2_23 on
 reg [4:0] batch_number;
+reg [1:0] bn_alu_algo;
+reg bn_alu_bypass;
+reg [15:0] bn_alu_operand;
+reg [5:0] bn_alu_shift_value;
+reg bn_alu_src;
+reg bn_bypass;
+reg bn_mul_bypass;
+reg [15:0] bn_mul_operand;
+reg bn_mul_prelu;
+reg [7:0] bn_mul_shift_value;
+reg bn_mul_src;
+reg bn_relu_bypass;
 reg [1:0] bs_alu_algo;
 reg bs_alu_bypass;
 reg [15:0] bs_alu_operand;
@@ -248,12 +265,17 @@ reg winograd;
 assign reg_offset_wr = {20'b0 , reg_offset};
 // SCR signals
 // Address decode
-wire nvdla_sdp_d_cvt_offset_0_wren = (reg_offset_wr == (32'h9070 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_d_cvt_scale_0_wren = (reg_offset_wr == (32'h9074 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_d_cvt_shift_0_wren = (reg_offset_wr == (32'h9078 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_cvt_offset_0_wren = (reg_offset_wr == (32'h9084 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_cvt_scale_0_wren = (reg_offset_wr == (32'h9088 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_cvt_shift_0_wren = (reg_offset_wr == (32'h908c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_data_cube_channel_0_wren = (reg_offset_wr == (32'h9048 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_data_cube_height_0_wren = (reg_offset_wr == (32'h9044 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_data_cube_width_0_wren = (reg_offset_wr == (32'h9040 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_dp_bn_alu_cfg_0_wren = (reg_offset_wr == (32'h9070 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_dp_bn_alu_src_value_0_wren = (reg_offset_wr == (32'h9074 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_dp_bn_cfg_0_wren = (reg_offset_wr == (32'h906c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_dp_bn_mul_cfg_0_wren = (reg_offset_wr == (32'h9078 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_dp_bn_mul_src_value_0_wren = (reg_offset_wr == (32'h907c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_dp_bs_alu_cfg_0_wren = (reg_offset_wr == (32'h905c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_dp_bs_alu_src_value_0_wren = (reg_offset_wr == (32'h9060 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_dp_bs_cfg_0_wren = (reg_offset_wr == (32'h9058 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
@@ -262,14 +284,19 @@ wire nvdla_sdp_d_dp_bs_mul_src_value_0_wren = (reg_offset_wr == (32'h9068 & 32'h
 wire nvdla_sdp_d_dst_base_addr_low_0_wren = (reg_offset_wr == (32'h904c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_dst_line_stride_0_wren = (reg_offset_wr == (32'h9050 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 wire nvdla_sdp_d_dst_surface_stride_0_wren = (reg_offset_wr == (32'h9054 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_d_feature_mode_cfg_0_wren = (reg_offset_wr == (32'h906c & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
-wire nvdla_sdp_d_op_enable_0_wren = (reg_offset_wr == (32'h9080 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_feature_mode_cfg_0_wren = (reg_offset_wr == (32'h9080 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
+wire nvdla_sdp_d_op_enable_0_wren = (reg_offset_wr == (32'h90c0 & 32'h00000fff)) & reg_wr_en ; //spyglass disable UnloadedNet-ML //(W528)
 assign nvdla_sdp_d_cvt_offset_0_out[31:0] = { cvt_offset };
 assign nvdla_sdp_d_cvt_scale_0_out[31:0] = { 16'b0, cvt_scale };
 assign nvdla_sdp_d_cvt_shift_0_out[31:0] = { 26'b0, cvt_shift };
 assign nvdla_sdp_d_data_cube_channel_0_out[31:0] = { 19'b0, channel };
 assign nvdla_sdp_d_data_cube_height_0_out[31:0] = { 19'b0, height };
 assign nvdla_sdp_d_data_cube_width_0_out[31:0] = { 19'b0, width };
+assign nvdla_sdp_d_dp_bn_alu_cfg_0_out[31:0] = { 18'b0, bn_alu_shift_value, 7'b0, bn_alu_src };
+assign nvdla_sdp_d_dp_bn_alu_src_value_0_out[31:0] = { 16'b0, bn_alu_operand };
+assign nvdla_sdp_d_dp_bn_cfg_0_out[31:0] = { 25'b0, bn_relu_bypass, bn_mul_prelu, bn_mul_bypass, bn_alu_algo, bn_alu_bypass, bn_bypass };
+assign nvdla_sdp_d_dp_bn_mul_cfg_0_out[31:0] = { 16'b0, bn_mul_shift_value, 7'b0, bn_mul_src };
+assign nvdla_sdp_d_dp_bn_mul_src_value_0_out[31:0] = { 16'b0, bn_mul_operand };
 assign nvdla_sdp_d_dp_bs_alu_cfg_0_out[31:0] = { 18'b0, bs_alu_shift_value, 7'b0, bs_alu_src };
 assign nvdla_sdp_d_dp_bs_alu_src_value_0_out[31:0] = { 16'b0, bs_alu_operand };
 assign nvdla_sdp_d_dp_bs_cfg_0_out[31:0] = { 25'b0, bs_relu_bypass, bs_mul_prelu, bs_mul_bypass, bs_alu_algo, bs_alu_bypass, bs_bypass };
@@ -281,18 +308,6 @@ assign nvdla_sdp_d_dst_surface_stride_0_out[31:0] = { dst_surface_stride};
 assign nvdla_sdp_d_feature_mode_cfg_0_out[31:0] = { 19'b0, batch_number, 4'b0, nan_to_zero, winograd, output_dst, flying_mode };
 assign nvdla_sdp_d_op_enable_0_out[31:0] = { 31'b0, op_en };
 assign op_en_trigger = nvdla_sdp_d_op_enable_0_wren; //(W563)
-assign bn_alu_algo = 2'b00;
-assign bn_alu_bypass = 1'b1;
-assign bn_alu_operand = 16'b0000000000000000;
-assign bn_alu_shift_value = 6'b000000;
-assign bn_alu_src = 1'b0;
-assign bn_bypass = 1'b1;
-assign bn_mul_bypass = 1'b1;
-assign bn_mul_operand = 16'b0000000000000000;
-assign bn_mul_prelu = 1'b0;
-assign bn_mul_shift_value = 8'b00000000;
-assign bn_mul_src = 1'b0;
-assign bn_relu_bypass = 1'b1;
 assign dst_base_addr_high = 32'h0;
 assign dst_batch_stride = {(32){1'b0}};
 assign dst_ram_type = 1'b1;
@@ -326,6 +341,27 @@ assign reg_offset_rd_int = reg_offset;
 //spyglass disable_block W338, W263
 always @(*) begin
   case (reg_offset_rd_int)
+     (32'h9040 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_data_cube_width_0_out;
+     (32'h9044 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_data_cube_height_0_out;
+     (32'h9048 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_data_cube_channel_0_out;
+     (32'h904c & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dst_base_addr_low_0_out;
+     (32'h9050 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dst_line_stride_0_out;
+     (32'h9054 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dst_surface_stride_0_out;
+     (32'h9058 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bs_cfg_0_out;
+     (32'h905c & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bs_alu_cfg_0_out;
+     (32'h9060 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bs_alu_src_value_0_out;
+     (32'h9064 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bs_mul_cfg_0_out;
+     (32'h9068 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bs_mul_src_value_0_out;
+     (32'h906c & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bn_cfg_0_out;
+     (32'h9070 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bn_alu_cfg_0_out;
+     (32'h9074 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bn_alu_src_value_0_out;
+     (32'h9078 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bn_mul_cfg_0_out;
+     (32'h907c & 32'h00000fff): reg_rd_data = nvdla_sdp_d_dp_bn_mul_src_value_0_out;
+     (32'h9080 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_feature_mode_cfg_0_out;
+     (32'h9084 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_cvt_offset_0_out;
+     (32'h9088 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_cvt_scale_0_out;
+     (32'h908c & 32'h00000fff): reg_rd_data = nvdla_sdp_d_cvt_shift_0_out;
+     (32'h90c0 & 32'h00000fff): reg_rd_data = nvdla_sdp_d_op_enable_0_out;
     default: reg_rd_data = {32{1'b0}};
   endcase
 end
@@ -340,6 +376,18 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
     channel[12:0] <= 13'b0000000000000;
     height[12:0] <= 13'b0000000000000;
     width[12:0] <= 13'b0000000000000;
+    bn_alu_shift_value[5:0] <= 6'b000000;
+    bn_alu_src <= 1'b0;
+    bn_alu_operand[15:0] <= 16'b0000000000000000;
+    bn_alu_algo[1:0] <= 2'b00;
+    bn_alu_bypass <= 1'b1;
+    bn_bypass <= 1'b1;
+    bn_mul_bypass <= 1'b1;
+    bn_mul_prelu <= 1'b1;
+    bn_relu_bypass <= 1'b1;
+    bn_mul_shift_value[7:0] <= 8'b00000000;
+    bn_mul_src <= 1'b0;
+    bn_mul_operand[15:0] <= 16'b0000000000000000;
     bs_alu_shift_value[5:0] <= 6'b000000;
     bs_alu_src <= 1'b0;
     bs_alu_operand[15:0] <= 16'b0000000000000000;
@@ -385,6 +433,54 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
 // Register: NVDLA_SDP_D_DATA_CUBE_WIDTH_0 Field: width
   if (nvdla_sdp_d_data_cube_width_0_wren) begin
     width[12:0] <= reg_wr_data[12:0];
+  end
+// Register: NVDLA_SDP_D_DP_BN_ALU_CFG_0 Field: bn_alu_shift_value
+  if (nvdla_sdp_d_dp_bn_alu_cfg_0_wren) begin
+    bn_alu_shift_value[5:0] <= reg_wr_data[13:8];
+  end
+// Register: NVDLA_SDP_D_DP_BN_ALU_CFG_0 Field: bn_alu_src
+  if (nvdla_sdp_d_dp_bn_alu_cfg_0_wren) begin
+    bn_alu_src <= reg_wr_data[0];
+  end
+// Register: NVDLA_SDP_D_DP_BN_ALU_SRC_VALUE_0 Field: bn_alu_operand
+  if (nvdla_sdp_d_dp_bn_alu_src_value_0_wren) begin
+    bn_alu_operand[15:0] <= reg_wr_data[15:0];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_alu_algo
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_alu_algo[1:0] <= reg_wr_data[3:2];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_alu_bypass
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_alu_bypass <= reg_wr_data[1];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_bypass
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_bypass <= reg_wr_data[0];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_mul_bypass
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_mul_bypass <= reg_wr_data[4];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_mul_prelu
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_mul_prelu <= reg_wr_data[5];
+  end
+// Register: NVDLA_SDP_D_DP_BN_CFG_0 Field: bn_relu_bypass
+  if (nvdla_sdp_d_dp_bn_cfg_0_wren) begin
+    bn_relu_bypass <= reg_wr_data[6];
+  end
+// Register: NVDLA_SDP_D_DP_BN_MUL_CFG_0 Field: bn_mul_shift_value
+  if (nvdla_sdp_d_dp_bn_mul_cfg_0_wren) begin
+    bn_mul_shift_value[7:0] <= reg_wr_data[15:8];
+  end
+// Register: NVDLA_SDP_D_DP_BN_MUL_CFG_0 Field: bn_mul_src
+  if (nvdla_sdp_d_dp_bn_mul_cfg_0_wren) begin
+    bn_mul_src <= reg_wr_data[0];
+  end
+// Register: NVDLA_SDP_D_DP_BN_MUL_SRC_VALUE_0 Field: bn_mul_operand
+  if (nvdla_sdp_d_dp_bn_mul_src_value_0_wren) begin
+    bn_mul_operand[15:0] <= reg_wr_data[15:0];
   end
 // Register: NVDLA_SDP_D_DP_BS_ALU_CFG_0 Field: bs_alu_shift_value
   if (nvdla_sdp_d_dp_bs_alu_cfg_0_wren) begin
