@@ -1,6 +1,6 @@
 .gitattributes
 FILE_LIST.txt
-NV_nvdla_wrapper.v
+rvd_acc_top.v
 fifos/NV_NVDLA_CDMA_WT_8ATMM_fifo.v
 fifos/NV_NVDLA_CDP_RDMA_lat_fifo.v
 fifos/NV_NVDLA_SDP_BRDMA_cq_lib.v
